@@ -81,7 +81,6 @@ export default function WeaponsPage() {
               <tbody>
                 {ALL_WEAPONS.map((weapon) => {
                   const owned = ownedNames.includes(weapon.name);
-                  const firstOption = weapon.options[0];
 
                   return (
                     <tr
@@ -118,10 +117,10 @@ export default function WeaponsPage() {
                         </div>
                       </td>
                       <td className="px-3 py-2 align-top text-xs text-zinc-700">
-                        {firstOption ? (
+                        {weapon.options.basic ? (
                           <span>
-                            {firstOption.basic} / {firstOption.additional} /{" "}
-                            {firstOption.skill}
+                            {weapon.options.basic} / {weapon.options.additional} /{" "}
+                            {weapon.options.skill}
                           </span>
                         ) : (
                           <span className="text-zinc-400">옵션 정보 없음</span>

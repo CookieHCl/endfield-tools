@@ -2,111 +2,91 @@
   {
     "name": "긴급 대책",
     "image_name": "긴급_대책.webp",
-    "options": [
-      {
-        "basic": "민첩",
-        "additional": "물리 피해 증가",
-        "skill": "억제"
-      }
-    ]
+    "options": {
+      "basic": "민첩",
+      "additional": "물리 피해 증가",
+      "skill": "억제"
+    }
   },
   {
     "name": "거대한 격랑",
     "image_name": "거대한_격랑.webp",
-    "options": [
-      {
-        "basic": "지능",
-        "additional": "공격력 증가",
-        "skill": "추격"
-      }
-    ]
+    "options": {
+      "basic": "지능",
+      "additional": "공격력 증가",
+      "skill": "추격"
+    }
   },
   {
     "name": "공업 0.1",
     "image_name": "공업_0.1.webp",
-    "options": [
-      {
-        "basic": "힘",
-        "additional": "공격력 증가",
-        "skill": "억제"
-      }
-    ]
+    "options": {
+      "basic": "힘",
+      "additional": "공격력 증가",
+      "skill": "억제"
+    }
   },
   {
     "name": "불꽃의 시험",
     "image_name": "불꽃의_시험.webp",
-    "options": [
-      {
-        "basic": "의지",
-        "additional": "생명력 증가",
-        "skill": "분쇄"
-      }
-    ]
+    "options": {
+      "basic": "의지",
+      "additional": "생명력 증가",
+      "skill": "분쇄"
+    }
   },
   {
     "name": "아겔로스 사냥꾼",
     "image_name": "아겔로스_사냥꾼.webp",
-    "options": [
-      {
-        "basic": "의지",
-        "additional": "아츠 피해 증가",
-        "skill": "억제"
-      }
-    ]
+    "options": {
+      "basic": "의지",
+      "additional": "아츠 피해 증가",
+      "skill": "억제"
+    }
   },
   {
     "name": "개척자의 이정표",
     "image_name": "개척자의_이정표.webp",
-    "options": [
-      {
-        "basic": "민첩",
-        "additional": "공격력 증가",
-        "skill": "사기"
-      }
-    ]
+    "options": {
+      "basic": "민첩",
+      "additional": "공격력 증가",
+      "skill": "사기"
+    }
   },
   {
     "name": "끝없는 여정",
     "image_name": "끝없는_여정.webp",
-    "options": [
-      {
-        "basic": "힘",
-        "additional": "아츠 피해 증가",
-        "skill": "추격"
-      }
-    ]
+    "options": {
+      "basic": "힘",
+      "additional": "아츠 피해 증가",
+      "skill": "추격"
+    }
   },
   {
     "name": "하울링 가드",
     "image_name": "하울링_가드.webp",
-    "options": [
-      {
-        "basic": "지능",
-        "additional": "공격력 증가",
-        "skill": "억제"
-      }
-    ]
+    "options": {
+      "basic": "지능",
+      "additional": "공격력 증가",
+      "skill": "억제"
+    }
   },
   {
     "name": "섬광 번개",
     "image_name": "섬광_번개.webp",
-    "options": [
-      {
-        "basic": "의지",
-        "additional": "공격력 증가",
-        "skill": "억제"
-      }
-    ]
+    "options": {
+      "basic": "의지",
+      "additional": "공격력 증가",
+      "skill": "억제"
+    }
   },
   {
     "name": "오토 하이퍼노바",
     "image_name": "오토_하이퍼노바.webp",
-    "options": [
-      {
-        "basic": "지능",
-        "additional": "아츠 피해 증가",
-        "skill": "사기"
-      }
-    ]
+    "options": {
+      "basic": "지능",
+      "additional": "아츠 피해 증가",
+      "skill": "사기"
+    }
   }
 ]

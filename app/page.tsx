@@ -22,7 +22,14 @@ export default function Home() {
                 보유 무기 관리 (/weapons)
               </Link>
             </li>
-            {/* 앞으로 다른 페이지를 여기 추가하면 됨 */}
+            <li>
+              <Link
+                href="/dungeon-farm"
+                className="text-emerald-700 underline-offset-2 hover:underline"
+              >
+                기질 파밍 장소 (/dungeon-farm)
+              </Link>
+            </li>
           </ul>
         </section>
       </main>
