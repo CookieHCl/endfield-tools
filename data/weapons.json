@@ -1,0 +1,575 @@
+[
+  {
+    "name": "분쇄의 군주",
+    "image_name": "분쇄의_군주.webp",
+    "options": [
+      {
+        "basic": "힘",
+        "additional": "치명타 확률 증가",
+        "skill": "분쇄"
+      }
+    ]
+  },
+  {
+    "name": "위대한 이름",
+    "image_name": "위대한_이름.webp",
+    "options": [
+      {
+        "basic": "주요 능력치 증가",
+        "additional": "물리 피해 증가",
+        "skill": "잔혹"
+      }
+    ]
+  },
+  {
+    "name": "고대의 강줄기",
+    "image_name": "고대의_강줄기.webp",
+    "signature_weapon": "판.webp",
+    "options": [
+      {
+        "basic": "힘",
+        "additional": "오리지늄 아츠 증가",
+        "skill": "잔혹"
+      }
+    ]
+  },
+  {
+    "name": "키메라의 정의",
+    "image_name": "키메라의_정의.webp",
+    "options": [
+      {
+        "basic": "힘",
+        "additional": "궁극기 획득 효율 증가",
+        "skill": "잔혹"
+      }
+    ]
+  },
+  {
+    "name": "장대한 염원",
+    "image_name": "장대한_염원.webp",
+    "signature_weapon": "관리자.webp",
+    "options": [
+      {
+        "basic": "민첩",
+        "additional": "공격력 증가",
+        "skill": "고통"
+      }
+    ]
+  },
+  {
+    "name": "십이문",
+    "image_name": "십이문.webp",
+    "signature_weapon": "아크라이트.webp",
+    "options": [
+      {
+        "basic": "민첩",
+        "additional": "공격력 증가",
+        "skill": "고통"
+      }
+    ]
+  },
+  {
+    "name": "작품 중생",
+    "image_name": "작품_중생.webp",
+    "options": [
+      {
+        "basic": "민첩",
+        "additional": "아츠 피해 증가",
+        "skill": "고통"
+      }
+    ]
+  },
+  {
+    "name": "obj 스파이크",
+    "image_name": "obj_스파이크.webp",
+    "signature_weapon": "에스텔라.webp",
+    "options": [
+      {
+        "basic": "의지",
+        "additional": "물리 피해 증가",
+        "skill": "고통"
+      }
+    ]
+  },
+  {
+    "name": "바다와 별의 꿈",
+    "image_name": "바다와_별의_꿈.webp",
+    "signature_weapon": "아델리아.webp",
+    "options": [
+      {
+        "basic": "지능",
+        "additional": "치유 효율 증가",
+        "skill": "고통"
+      }
+    ]
+  },
+  {
+    "name": "암흑의 횃불",
+    "image_name": "암흑의_횃불.webp",
+    "options": [
+      {
+        "basic": "지능",
+        "additional": "열기 피해 증가",
+        "skill": "고통"
+      }
+    ]
+  },
+  {
+    "name": "항로의 개척자",
+    "image_name": "항로의_개척자.webp",
+    "options": [
+      {
+        "basic": "지능",
+        "additional": "냉기 피해 증가",
+        "skill": "고통"
+      }
+    ]
+  },
+  {
+    "name": "황무지의 방랑자",
+    "image_name": "황무지의_방랑자.webp",
+    "signature_weapon": "펠리카.webp",
+    "options": [
+      {
+        "basic": "지능",
+        "additional": "전기 피해 증가",
+        "skill": "고통"
+      }
+    ]
+  },
+  {
+    "name": "쐐기",
+    "image_name": "쐐기.webp",
+    "options": [
+      {
+        "basic": "주요 능력치 증가",
+        "additional": "치명타 확률 증가",
+        "skill": "고통"
+      }
+    ]
+  },
+  {
+    "name": "클래니벌",
+    "image_name": "클래니벌.webp",
+    "options": [
+      {
+        "basic": "주요 능력치 증가",
+        "additional": "아츠 피해 증가",
+        "skill": "고통"
+      }
+    ]
+  },
+  {
+    "name": "백야의 별",
+    "image_name": "백야의_별.webp",
+    "options": [
+      {
+        "basic": "주요 능력치 증가",
+        "additional": "오리지늄 아츠 증가",
+        "skill": "고통"
+      }
+    ]
+  },
+  {
+    "name": "obj 엣지 오브 라이트",
+    "image_name": "obj_엣지_오브_라이트.webp",
+    "signature_weapon": "아케쿠리.webp",
+    "options": [
+      {
+        "basic": "민첩",
+        "additional": "공격력 증가",
+        "skill": "흐름"
+      }
+    ]
+  },
+  {
+    "name": "끝없는 방랑",
+    "image_name": "끝없는_방랑.webp",
+    "signature_weapon": "포그라니치니크.webp",
+    "options": [
+      {
+        "basic": "의지",
+        "additional": "공격력 증가",
+        "skill": "흐름"
+      }
+    ]
+  },
+  {
+    "name": "테르밋 커터",
+    "image_name": "테르밋_커터.webp",
+    "options": [
+      {
+        "basic": "의지",
+        "additional": "공격력 증가",
+        "skill": "흐름"
+      }
+    ]
+  },
+  {
+    "name": "숭배의 시선",
+    "image_name": "숭배의_시선.webp",
+    "signature_weapon": "진천우.webp",
+    "options": [
+      {
+        "basic": "민첩",
+        "additional": "물리 피해 증가",
+        "skill": "어둠"
+      }
+    ]
+  },
+  {
+    "name": "용조의 불꽃",
+    "image_name": "용조의_불꽃.webp",
+    "signature_weapon": "레바테인.webp",
+    "options": [
+      {
+        "basic": "지능",
+        "additional": "공격력 증가",
+        "skill": "어둠"
+      }
+    ]
+  },
+  {
+    "name": "망자의 노래",
+    "image_name": "망자의_노래.webp",
+    "options": [
+      {
+        "basic": "지능",
+        "additional": "공격력 증가",
+        "skill": "어둠"
+      }
+    ]
+  },
+  {
+    "name": "망각",
+    "image_name": "망각.webp",
+    "options": [
+      {
+        "basic": "지능",
+        "additional": "아츠 피해 증가",
+        "skill": "어둠"
+      }
+    ]
+  },
+  {
+    "name": "부요",
+    "image_name": "부요.webp",
+    "options": [
+      {
+        "basic": "주요 능력치 증가",
+        "additional": "치명타 확률 증가",
+        "skill": "어둠"
+      }
+    ]
+  },
+  {
+    "name": "천둥의 흔적",
+    "image_name": "천둥의_흔적.webp",
+    "signature_weapon": "엠버.webp",
+    "options": [
+      {
+        "basic": "힘",
+        "additional": "생명력 증가",
+        "skill": "의료"
+      }
+    ]
+  },
+  {
+    "name": "최후의 메아리",
+    "image_name": "최후의_메아리.webp",
+    "signature_weapon": "스노우샤인.webp",
+    "options": [
+      {
+        "basic": "힘",
+        "additional": "생명력 증가",
+        "skill": "의료"
+      }
+    ]
+  },
+  {
+    "name": "기사도 정신",
+    "image_name": "기사도_정신.webp",
+    "options": [
+      {
+        "basic": "의지",
+        "additional": "생명력 증가",
+        "skill": "의료"
+      }
+    ]
+  },
+  {
+    "name": "선교의 자유",
+    "image_name": "선교의_자유.webp",
+    "signature_weapon": "자이히.webp",
+    "options": [
+      {
+        "basic": "의지",
+        "additional": "치유 효율 증가",
+        "skill": "의료"
+      }
+    ]
+  },
+  {
+    "name": "obj벨로시투스",
+    "image_name": "obj벨로시투스.webp",
+    "signature_weapon": "플루라이트.webp",
+    "options": [
+      {
+        "basic": "민첩",
+        "additional": "궁극기 획득 효율 증가",
+        "skill": "방출"
+      }
+    ]
+  },
+  {
+    "name": "헤라펜거",
+    "image_name": "헤라펜거.webp",
+    "signature_weapon": "라스트_라이트.webp",
+    "options": [
+      {
+        "basic": "힘",
+        "additional": "공격력 증가",
+        "skill": "방출"
+      }
+    ]
+  },
+  {
+    "name": "검은 추적자",
+    "image_name": "검은_추적자.webp",
+    "options": [
+      {
+        "basic": "힘",
+        "additional": "궁극기 획득 효율 증가",
+        "skill": "방출"
+      }
+    ]
+  },
+  {
+    "name": "폭발 유닛",
+    "image_name": "폭발_유닛.webp",
+    "options": [
+      {
+        "basic": "주요 능력치 증가",
+        "additional": "오리지늄 아츠 증가",
+        "skill": "방출"
+      }
+    ]
+  },
+  {
+    "name": "린수를 찾아서",
+    "image_name": "린수를_찾아서.webp",
+    "signature_weapon": "알레쉬.webp",
+    "options": [
+      {
+        "basic": "힘",
+        "additional": "냉기 피해 증가",
+        "skill": "억제"
+      }
+    ]
+  },
+  {
+    "name": "작품 침식 흔적",
+    "image_name": "작품_침식_흔적.webp",
+    "options": [
+      {
+        "basic": "의지",
+        "additional": "자연 피해 증가",
+        "skill": "억제"
+      }
+    ]
+  },
+  {
+    "name": "중심력",
+    "image_name": "중심력.webp",
+    "signature_weapon": "아비웨나.webp",
+    "options": [
+      {
+        "basic": "의지",
+        "additional": "전기 피해 증가",
+        "skill": "억제"
+      }
+    ]
+  },
+  {
+    "name": "모범",
+    "image_name": "모범.webp",
+    "options": [
+      {
+        "basic": "주요 능력치 증가",
+        "additional": "공격력 증가",
+        "skill": "억제"
+      }
+    ]
+  },
+  {
+    "name": "JET",
+    "image_name": "JET.webp",
+    "options": [
+      {
+        "basic": "주요 능력치 증가",
+        "additional": "공격력 증가",
+        "skill": "억제"
+      }
+    ]
+  },
+  {
+    "name": "산의 지배자",
+    "image_name": "산의_지배자.webp",
+    "signature_weapon": "여풍.webp",
+    "options": [
+      {
+        "basic": "민첩",
+        "additional": "물리 피해 증가",
+        "skill": "효율"
+      }
+    ]
+  },
+  {
+    "name": "obj 헤비버든",
+    "image_name": "obj_헤비버든.webp",
+    "signature_weapon": "카치르.webp",
+    "options": [
+      {
+        "basic": "힘",
+        "additional": "생명력 증가",
+        "skill": "효율"
+      }
+    ]
+  },
+  {
+    "name": "과거의 일품",
+    "image_name": "과거의_일품.webp",
+    "options": [
+      {
+        "basic": "의지",
+        "additional": "생명력 증가",
+        "skill": "효율"
+      }
+    ]
+  },
+  {
+    "name": "용사",
+    "image_name": "용사.webp",
+    "options": [
+      {
+        "basic": "민첩",
+        "additional": "물리 피해 증가",
+        "skill": "기예"
+      }
+    ]
+  },
+  {
+    "name": "강철의 여운",
+    "image_name": "강철의_여운.webp",
+    "options": [
+      {
+        "basic": "민첩",
+        "additional": "물리 피해 증가",
+        "skill": "기예"
+      }
+    ]
+  },
+  {
+    "name": "예술의 폭군",
+    "image_name": "예술의_폭군.webp",
+    "signature_weapon": "이본.webp",
+    "options": [
+      {
+        "basic": "지능",
+        "additional": "치명타 확률 증가",
+        "skill": "골절"
+      }
+    ]
+  },
+  {
+    "name": "이성적인 작별",
+    "image_name": "이성적인_작별.webp",
+    "signature_weapon": "울프가드.webp",
+    "options": [
+      {
+        "basic": "힘",
+        "additional": "열기 피해 증가",
+        "skill": "추격"
+      }
+    ]
+  },
+  {
+    "name": "사명의 길",
+    "image_name": "사명의_길.webp",
+    "signature_weapon": "질베르타.webp",
+    "options": [
+      {
+        "basic": "의지",
+        "additional": "궁극기 획득 효율 증가",
+        "skill": "추격"
+      }
+    ]
+  },
+  {
+    "name": "obj 아츠 아이덴티티",
+    "image_name": "obj_아츠_아이덴티티.webp",
+    "signature_weapon": "안탈.webp",
+    "options": [
+      {
+        "basic": "지능",
+        "additional": "오리지늄 아츠 증가",
+        "skill": "추격"
+      }
+    ]
+  },
+  {
+    "name": "무가내하",
+    "image_name": "무가내하.webp",
+    "options": [
+      {
+        "basic": "의지",
+        "additional": "궁극기 획득 효율 증가",
+        "skill": "사기"
+      }
+    ]
+  },
+  {
+    "name": "불사의 성주",
+    "image_name": "불사의_성주.webp",
+    "options": [
+      {
+        "basic": "지능",
+        "additional": "궁극기 획득 효율 증가",
+        "skill": "사기"
+      }
+    ]
+  },
+  {
+    "name": "반항",
+    "image_name": "반항.webp",
+    "options": [
+      {
+        "basic": "민첩",
+        "additional": "공격력 증가",
+        "skill": "방출"
+      }
+    ]
+  },
+  {
+    "name": "찬란했던 기억",
+    "image_name": "찬란했던_기억.webp",
+    "options": [
+      {
+        "basic": "민첩",
+        "additional": "치명타 확률 증가",
+        "skill": "어둠"
+      }
+    ]
+  },
+  {
+    "name": "향수",
+    "image_name": "향수.webp",
+    "options": [
+      {
+        "basic": "민첩",
+        "additional": "냉기 피해 증가",
+        "skill": "억제"
+      }
+    ]
+  }
+]
