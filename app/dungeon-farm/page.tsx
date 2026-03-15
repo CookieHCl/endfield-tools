@@ -86,6 +86,15 @@ export default function DungeonFarmPage() {
     5: true,
     6: true,
   });
+  const [priorityFilter, setPriorityFilter] = useState<{
+    4: boolean;
+    5: boolean;
+    6: boolean;
+  }>({
+    4: false,
+    5: false,
+    6: true,
+  });
 
   const allCombos = useMemo<FarmCombo[]>(() => {
     if (!GLOBAL_BASICS || GLOBAL_BASICS.length < 3) return [];
@@ -173,6 +182,14 @@ export default function DungeonFarmPage() {
     return result;
   }, [ownedNames]);
 
+  const activePriorities = useMemo(
+    () =>
+      (Object.entries(priorityFilter) as [string, boolean][])
+        .filter(([, active]) => active)
+        .map(([star]) => Number(star)),
+    [priorityFilter],
+  );
+
   const filteredCombos = useMemo<FarmCombo[]>(() => {
     const activeStars = (Object.entries(starFilter) as [string, boolean][])
       .filter(([, active]) => active)
@@ -197,8 +214,19 @@ export default function DungeonFarmPage() {
       })
       .filter((c): c is FarmCombo => c !== null);
 
-    // 정렬: 미보유 무기 수 -> 보유 무기 수 -> 던전 id
+    // 정렬: 우선순위 미보유 무기 수 -> 미보유 무기 수 -> 보유 무기 수 -> 던전 id
     result.sort((a, b) => {
+      const aPriority = a.unownedWeapons.filter((w) =>
+        activePriorities.includes(w.star),
+      ).length;
+      const bPriority = b.unownedWeapons.filter((w) =>
+        activePriorities.includes(w.star),
+      ).length;
+
+      if (aPriority !== bPriority) {
+        return bPriority - aPriority;
+      }
+
       const aUnowned = a.unownedWeapons.length;
       const bUnowned = b.unownedWeapons.length;
 
@@ -217,7 +245,7 @@ export default function DungeonFarmPage() {
     });
 
     return result;
-  }, [allCombos, starFilter, showOwned]);
+  }, [allCombos, starFilter, showOwned, activePriorities]);
 
   const {
     farmableBasics,
@@ -275,7 +303,18 @@ export default function DungeonFarmPage() {
   }, []);
 
   const toggleStarFilter = (star: 4 | 5 | 6) => {
-    setStarFilter((prev) => ({
+    setStarFilter((prev) => {
+      const next = { ...prev, [star]: !prev[star] };
+      if (!next[star]) {
+        setPriorityFilter((p) => ({ ...p, [star]: false }));
+      }
+      return next;
+    });
+  };
+
+  const togglePriorityFilter = (star: 4 | 5 | 6) => {
+    if (!starFilter[star]) return;
+    setPriorityFilter((prev) => ({
       ...prev,
       [star]: !prev[star],
     }));
@@ -331,18 +370,58 @@ export default function DungeonFarmPage() {
               })}
             </div>
 
-            <button
-              type="button"
-              onClick={() => setShowOwned((prev) => !prev)}
-              className={
-                "rounded-full border px-3 py-1 text-[11px] font-medium transition-colors " +
-                (showOwned
-                  ? "border-emerald-500 bg-emerald-500 text-white"
-                  : "bg-white border-zinc-200 text-zinc-500 hover:bg-zinc-50")
-              }
-            >
-              보유 무기 표시
-            </button>
+            <div className="flex items-center gap-4">
+              <button
+                type="button"
+                onClick={() => setShowOwned((prev) => !prev)}
+                className={
+                  "rounded-full border px-3 py-1 text-[11px] font-medium transition-colors " +
+                  (showOwned
+                    ? "border-emerald-500 bg-emerald-500 text-white"
+                    : "bg-white border-zinc-200 text-zinc-500 hover:bg-zinc-50")
+                }
+              >
+                보유 무기 표시
+              </button>
+
+              <div className="h-4 w-px bg-zinc-300" />
+
+              <div className="flex items-center gap-2">
+                <span className="mr-2 text-[11px] font-semibold text-zinc-600">
+                  파밍 우선
+                </span>
+                {[4, 5, 6].map((star) => {
+                  const active = priorityFilter[star as 4 | 5 | 6];
+                  const disabled = !starFilter[star as 4 | 5 | 6];
+                  const color = STAR_COLORS[star] ?? "#e5e5e5";
+                  return (
+                    <button
+                      key={star}
+                      type="button"
+                      disabled={disabled}
+                      onClick={() => togglePriorityFilter(star as 4 | 5 | 6)}
+                      className={
+                        "rounded-full px-3 py-1 text-[11px] font-medium transition-colors " +
+                        (disabled
+                          ? "cursor-not-allowed border-zinc-200 bg-zinc-100 text-zinc-400 opacity-50"
+                          : active
+                            ? "text-zinc-900"
+                            : "bg-white text-zinc-500 hover:bg-zinc-50")
+                      }
+                      style={
+                        !disabled && active
+                          ? { backgroundColor: color, borderColor: color }
+                          : !disabled
+                            ? { borderColor: color }
+                            : {}
+                      }
+                    >
+                      {star}성 우선
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
           </div>
         </header>
 
