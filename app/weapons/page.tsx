@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useMemo, useState } from "react";
 import { ALL_WEAPONS } from "../../data/db";
 import { useOwnedWeapons } from "../owned-weapons-provider";
+import { imgPath } from "@/lib/utils";
 
 const STAR_COLORS: Record<number, string> = {
   4: "#9451f8",
@@ -212,7 +213,7 @@ export default function WeaponsPage() {
                         <div className="flex items-center gap-3">
                           <div className="relative h-12 w-12 overflow-hidden rounded-md bg-zinc-100">
                             <Image
-                              src={`${process.env.PAGES_BASE_PATH || ''}/weapon_images/${weapon.image_name}`}
+                              src={imgPath(`/weapon_images/${weapon.image_name}`)}
                               alt={weapon.name}
                               fill
                               sizes="48px"
@@ -247,7 +248,7 @@ export default function WeaponsPage() {
                           <div className="flex items-center gap-2">
                             <div className="relative h-10 w-10 overflow-hidden rounded-md bg-zinc-100">
                               <Image
-                                src={`${process.env.PAGES_BASE_PATH || ''}/characters/${weapon.signature_weapon}`}
+                                src={imgPath(`/characters/${weapon.signature_weapon}`)}
                                 alt={`${weapon.name} 전무`}
                                 fill
                                 sizes="40px"

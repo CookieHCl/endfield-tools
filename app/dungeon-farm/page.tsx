@@ -5,6 +5,7 @@ import { useMemo, useState } from "react";
 import { ALL_WEAPONS, DUNGEONS, GLOBAL_BASICS } from "../../data/db";
 import type { Dungeon, Weapon, WeaponOption } from "../../lib/types";
 import { useOwnedWeapons } from "../owned-weapons-provider";
+import { imgPath } from "@/lib/utils";
 
 type FarmType = "additional" | "skill";
 
@@ -567,7 +568,7 @@ export default function DungeonFarmPage() {
                       <div className="flex items-center gap-3">
                         <div className="relative h-14 w-24 overflow-hidden rounded-md bg-zinc-100">
                           <Image
-                            src={`${process.env.PAGES_BASE_PATH || ''}/dungeon_images/${combo.dungeon.image_name}`}
+                            src={imgPath(`/dungeon_images/${combo.dungeon.image_name}`)}
                             alt={combo.dungeon.name}
                             fill
                             sizes="96px"
