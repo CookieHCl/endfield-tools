@@ -79,7 +79,7 @@ function optionMatchesSkillFarm(
 }
 
 export default function DungeonFarmPage() {
-  const { ownedNames } = useOwnedWeapons();
+  const { ownedNames, setOwnedNames } = useOwnedWeapons();
   const [showOwned, setShowOwned] = useState(true);
   const [starFilter, setStarFilter] = useState<{ 4: boolean; 5: boolean; 6: boolean }>({
     4: false,
@@ -95,6 +95,40 @@ export default function DungeonFarmPage() {
     5: false,
     6: true,
   });
+
+  const handleExportJson = () => {
+    try {
+      const data = JSON.stringify(ownedNames, null, 2);
+      const blob = new Blob([data], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "endfield-weapons-owned.json";
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    } catch {
+      // ignore
+    }
+  };
+
+  const handleImportJson = (file: File | null) => {
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = () => {
+      try {
+        const parsed = JSON.parse(String(reader.result));
+        if (Array.isArray(parsed)) {
+          const names = parsed.filter((v) => typeof v === "string");
+          setOwnedNames(names);
+        }
+      } catch {
+        // ignore parse errors
+      }
+    };
+    reader.readAsText(file);
+  };
 
   const allCombos = useMemo<FarmCombo[]>(() => {
     if (!GLOBAL_BASICS || GLOBAL_BASICS.length < 3) return [];
@@ -324,19 +358,41 @@ export default function DungeonFarmPage() {
     <div className="min-h-screen bg-zinc-50 py-10 px-4 text-zinc-900">
       <main className="mx-auto flex max-w-5xl flex-col gap-6">
         <header className="flex flex-col gap-3">
-          <div className="flex flex-col gap-2">
-            <h1 className="text-2xl font-bold">기질 파밍 장소</h1>
-            <p className="text-sm text-zinc-600">
-              각 던전에서 선택 가능한 기본 기질 3개와 추가/스킬 조합을 모두
-              계산해서, 어떤 무기들의 기질을 파밍할 수 있는지 정리한 페이지입니다.
-            </p>
-            <p className="text-xs text-zinc-500">
-              위에서부터{" "}
-              <span className="font-semibold">
-                보유하지 않은 무기를 가장 많이 파밍할 수 있는 조합
-              </span>
-              순으로 정렬되어 있습니다.
-            </p>
+          <div className="flex items-center justify-between gap-3">
+            <div className="flex flex-col gap-2">
+              <h1 className="text-2xl font-bold">기질 파밍 장소</h1>
+              <p className="text-sm text-zinc-600">
+                각 던전에서 선택 가능한 기본 기질 3개와 추가/스킬 조합을 모두
+                계산해서, 어떤 무기들의 기질을 파밍할 수 있는지 정리한 페이지입니다.
+              </p>
+              <p className="text-xs text-zinc-500">
+                위에서부터{" "}
+                <span className="font-semibold">
+                  보유하지 않은 무기를 가장 많이 파밍할 수 있는 조합
+                </span>
+                순으로 정렬되어 있습니다.
+              </p>
+            </div>
+            <div className="flex flex-col items-end gap-1 text-[11px]">
+              <div className="flex gap-2">
+                <button
+                  type="button"
+                  onClick={handleExportJson}
+                  className="whitespace-nowrap rounded-full border border-zinc-300 bg-white px-3 py-1 font-medium text-zinc-700 transition-colors hover:bg-zinc-50"
+                >
+                  JSON 내보내기
+                </button>
+                <label className="whitespace-nowrap inline-flex cursor-pointer items-center rounded-full border border-zinc-300 bg-white px-3 py-1 font-medium text-zinc-700 transition-colors hover:bg-zinc-50">
+                  JSON 불러오기
+                  <input
+                    type="file"
+                    accept="application/json"
+                    className="hidden"
+                    onChange={(e) => handleImportJson(e.target.files?.[0] ?? null)}
+                  />
+                </label>
+              </div>
+            </div>
           </div>
 
           <div className="flex items-center justify-between rounded-lg border border-zinc-200 bg-white px-4 py-2 text-xs">
