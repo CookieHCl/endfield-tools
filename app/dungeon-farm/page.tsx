@@ -567,7 +567,7 @@ export default function DungeonFarmPage() {
                       <div className="flex items-center gap-3">
                         <div className="relative h-14 w-24 overflow-hidden rounded-md bg-zinc-100">
                           <Image
-                            src={`/dungeon_images/${combo.dungeon.image_name}`}
+                            src={`${process.env.PAGES_BASE_PATH || ''}/dungeon_images/${combo.dungeon.image_name}`}
                             alt={combo.dungeon.name}
                             fill
                             sizes="96px"
