@@ -1,10 +1,9 @@
-"use client";
+ "use client";
 
 import Image from "next/image";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { ALL_WEAPONS } from "../../data/db";
-
-const STORAGE_KEY = "ownedWeapons";
+import { useOwnedWeapons } from "../owned-weapons-provider";
 
 const STAR_COLORS: Record<number, string> = {
   4: "#9451f8",
@@ -13,7 +12,7 @@ const STAR_COLORS: Record<number, string> = {
 };
 
 export default function WeaponsPage() {
-  const [ownedNames, setOwnedNames] = useState<string[]>([]);
+  const { ownedNames, setOwnedNames, toggleOwned } = useOwnedWeapons();
   const [starFilter, setStarFilter] = useState<{ 4: boolean; 5: boolean; 6: boolean }>({
     4: false,
     5: true,
@@ -53,36 +52,6 @@ export default function WeaponsPage() {
       }
     };
     reader.readAsText(file);
-  };
-
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-    try {
-      const stored = window.localStorage.getItem(STORAGE_KEY);
-      if (stored) {
-        const parsed = JSON.parse(stored);
-        if (Array.isArray(parsed)) {
-          setOwnedNames(parsed.filter((v) => typeof v === "string"));
-        }
-      }
-    } catch {
-      // ignore parse errors
-    }
-  }, []);
-
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-    try {
-      window.localStorage.setItem(STORAGE_KEY, JSON.stringify(ownedNames));
-    } catch {
-      // ignore storage errors
-    }
-  }, [ownedNames]);
-
-  const toggleOwned = (name: string) => {
-    setOwnedNames((prev) =>
-      prev.includes(name) ? prev.filter((n) => n !== name) : [...prev, name],
-    );
   };
 
   const toggleStarFilter = (star: 4 | 5 | 6) => {
