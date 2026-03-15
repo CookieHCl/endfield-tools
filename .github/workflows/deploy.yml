@@ -59,6 +59,8 @@ jobs:
         run: npm ci
 
       - name: Build with Next.js
+        env:
+          NEXT_PUBLIC_BASE_PATH: /endfield-tools
         run: npm run build
 
       - name: Upload artifact
