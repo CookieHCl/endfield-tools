@@ -4,7 +4,7 @@
     "star": 4,
     "image_name": "긴급_대책.webp",
     "options": {
-      "basic": "민첩",
+      "basic": "민첩 증가",
       "additional": "물리 피해 증가",
       "skill": "억제"
     }
@@ -14,7 +14,7 @@
     "star": 4,
     "image_name": "거대한_격랑.webp",
     "options": {
-      "basic": "지능",
+      "basic": "지능 증가",
       "additional": "공격력 증가",
       "skill": "추격"
     }
@@ -24,7 +24,7 @@
     "star": 4,
     "image_name": "공업_0.1.webp",
     "options": {
-      "basic": "힘",
+      "basic": "힘 증가",
       "additional": "공격력 증가",
       "skill": "억제"
     }
@@ -34,7 +34,7 @@
     "star": 4,
     "image_name": "불꽃의_시험.webp",
     "options": {
-      "basic": "의지",
+      "basic": "의지 증가",
       "additional": "생명력 증가",
       "skill": "분쇄"
     }
@@ -44,7 +44,7 @@
     "star": 4,
     "image_name": "아겔로스_사냥꾼.webp",
     "options": {
-      "basic": "의지",
+      "basic": "의지 증가",
       "additional": "아츠 피해 증가",
       "skill": "억제"
     }
@@ -54,7 +54,7 @@
     "star": 4,
     "image_name": "개척자의_이정표.webp",
     "options": {
-      "basic": "민첩",
+      "basic": "민첩 증가",
       "additional": "공격력 증가",
       "skill": "사기"
     }
@@ -64,7 +64,7 @@
     "star": 4,
     "image_name": "끝없는_여정.webp",
     "options": {
-      "basic": "힘",
+      "basic": "힘 증가",
       "additional": "아츠 피해 증가",
       "skill": "추격"
     }
@@ -74,7 +74,7 @@
     "star": 4,
     "image_name": "하울링_가드.webp",
     "options": {
-      "basic": "지능",
+      "basic": "지능 증가",
       "additional": "공격력 증가",
       "skill": "억제"
     }
@@ -84,7 +84,7 @@
     "star": 4,
     "image_name": "섬광_번개.webp",
     "options": {
-      "basic": "의지",
+      "basic": "의지 증가",
       "additional": "공격력 증가",
       "skill": "억제"
     }
@@ -94,7 +94,7 @@
     "star": 4,
     "image_name": "오토_하이퍼노바.webp",
     "options": {
-      "basic": "지능",
+      "basic": "지능 증가",
       "additional": "아츠 피해 증가",
       "skill": "사기"
     }

@@ -4,7 +4,7 @@
     "star": 6,
     "image_name": "분쇄의_군주.webp",
     "options": {
-      "basic": "힘",
+      "basic": "힘 증가",
       "additional": "치명타 확률 증가",
       "skill": "분쇄"
     }
@@ -25,7 +25,7 @@
     "image_name": "장대한_염원.webp",
     "signature_weapon": "관리자.webp",
     "options": {
-      "basic": "민첩",
+      "basic": "민첩 증가",
       "additional": "공격력 증가",
       "skill": "고통"
     }
@@ -36,7 +36,7 @@
     "image_name": "바다와_별의_꿈.webp",
     "signature_weapon": "아델리아.webp",
     "options": {
-      "basic": "지능",
+      "basic": "지능 증가",
       "additional": "치유 효율 증가",
       "skill": "고통"
     }
@@ -46,7 +46,7 @@
     "star": 6,
     "image_name": "암흑의_횃불.webp",
     "options": {
-      "basic": "지능",
+      "basic": "지능 증가",
       "additional": "열기 피해 증가",
       "skill": "고통"
     }
@@ -56,7 +56,7 @@
     "star": 6,
     "image_name": "항로의_개척자.webp",
     "options": {
-      "basic": "지능",
+      "basic": "지능 증가",
       "additional": "냉기 피해 증가",
       "skill": "고통"
     }
@@ -97,7 +97,7 @@
     "image_name": "끝없는_방랑.webp",
     "signature_weapon": "포그라니치니크.webp",
     "options": {
-      "basic": "의지",
+      "basic": "의지 증가",
       "additional": "공격력 증가",
       "skill": "흐름"
     }
@@ -107,7 +107,7 @@
     "star": 6,
     "image_name": "테르밋_커터.webp",
     "options": {
-      "basic": "의지",
+      "basic": "의지 증가",
       "additional": "공격력 증가",
       "skill": "흐름"
     }
@@ -118,7 +118,7 @@
     "image_name": "용조의_불꽃.webp",
     "signature_weapon": "레바테인.webp",
     "options": {
-      "basic": "지능",
+      "basic": "지능 증가",
       "additional": "공격력 증가",
       "skill": "어둠"
     }
@@ -128,7 +128,7 @@
     "star": 6,
     "image_name": "망각.webp",
     "options": {
-      "basic": "지능",
+      "basic": "지능 증가",
       "additional": "아츠 피해 증가",
       "skill": "어둠"
     }
@@ -149,7 +149,7 @@
     "image_name": "천둥의_흔적.webp",
     "signature_weapon": "엠버.webp",
     "options": {
-      "basic": "힘",
+      "basic": "힘 증가",
       "additional": "생명력 증가",
       "skill": "의료"
     }
@@ -159,7 +159,7 @@
     "star": 6,
     "image_name": "기사도_정신.webp",
     "options": {
-      "basic": "의지",
+      "basic": "의지 증가",
       "additional": "생명력 증가",
       "skill": "의료"
     }
@@ -170,7 +170,7 @@
     "image_name": "헤라펜거.webp",
     "signature_weapon": "라스트_라이트.webp",
     "options": {
-      "basic": "힘",
+      "basic": "힘 증가",
       "additional": "공격력 증가",
       "skill": "방출"
     }
@@ -190,7 +190,7 @@
     "star": 6,
     "image_name": "작품_침식_흔적.webp",
     "options": {
-      "basic": "의지",
+      "basic": "의지 증가",
       "additional": "자연 피해 증가",
       "skill": "억제"
     }
@@ -221,7 +221,7 @@
     "image_name": "산의_지배자.webp",
     "signature_weapon": "여풍.webp",
     "options": {
-      "basic": "민첩",
+      "basic": "민첩 증가",
       "additional": "물리 피해 증가",
       "skill": "효율"
     }
@@ -231,7 +231,7 @@
     "star": 6,
     "image_name": "과거의_일품.webp",
     "options": {
-      "basic": "의지",
+      "basic": "의지 증가",
       "additional": "생명력 증가",
       "skill": "효율"
     }
@@ -241,7 +241,7 @@
     "star": 6,
     "image_name": "용사.webp",
     "options": {
-      "basic": "민첩",
+      "basic": "민첩 증가",
       "additional": "물리 피해 증가",
       "skill": "기예"
     }
@@ -252,7 +252,7 @@
     "image_name": "예술의_폭군.webp",
     "signature_weapon": "이본.webp",
     "options": {
-      "basic": "지능",
+      "basic": "지능 증가",
       "additional": "치명타 확률 증가",
       "skill": "골절"
     }
@@ -263,7 +263,7 @@
     "image_name": "사명의_길.webp",
     "signature_weapon": "질베르타.webp",
     "options": {
-      "basic": "의지",
+      "basic": "의지 증가",
       "additional": "궁극기 획득 효율 증가",
       "skill": "추격"
     }
@@ -274,7 +274,7 @@
     "image_name": "반항.webp",
     "signature_weapon": "탕탕.webp",
     "options": {
-      "basic": "민첩",
+      "basic": "민첩 증가",
       "additional": "공격력 증가",
       "skill": "방출"
     }
@@ -284,7 +284,7 @@
     "star": 6,
     "image_name": "찬란했던_기억.webp",
     "options": {
-      "basic": "민첩",
+      "basic": "민첩 증가",
       "additional": "치명타 확률 증가",
       "skill": "어둠"
     }
@@ -294,7 +294,7 @@
     "star": 6,
     "image_name": "향수.webp",
     "options": {
-      "basic": "민첩",
+      "basic": "민첩 증가",
       "additional": "냉기 피해 증가",
       "skill": "억제"
     }

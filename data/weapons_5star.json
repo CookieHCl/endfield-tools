@@ -5,7 +5,7 @@
     "image_name": "고대의_강줄기.webp",
     "signature_weapon": "판.webp",
     "options": {
-      "basic": "힘",
+      "basic": "힘 증가",
       "additional": "오리지늄 아츠 증가",
       "skill": "잔혹"
     }
@@ -15,7 +15,7 @@
     "star": 5,
     "image_name": "키메라의_정의.webp",
     "options": {
-      "basic": "힘",
+      "basic": "힘 증가",
       "additional": "궁극기 획득 효율 증가",
       "skill": "잔혹"
     }
@@ -26,7 +26,7 @@
     "image_name": "십이문.webp",
     "signature_weapon": "아크라이트.webp",
     "options": {
-      "basic": "민첩",
+      "basic": "민첩 증가",
       "additional": "공격력 증가",
       "skill": "고통"
     }
@@ -36,7 +36,7 @@
     "star": 5,
     "image_name": "작품_중생.webp",
     "options": {
-      "basic": "민첩",
+      "basic": "민첩 증가",
       "additional": "아츠 피해 증가",
       "skill": "고통"
     }
@@ -47,7 +47,7 @@
     "image_name": "obj_스파이크.webp",
     "signature_weapon": "에스텔라.webp",
     "options": {
-      "basic": "의지",
+      "basic": "의지 증가",
       "additional": "물리 피해 증가",
       "skill": "고통"
     }
@@ -58,7 +58,7 @@
     "image_name": "황무지의_방랑자.webp",
     "signature_weapon": "펠리카.webp",
     "options": {
-      "basic": "지능",
+      "basic": "지능 증가",
       "additional": "전기 피해 증가",
       "skill": "고통"
     }
@@ -69,7 +69,7 @@
     "image_name": "obj_엣지_오브_라이트.webp",
     "signature_weapon": "아케쿠리.webp",
     "options": {
-      "basic": "민첩",
+      "basic": "민첩 증가",
       "additional": "공격력 증가",
       "skill": "흐름"
     }
@@ -80,7 +80,7 @@
     "image_name": "숭배의_시선.webp",
     "signature_weapon": "진천우.webp",
     "options": {
-      "basic": "민첩",
+      "basic": "민첩 증가",
       "additional": "물리 피해 증가",
       "skill": "어둠"
     }
@@ -90,7 +90,7 @@
     "star": 5,
     "image_name": "망자의_노래.webp",
     "options": {
-      "basic": "지능",
+      "basic": "지능 증가",
       "additional": "공격력 증가",
       "skill": "어둠"
     }
@@ -101,7 +101,7 @@
     "image_name": "최후의_메아리.webp",
     "signature_weapon": "스노우샤인.webp",
     "options": {
-      "basic": "힘",
+      "basic": "힘 증가",
       "additional": "생명력 증가",
       "skill": "의료"
     }
@@ -112,7 +112,7 @@
     "image_name": "선교의_자유.webp",
     "signature_weapon": "자이히.webp",
     "options": {
-      "basic": "의지",
+      "basic": "의지 증가",
       "additional": "치유 효율 증가",
       "skill": "의료"
     }
@@ -123,7 +123,7 @@
     "image_name": "obj벨로시투스.webp",
     "signature_weapon": "플루라이트.webp",
     "options": {
-      "basic": "민첩",
+      "basic": "민첩 증가",
       "additional": "궁극기 획득 효율 증가",
       "skill": "방출"
     }
@@ -133,7 +133,7 @@
     "star": 5,
     "image_name": "검은_추적자.webp",
     "options": {
-      "basic": "힘",
+      "basic": "힘 증가",
       "additional": "궁극기 획득 효율 증가",
       "skill": "방출"
     }
@@ -144,7 +144,7 @@
     "image_name": "린수를_찾아서.webp",
     "signature_weapon": "알레쉬.webp",
     "options": {
-      "basic": "힘",
+      "basic": "힘 증가",
       "additional": "냉기 피해 증가",
       "skill": "억제"
     }
@@ -155,7 +155,7 @@
     "image_name": "중심력.webp",
     "signature_weapon": "아비웨나.webp",
     "options": {
-      "basic": "의지",
+      "basic": "의지 증가",
       "additional": "전기 피해 증가",
       "skill": "억제"
     }
@@ -166,7 +166,7 @@
     "image_name": "obj_헤비버든.webp",
     "signature_weapon": "카치르.webp",
     "options": {
-      "basic": "힘",
+      "basic": "힘 증가",
       "additional": "생명력 증가",
       "skill": "효율"
     }
@@ -176,7 +176,7 @@
     "star": 5,
     "image_name": "강철의_여운.webp",
     "options": {
-      "basic": "민첩",
+      "basic": "민첩 증가",
       "additional": "물리 피해 증가",
       "skill": "기예"
     }
@@ -187,7 +187,7 @@
     "image_name": "이성적인_작별.webp",
     "signature_weapon": "울프가드.webp",
     "options": {
-      "basic": "힘",
+      "basic": "힘 증가",
       "additional": "열기 피해 증가",
       "skill": "추격"
     }
@@ -198,7 +198,7 @@
     "image_name": "obj_아츠_아이덴티티.webp",
     "signature_weapon": "안탈.webp",
     "options": {
-      "basic": "지능",
+      "basic": "지능 증가",
       "additional": "오리지늄 아츠 증가",
       "skill": "추격"
     }
@@ -208,7 +208,7 @@
     "star": 5,
     "image_name": "무가내하.webp",
     "options": {
-      "basic": "의지",
+      "basic": "의지 증가",
       "additional": "궁극기 획득 효율 증가",
       "skill": "사기"
     }
@@ -218,7 +218,7 @@
     "star": 5,
     "image_name": "불사의_성주.webp",
     "options": {
-      "basic": "지능",
+      "basic": "지능 증가",
       "additional": "궁극기 획득 효율 증가",
       "skill": "사기"
     }

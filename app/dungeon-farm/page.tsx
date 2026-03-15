@@ -17,6 +17,13 @@ type FarmCombo = {
   weapons: Weapon[];
 };
 
+type UnfarmableWeapon = {
+  weapon: Weapon;
+  basicFarmable: boolean;
+  additionalFarmable: boolean;
+  skillFarmable: boolean;
+};
+
 function combinations<T>(arr: T[], k: number): T[][] {
   const result: T[][] = [];
   const n = arr.length;
@@ -129,6 +136,61 @@ export default function DungeonFarmPage() {
     return result;
   }, []);
 
+  const {
+    farmableBasics,
+    farmableAdditionals,
+    farmableSkills,
+    unfarmableWeapons,
+  } = useMemo<{
+    farmableBasics: string[];
+    farmableAdditionals: string[];
+    farmableSkills: string[];
+    unfarmableWeapons: UnfarmableWeapon[];
+  }>(() => {
+    const basicsSet = new Set<string>();
+    const additionalSet = new Set<string>();
+    const skillSet = new Set<string>();
+
+    for (const b of GLOBAL_BASICS) {
+      basicsSet.add(b);
+    }
+    for (const dungeon of DUNGEONS) {
+      for (const add of dungeon.additional_attributes) {
+        additionalSet.add(add);
+      }
+      for (const sk of dungeon.skill_attributes) {
+        skillSet.add(sk);
+      }
+    }
+
+    const farmableBasics = Array.from(basicsSet).sort();
+    const farmableAdditionals = Array.from(additionalSet).sort();
+    const farmableSkills = Array.from(skillSet).sort();
+
+    const unfarmableWeapons: UnfarmableWeapon[] = ALL_WEAPONS.map((weapon) => {
+      const { basic, additional, skill } = weapon.options;
+      const basicFarmable = basicsSet.has(basic);
+      const additionalFarmable = additionalSet.has(additional);
+      const skillFarmable = skillSet.has(skill);
+      return {
+        weapon,
+        basicFarmable,
+        additionalFarmable,
+        skillFarmable,
+      };
+    }).filter(
+      (w) =>
+        !w.basicFarmable || !w.additionalFarmable || !w.skillFarmable,
+    );
+
+    return {
+      farmableBasics,
+      farmableAdditionals,
+      farmableSkills,
+      unfarmableWeapons,
+    };
+  }, []);
+
   return (
     <div className="min-h-screen bg-zinc-50 py-10 px-4 text-zinc-900">
       <main className="mx-auto flex max-w-5xl flex-col gap-6">
@@ -145,6 +207,66 @@ export default function DungeonFarmPage() {
           </p>
         </header>
 
+        {unfarmableWeapons.length > 0 && (
+          <section className="rounded-lg border border-red-300 bg-red-50 px-4 py-3 text-sm text-red-900">
+            <p className="font-semibold">
+              경고! 아래 무기들은 파밍할 수 없습니다
+            </p>
+            <div className="mt-2 space-y-1 text-xs">
+              <p>
+                <span className="font-semibold">가능한 기초 속성:</span>{" "}
+                {farmableBasics.join(" / ")}
+              </p>
+              <p>
+                <span className="font-semibold">가능한 추가 속성:</span>{" "}
+                {farmableAdditionals.join(" / ")}
+              </p>
+              <p>
+                <span className="font-semibold">가능한 스킬 속성:</span>{" "}
+                {farmableSkills.join(" / ")}
+              </p>
+            </div>
+            <div className="mt-3 space-y-1 text-xs">
+              {unfarmableWeapons.map(
+                ({
+                  weapon,
+                  basicFarmable,
+                  additionalFarmable,
+                  skillFarmable,
+                }) => {
+                  const { basic, additional, skill } = weapon.options;
+                  return (
+                    <p key={weapon.name}>
+                      {weapon.name}
+                      <span className="ml-1 text-[11px] text-red-800">
+                        ({weapon.star}성)
+                      </span>{" "}
+                      /{" "}
+                      {basicFarmable ? (
+                        <span>{basic}</span>
+                      ) : (
+                        <span className="font-bold">{basic}</span>
+                      )}{" "}
+                      /{" "}
+                      {additionalFarmable ? (
+                        <span>{additional}</span>
+                      ) : (
+                        <span className="font-bold">{additional}</span>
+                      )}{" "}
+                      /{" "}
+                      {skillFarmable ? (
+                        <span>{skill}</span>
+                      ) : (
+                        <span className="font-bold">{skill}</span>
+                      )}
+                    </p>
+                  );
+                },
+              )}
+            </div>
+          </section>
+        )}
+
         <section className="rounded-lg border border-zinc-200 bg-white shadow-sm">
           <div className="max-h-[75vh] overflow-auto">
             <table className="min-w-full border-collapse text-sm">
@@ -153,10 +275,7 @@ export default function DungeonFarmPage() {
                   <th className="w-60 border-b border-zinc-200 px-3 py-2 text-left">
                     던전
                   </th>
-                  <th className="w-56 border-b border-zinc-200 px-3 py-2 text-left">
-                    선택 basic 3개
-                  </th>
-                  <th className="w-40 border-b border-zinc-200 px-3 py-2 text-left">
+                  <th className="w-96 border-b border-zinc-200 px-3 py-2 text-left">
                     고정 옵션
                   </th>
                   <th className="w-32 border-b border-zinc-200 px-3 py-2 text-left">
@@ -191,23 +310,13 @@ export default function DungeonFarmPage() {
                           <span className="text-xs text-zinc-500">
                             {combo.dungeon.region}
                           </span>
-                          <span className="text-[11px] text-zinc-500">
-                            {combo.type === "additional"
-                              ? "추가 고정"
-                              : "스킬 고정"}
-                          </span>
                         </div>
                       </div>
                     </td>
                     <td className="px-3 py-3 text-xs text-zinc-700">
-                      {combo.basics.join(" / ")}
-                    </td>
-                    <td className="px-3 py-3 text-xs text-zinc-700">
-                      <span className="inline-flex items-center gap-1 rounded-full bg-emerald-50 px-2 py-0.5 text-[11px] font-medium text-emerald-800">
-                        <span>{combo.fixedLabel}</span>
-                        <span className="text-zinc-700">
-                          {combo.fixedAttribute}
-                        </span>
+                      <span>{combo.basics.join(" / ") + " / "}</span>
+                      <span className="font-bold">
+                        {combo.fixedAttribute}
                       </span>
                     </td>
                     <td className="px-3 py-3 text-xs font-semibold text-zinc-800">
