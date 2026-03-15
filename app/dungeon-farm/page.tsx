@@ -15,7 +15,8 @@ type FarmCombo = {
   basics: string[];
   fixedAttribute: string;
   fixedLabel: string;
-  weapons: Weapon[];
+  unownedWeapons: Weapon[];
+  ownedWeapons: Weapon[];
 };
 
 type UnfarmableWeapon = {
@@ -79,40 +80,31 @@ function optionMatchesSkillFarm(
 
 export default function DungeonFarmPage() {
   const { ownedNames } = useOwnedWeapons();
+  const [showOwned, setShowOwned] = useState(true);
   const [starFilter, setStarFilter] = useState<{ 4: boolean; 5: boolean; 6: boolean }>({
     4: false,
     5: true,
     6: true,
   });
 
-  const activeStars = useMemo(
-    () =>
-      (Object.entries(starFilter) as [string, boolean][])
-        .filter(([, active]) => active)
-        .map(([star]) => Number(star)),
-    [starFilter],
-  );
-
-  const baseWeapons = useMemo<Weapon[]>(() => {
-    const weapons = ALL_WEAPONS.filter((w) => activeStars.includes(w.star));
-
-    return weapons.sort((a, b) => {
-      if (b.star !== a.star) return b.star - a.star;
-      return a.name.localeCompare(b.name);
-    });
-  }, [activeStars]);
-
-  const combos = useMemo<FarmCombo[]>(() => {
+  const allCombos = useMemo<FarmCombo[]>(() => {
     if (!GLOBAL_BASICS || GLOBAL_BASICS.length < 3) return [];
 
     const basicsCombos = combinations(GLOBAL_BASICS, 3);
     const result: FarmCombo[] = [];
 
+    const sortWeapons = (weapons: Weapon[]) => {
+      return weapons.sort((a, b) => {
+        if (b.star !== a.star) return b.star - a.star;
+        return a.name.localeCompare(b.name);
+      });
+    };
+
     for (const dungeon of DUNGEONS) {
       // additional 고정 조합
       for (const basics of basicsCombos) {
         for (const addAttr of dungeon.additional_attributes) {
-          const weapons = baseWeapons.filter((weapon) =>
+          const matchingWeapons = ALL_WEAPONS.filter((weapon) =>
             optionMatchesAdditionalFarm(
               weapon.options,
               basics,
@@ -121,7 +113,14 @@ export default function DungeonFarmPage() {
             ),
           );
 
-          if (weapons.length === 0) continue;
+          if (matchingWeapons.length === 0) continue;
+
+          const unownedWeapons = sortWeapons(
+            matchingWeapons.filter((w) => !ownedNames.includes(w.name)),
+          );
+          const ownedWeapons = sortWeapons(
+            matchingWeapons.filter((w) => ownedNames.includes(w.name)),
+          );
 
           result.push({
             id: `${dungeon.id}-add-${basics.join(",")}-${addAttr}`,
@@ -130,7 +129,8 @@ export default function DungeonFarmPage() {
             basics,
             fixedAttribute: addAttr,
             fixedLabel: "추가",
-            weapons,
+            unownedWeapons,
+            ownedWeapons,
           });
         }
       }
@@ -138,7 +138,7 @@ export default function DungeonFarmPage() {
       // skill 고정 조합
       for (const basics of basicsCombos) {
         for (const skillAttr of dungeon.skill_attributes) {
-          const weapons = baseWeapons.filter((weapon) =>
+          const matchingWeapons = ALL_WEAPONS.filter((weapon) =>
             optionMatchesSkillFarm(
               weapon.options,
               basics,
@@ -147,7 +147,14 @@ export default function DungeonFarmPage() {
             ),
           );
 
-          if (weapons.length === 0) continue;
+          if (matchingWeapons.length === 0) continue;
+
+          const unownedWeapons = sortWeapons(
+            matchingWeapons.filter((w) => !ownedNames.includes(w.name)),
+          );
+          const ownedWeapons = sortWeapons(
+            matchingWeapons.filter((w) => ownedNames.includes(w.name)),
+          );
 
           result.push({
             id: `${dungeon.id}-skill-${basics.join(",")}-${skillAttr}`,
@@ -156,25 +163,51 @@ export default function DungeonFarmPage() {
             basics,
             fixedAttribute: skillAttr,
             fixedLabel: "스킬",
-            weapons,
+            unownedWeapons,
+            ownedWeapons,
           });
         }
       }
     }
 
+    return result;
+  }, [ownedNames]);
+
+  const filteredCombos = useMemo<FarmCombo[]>(() => {
+    const activeStars = (Object.entries(starFilter) as [string, boolean][])
+      .filter(([, active]) => active)
+      .map(([star]) => Number(star));
+
+    const result = allCombos
+      .map((combo) => {
+        const unowned = combo.unownedWeapons.filter((w) =>
+          activeStars.includes(w.star),
+        );
+        const owned = showOwned
+          ? combo.ownedWeapons.filter((w) => activeStars.includes(w.star))
+          : [];
+
+        if (unowned.length === 0 && owned.length === 0) return null;
+
+        return {
+          ...combo,
+          unownedWeapons: unowned,
+          ownedWeapons: owned,
+        };
+      })
+      .filter((c): c is FarmCombo => c !== null);
+
     // 정렬: 미보유 무기 수 -> 보유 무기 수 -> 던전 id
     result.sort((a, b) => {
-      const aUnowned = a.weapons.filter((w) => !ownedNames.includes(w.name))
-        .length;
-      const bUnowned = b.weapons.filter((w) => !ownedNames.includes(w.name))
-        .length;
+      const aUnowned = a.unownedWeapons.length;
+      const bUnowned = b.unownedWeapons.length;
 
       if (aUnowned !== bUnowned) {
         return bUnowned - aUnowned;
       }
 
-      const aOwned = a.weapons.length - aUnowned;
-      const bOwned = b.weapons.length - bUnowned;
+      const aOwned = a.ownedWeapons.length;
+      const bOwned = b.ownedWeapons.length;
 
       if (aOwned !== bOwned) {
         return bOwned - aOwned;
@@ -184,7 +217,7 @@ export default function DungeonFarmPage() {
     });
 
     return result;
-  }, [baseWeapons, ownedNames]);
+  }, [allCombos, starFilter, showOwned]);
 
   const {
     farmableBasics,
@@ -217,7 +250,7 @@ export default function DungeonFarmPage() {
     const farmableAdditionals = Array.from(additionalSet).sort();
     const farmableSkills = Array.from(skillSet).sort();
 
-    const unfarmableWeapons: UnfarmableWeapon[] = baseWeapons.map((weapon) => {
+    const unfarmableWeapons: UnfarmableWeapon[] = ALL_WEAPONS.map((weapon) => {
       const { basic, additional, skill } = weapon.options;
       const basicFarmable = basicsSet.has(basic);
       const additionalFarmable = additionalSet.has(additional);
@@ -239,7 +272,7 @@ export default function DungeonFarmPage() {
       farmableSkills,
       unfarmableWeapons,
     };
-  }, [baseWeapons]);
+  }, []);
 
   const toggleStarFilter = (star: 4 | 5 | 6) => {
     setStarFilter((prev) => ({
@@ -297,6 +330,19 @@ export default function DungeonFarmPage() {
                 );
               })}
             </div>
+
+            <button
+              type="button"
+              onClick={() => setShowOwned((prev) => !prev)}
+              className={
+                "rounded-full border px-3 py-1 text-[11px] font-medium transition-colors " +
+                (showOwned
+                  ? "border-emerald-500 bg-emerald-500 text-white"
+                  : "bg-white border-zinc-200 text-zinc-500 hover:bg-zinc-50")
+              }
+            >
+              보유 무기 표시
+            </button>
           </div>
         </header>
 
@@ -377,7 +423,7 @@ export default function DungeonFarmPage() {
                 </tr>
               </thead>
               <tbody>
-                {combos.map((combo) => (
+                {filteredCombos.map((combo) => (
                   <tr
                     key={combo.id}
                     className="border-b border-zinc-100 last:border-b-0 align-top"
@@ -411,70 +457,59 @@ export default function DungeonFarmPage() {
                     </td>
                     <td className="px-3 py-3 text-xs text-zinc-700">
                       <div className="flex flex-col gap-1">
-                        {(() => {
-                          const unowned = combo.weapons.filter(
-                            (w) => !ownedNames.includes(w.name),
-                          );
-                          const owned = combo.weapons.filter((w) =>
-                            ownedNames.includes(w.name),
-                          );
-
-                          return (
-                            <>
-                              {unowned.length > 0 && (
-                                <div className="flex flex-wrap gap-1">
-                                  {unowned.map((w) => {
-                                    const color =
-                                      STAR_COLORS[w.star] ?? "#e5e5e5";
-                                    return (
-                                      <span
-                                        key={`unowned-${w.name}`}
-                                        className="rounded-full border bg-white px-2 py-0.5 text-[11px]"
-                                        style={{
-                                          borderColor: color,
-                                          color,
-                                        }}
-                                      >
-                                        <span className="font-bold">
-                                          {w.name}
-                                        </span>
-                                        : {w.options.basic} /{" "}
-                                        {w.options.additional} /{" "}
-                                        {w.options.skill}
-                                      </span>
-                                    );
-                                  })}
-                                </div>
-                              )}
-                              {owned.length > 0 && (
-                                <div className="flex flex-wrap gap-1">
-                                  {owned.map((w) => {
-                                    const color =
-                                      STAR_COLORS[w.star] ?? "#e5e5e5";
-                                    return (
-                                      <span
-                                        key={`owned-${w.name}`}
-                                        className="rounded-full border px-2 py-0.5 text-[11px]"
-                                        style={{
-                                          backgroundColor: color,
-                                          borderColor: color,
-                                          color: "#ffffff",
-                                        }}
-                                      >
-                                        <span className="font-bold">
-                                          {w.name}
-                                        </span>
-                                        : {w.options.basic} /{" "}
-                                        {w.options.additional} /{" "}
-                                        {w.options.skill}
-                                      </span>
-                                    );
-                                  })}
-                                </div>
-                              )}
-                            </>
-                          );
-                        })()}
+                        <>
+                          {combo.unownedWeapons.length > 0 && (
+                            <div className="flex flex-wrap gap-1">
+                              {combo.unownedWeapons.map((w) => {
+                                const color =
+                                  STAR_COLORS[w.star] ?? "#e5e5e5";
+                                return (
+                                  <span
+                                    key={`unowned-${w.name}`}
+                                    className="rounded-full border bg-white px-2 py-0.5 text-[11px]"
+                                    style={{
+                                      borderColor: color,
+                                      color,
+                                    }}
+                                  >
+                                    <span className="font-bold">
+                                      {w.name}
+                                    </span>
+                                    : {w.options.basic} /{" "}
+                                    {w.options.additional} /{" "}
+                                    {w.options.skill}
+                                  </span>
+                                );
+                              })}
+                            </div>
+                          )}
+                          {combo.ownedWeapons.length > 0 && (
+                            <div className="flex flex-wrap gap-1">
+                              {combo.ownedWeapons.map((w) => {
+                                const color =
+                                  STAR_COLORS[w.star] ?? "#e5e5e5";
+                                return (
+                                  <span
+                                    key={`owned-${w.name}`}
+                                    className="rounded-full border px-2 py-0.5 text-[11px]"
+                                    style={{
+                                      backgroundColor: color,
+                                      borderColor: color,
+                                      color: "#ffffff",
+                                    }}
+                                  >
+                                    <span className="font-bold">
+                                      {w.name}
+                                    </span>
+                                    : {w.options.basic} /{" "}
+                                    {w.options.additional} /{" "}
+                                    {w.options.skill}
+                                  </span>
+                                );
+                              })}
+                            </div>
+                          )}
+                        </>
                       </div>
                     </td>
                   </tr>
