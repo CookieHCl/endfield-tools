@@ -2,8 +2,7 @@
 
 import Image from "next/image";
 import { useMemo } from "react";
-import dungeonData from "../../data/dungeon_data.json";
-import weaponsData from "../../data/weapons.json";
+import { ALL_WEAPONS, DUNGEONS, GLOBAL_BASICS } from "../../data/db";
 import type { Dungeon, Weapon, WeaponOption } from "../../lib/types";
 
 type FarmType = "additional" | "skill";
@@ -17,19 +16,6 @@ type FarmCombo = {
   fixedLabel: string;
   weapons: Weapon[];
 };
-
-const GLOBAL_BASICS: string[] = (dungeonData as any).find(
-  (d: any) => d.id === 0,
-)?.basic;
-
-const DUNGEONS: Dungeon[] = (dungeonData as any).filter(
-  (d: any) => d.id !== 0,
-);
-
-const ALL_WEAPONS: Weapon[] = (weaponsData as any).map((w: any) => ({
-  star: typeof w.star === "number" ? w.star : 0,
-  ...w,
-}));
 
 function combinations<T>(arr: T[], k: number): T[][] {
   const result: T[][] = [];

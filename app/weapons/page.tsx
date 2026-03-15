@@ -2,13 +2,7 @@
 
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import weaponsData from "../../data/weapons.json";
-import type { Weapon } from "../../lib/types";
-
-const ALL_WEAPONS: Weapon[] = (weaponsData as any).map((w: any) => ({
-  star: typeof w.star === "number" ? w.star : 0,
-  ...w,
-}));
+import { ALL_WEAPONS } from "../../data/db";
 
 const STORAGE_KEY = "ownedWeapons";
 
@@ -51,8 +45,7 @@ export default function WeaponsPage() {
         <header className="flex flex-col gap-2">
           <h1 className="text-2xl font-bold">보유 무기 관리</h1>
           <p className="text-sm text-zinc-600">
-            `data/weapons.json`에 있는 무기 목록입니다. 보유한 무기를 체크하면
-            브라우저에 로컬로 저장됩니다.
+            보유한 무기를 체크하면 브라우저에 로컬로 저장됩니다.
           </p>
           <p className="text-xs text-zinc-500">
             현재 보유: {ownedNames.length} / {ALL_WEAPONS.length}
