@@ -6,10 +6,10 @@ export type WeaponOption = {
 
 export type Weapon = {
   name: string;
+  star: number;
   image_name: string;
   signature_weapon?: string;
   options: WeaponOption;
-  star: number;
 };
 
 export type DungeonBase = {
