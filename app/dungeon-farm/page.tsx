@@ -396,6 +396,66 @@ export default function DungeonFarmPage() {
             </div>
           </div>
 
+          {unfarmableWeapons.length > 0 && (
+            <section className="rounded-lg border border-red-300 bg-red-50 px-4 py-3 text-sm text-red-900">
+              <p className="font-semibold">
+                경고! 아래 무기들은 파밍할 수 없습니다
+              </p>
+              <div className="mt-2 space-y-1 text-xs">
+                <p>
+                  <span className="font-semibold">가능한 기초 속성:</span>{" "}
+                  {farmableBasics.join(" / ")}
+                </p>
+                <p>
+                  <span className="font-semibold">가능한 추가 속성:</span>{" "}
+                  {farmableAdditionals.join(" / ")}
+                </p>
+                <p>
+                  <span className="font-semibold">가능한 스킬 속성:</span>{" "}
+                  {farmableSkills.join(" / ")}
+                </p>
+              </div>
+              <div className="mt-3 space-y-1 text-xs">
+                {unfarmableWeapons.map(
+                  ({
+                    weapon,
+                    basicFarmable,
+                    additionalFarmable,
+                    skillFarmable,
+                  }) => {
+                    const { basic, additional, skill } = weapon.options;
+                    return (
+                      <p key={weapon.name}>
+                        {weapon.name}
+                        <span className="ml-1 text-[11px] text-red-800">
+                          ({weapon.star}성)
+                        </span>{" "}
+                        /{" "}
+                        {basicFarmable ? (
+                          <span>{basic}</span>
+                        ) : (
+                          <span className="font-bold">{basic}</span>
+                        )}{" "}
+                        /{" "}
+                        {additionalFarmable ? (
+                          <span>{additional}</span>
+                        ) : (
+                          <span className="font-bold">{additional}</span>
+                        )}{" "}
+                        /{" "}
+                        {skillFarmable ? (
+                          <span>{skill}</span>
+                        ) : (
+                          <span className="font-bold">{skill}</span>
+                        )}
+                      </p>
+                    );
+                  },
+                )}
+              </div>
+            </section>
+          )}
+
           <div className="flex items-center justify-between rounded-lg border border-zinc-200 bg-white px-4 py-2 text-xs">
             <div className="flex items-center gap-2">
               <span className="mr-2 text-[11px] font-semibold text-zinc-600">
@@ -481,66 +541,6 @@ export default function DungeonFarmPage() {
             </div>
           </div>
         </header>
-
-        {unfarmableWeapons.length > 0 && (
-          <section className="rounded-lg border border-red-300 bg-red-50 px-4 py-3 text-sm text-red-900">
-            <p className="font-semibold">
-              경고! 아래 무기들은 파밍할 수 없습니다
-            </p>
-            <div className="mt-2 space-y-1 text-xs">
-              <p>
-                <span className="font-semibold">가능한 기초 속성:</span>{" "}
-                {farmableBasics.join(" / ")}
-              </p>
-              <p>
-                <span className="font-semibold">가능한 추가 속성:</span>{" "}
-                {farmableAdditionals.join(" / ")}
-              </p>
-              <p>
-                <span className="font-semibold">가능한 스킬 속성:</span>{" "}
-                {farmableSkills.join(" / ")}
-              </p>
-            </div>
-            <div className="mt-3 space-y-1 text-xs">
-              {unfarmableWeapons.map(
-                ({
-                  weapon,
-                  basicFarmable,
-                  additionalFarmable,
-                  skillFarmable,
-                }) => {
-                  const { basic, additional, skill } = weapon.options;
-                  return (
-                    <p key={weapon.name}>
-                      {weapon.name}
-                      <span className="ml-1 text-[11px] text-red-800">
-                        ({weapon.star}성)
-                      </span>{" "}
-                      /{" "}
-                      {basicFarmable ? (
-                        <span>{basic}</span>
-                      ) : (
-                        <span className="font-bold">{basic}</span>
-                      )}{" "}
-                      /{" "}
-                      {additionalFarmable ? (
-                        <span>{additional}</span>
-                      ) : (
-                        <span className="font-bold">{additional}</span>
-                      )}{" "}
-                      /{" "}
-                      {skillFarmable ? (
-                        <span>{skill}</span>
-                      ) : (
-                        <span className="font-bold">{skill}</span>
-                      )}
-                    </p>
-                  );
-                },
-              )}
-            </div>
-          </section>
-        )}
 
         <section className="rounded-lg border border-zinc-200 bg-white shadow-sm">
           <div className="max-h-[75vh] overflow-auto">
