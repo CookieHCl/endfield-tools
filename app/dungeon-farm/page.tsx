@@ -82,6 +82,7 @@ function optionMatchesSkillFarm(
 export default function DungeonFarmPage() {
   const { ownedNames, setOwnedNames } = useOwnedWeapons();
   const [showOwned, setShowOwned] = useState(true);
+  const [selectedWeapon, setSelectedWeapon] = useState<string | null>(null);
   const [starFilter, setStarFilter] = useState<{ 4: boolean; 5: boolean; 6: boolean }>({
     4: false,
     5: true,
@@ -225,6 +226,16 @@ export default function DungeonFarmPage() {
     [priorityFilter],
   );
 
+  const sortedWeapons = useMemo(() => {
+    return [...ALL_WEAPONS].sort((a, b) => {
+      const aOwned = ownedNames.includes(a.name);
+      const bOwned = ownedNames.includes(b.name);
+      if (aOwned !== bOwned) return aOwned ? 1 : -1;
+      if (b.star !== a.star) return b.star - a.star;
+      return a.name.localeCompare(b.name);
+    });
+  }, [ownedNames]);
+
   const filteredCombos = useMemo<FarmCombo[]>(() => {
     const activeStars = (Object.entries(starFilter) as [string, boolean][])
       .filter(([, active]) => active)
@@ -249,8 +260,22 @@ export default function DungeonFarmPage() {
       })
       .filter((c): c is FarmCombo => c !== null);
 
-    // 정렬: 우선순위 미보유 무기 수 -> 미보유 무기 수 -> 보유 무기 수 -> 던전 id
+    // 정렬: 선택 무기 포함 여부 -> 우선순위 미보유 무기 수 -> 미보유 무기 수 -> 보유 무기 수 -> 던전 id
     result.sort((a, b) => {
+      if (selectedWeapon) {
+        const aHas = [...a.unownedWeapons, ...a.ownedWeapons].some(
+          (w) => w.name === selectedWeapon,
+        )
+          ? 1
+          : 0;
+        const bHas = [...b.unownedWeapons, ...b.ownedWeapons].some(
+          (w) => w.name === selectedWeapon,
+        )
+          ? 1
+          : 0;
+        if (aHas !== bHas) return bHas - aHas;
+      }
+
       const aPriority = a.unownedWeapons.filter((w) =>
         activePriorities.includes(w.star),
       ).length;
@@ -280,7 +305,7 @@ export default function DungeonFarmPage() {
     });
 
     return result;
-  }, [allCombos, starFilter, showOwned, activePriorities]);
+  }, [allCombos, starFilter, showOwned, activePriorities, selectedWeapon]);
 
   const {
     farmableBasics,
@@ -541,6 +566,62 @@ export default function DungeonFarmPage() {
             </div>
           </div>
         </header>
+
+        <section className="rounded-lg border border-zinc-200 bg-white shadow-sm">
+          <div className="overflow-x-auto">
+            <div className="flex gap-2 px-3 py-3">
+              {sortedWeapons.map((weapon) => {
+                const isOwned = ownedNames.includes(weapon.name);
+                const isSelected = selectedWeapon === weapon.name;
+                const color = STAR_COLORS[weapon.star] ?? "#e5e5e5";
+                return (
+                  <button
+                    key={weapon.name}
+                    type="button"
+                    onClick={() =>
+                      setSelectedWeapon((prev) =>
+                        prev === weapon.name ? null : weapon.name,
+                      )
+                    }
+                    className={
+                      "flex w-24 shrink-0 flex-col items-center gap-1 rounded-xl border-2 px-2 py-2 text-center transition-all " +
+                      (isSelected ? "ring-2 ring-blue-500 ring-offset-1 " : "") +
+                      (isOwned ? "text-white" : "bg-white")
+                    }
+                    style={
+                      isOwned
+                        ? { backgroundColor: color, borderColor: color }
+                        : { borderColor: color, color }
+                    }
+                  >
+                    <div className="relative h-12 w-12 overflow-hidden rounded-lg bg-zinc-100">
+                      <Image
+                        src={imgPath(`/weapon_images/${weapon.image_name}`)}
+                        alt={weapon.name}
+                        fill
+                        sizes="48px"
+                        className="object-cover"
+                      />
+                    </div>
+                    <span className="w-full truncate text-[10px] font-semibold leading-tight">
+                      {weapon.name}
+                    </span>
+                    <div
+                      className={
+                        "w-full text-[9px] leading-tight " +
+                        (isOwned ? "text-white/80" : "text-zinc-500")
+                      }
+                    >
+                      <div>{weapon.options.basic}</div>
+                      <div>{weapon.options.additional}</div>
+                      <div>{weapon.options.skill}</div>
+                    </div>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        </section>
 
         <section className="rounded-lg border border-zinc-200 bg-white shadow-sm">
           <div className="max-h-[75vh] overflow-auto">
