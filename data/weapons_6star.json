@@ -304,12 +304,10 @@
     "star": 6,
     "image_name": "늑대의_혈흔.webp",
     "signature_weapon": "로시.webp",
-    "options": [
-      {
-        "basic": "민첩",
-        "additional": "치명타 확률 증가",
-        "skill": "골절"
-      }
-    ]
+    "options": {
+      "basic": "민첩",
+      "additional": "치명타 확률 증가",
+      "skill": "골절"
+    }
   }
 ]
