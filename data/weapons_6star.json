@@ -313,7 +313,8 @@
   {
     "name": "고독한 나룻배",
     "star": 6,
-    "image_name": "임시.webp",
+    "image_name": "고독한_나룻배.webp",
+    "signature_weapon": "장방이.webp",
     "options": {
       "basic": "의지 증가",
       "additional": "공격력 증가",
@@ -323,7 +324,7 @@
   {
     "name": "안개 속 불빛",
     "star": 6,
-    "image_name": "임시.webp",
+    "image_name": "안개_속_불빛.webp",
     "options": {
       "basic": "의지 증가",
       "additional": "전기 피해 증가",
