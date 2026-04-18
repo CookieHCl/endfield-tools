@@ -264,7 +264,7 @@
     "signature_weapon": "질베르타.webp",
     "options": {
       "basic": "의지 증가",
-      "additional": "궁극기 획득 효율 증가",
+      "additional": "궁극기 충전 효율 증가",
       "skill": "추격"
     }
   },

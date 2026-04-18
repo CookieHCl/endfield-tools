@@ -1,8 +1,8 @@
 [
   {
-    "name": "긴급 대책",
+    "name": "드러난 칼날",
     "star": 4,
-    "image_name": "긴급_대책.webp",
+    "image_name": "드러난_칼날.webp",
     "options": {
       "basic": "민첩 증가",
       "additional": "물리 피해 증가",

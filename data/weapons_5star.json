@@ -16,7 +16,7 @@
     "image_name": "키메라의_정의.webp",
     "options": {
       "basic": "힘 증가",
-      "additional": "궁극기 획득 효율 증가",
+      "additional": "궁극기 충전 효율 증가",
       "skill": "잔혹"
     }
   },
@@ -124,7 +124,7 @@
     "signature_weapon": "플루라이트.webp",
     "options": {
       "basic": "민첩 증가",
-      "additional": "궁극기 획득 효율 증가",
+      "additional": "궁극기 충전 효율 증가",
       "skill": "방출"
     }
   },
@@ -134,7 +134,7 @@
     "image_name": "검은_추적자.webp",
     "options": {
       "basic": "힘 증가",
-      "additional": "궁극기 획득 효율 증가",
+      "additional": "궁극기 충전 효율 증가",
       "skill": "방출"
     }
   },
@@ -209,7 +209,7 @@
     "image_name": "무가내하.webp",
     "options": {
       "basic": "의지 증가",
-      "additional": "궁극기 획득 효율 증가",
+      "additional": "궁극기 충전 효율 증가",
       "skill": "사기"
     }
   },
@@ -219,7 +219,7 @@
     "image_name": "불사의_성주.webp",
     "options": {
       "basic": "지능 증가",
-      "additional": "궁극기 획득 효율 증가",
+      "additional": "궁극기 충전 효율 증가",
       "skill": "사기"
     }
   }
