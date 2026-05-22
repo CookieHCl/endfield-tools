@@ -330,5 +330,47 @@
       "additional": "전기 피해 증가",
       "skill": "효율"
     }
+  },
+  {
+    "name": "적영",
+    "star": 6,
+    "image_name": "적영.webp",
+    "signature_weapon": "미브.webp",
+    "options": {
+      "basic": "힘 증가",
+      "additional": "공격력 증가",
+      "skill": "기예"
+    }
+  },
+  {
+    "name": "붉게 물든 가호",
+    "star": 6,
+    "image_name": "붉게_물든_가호.webp",
+    "signature_weapon": "카뮤.webp",
+    "options": {
+      "basic": "민첩 증가",
+      "additional": "열기 피해 증가",
+      "skill": "흐름"
+    }
+  },
+  {
+    "name": "환상통",
+    "star": 6,
+    "image_name": "환상통.webp",
+    "options": {
+      "basic": "힘 증가",
+      "additional": "오리지늄 아츠 증가",
+      "skill": "억제"
+    }
+  },
+  {
+    "name": "등불의 사명",
+    "star": 6,
+    "image_name": "등불의_사명.webp",
+    "options": {
+      "basic": "민첩 증가",
+      "additional": "궁극기 충전 효율 증가",
+      "skill": "효율"
+    }
   }
 ]
