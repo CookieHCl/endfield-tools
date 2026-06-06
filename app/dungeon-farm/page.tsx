@@ -27,6 +27,11 @@ type UnfarmableWeapon = {
   skillFarmable: boolean;
 };
 
+type DungeonFilter = {
+  region: string | null;
+  dungeonId: number | null;
+};
+
 const STAR_COLORS: Record<number, string> = {
   4: "#9451f8",
   5: "#ffba03",
@@ -83,6 +88,10 @@ export default function DungeonFarmPage() {
   const { ownedNames, setOwnedNames } = useOwnedWeapons();
   const [showOwned, setShowOwned] = useState(true);
   const [selectedWeapon, setSelectedWeapon] = useState<string | null>(null);
+  const [dungeonFilter, setDungeonFilter] = useState<DungeonFilter>({
+    region: null,
+    dungeonId: null,
+  });
   const [starFilter, setStarFilter] = useState<{ 4: boolean; 5: boolean; 6: boolean }>({
     4: false,
     5: true,
@@ -131,6 +140,21 @@ export default function DungeonFarmPage() {
     };
     reader.readAsText(file);
   };
+
+  const dungeonGroups = useMemo(() => {
+    const groups = new Map<string, Dungeon[]>();
+
+    for (const dungeon of DUNGEONS) {
+      const dungeons = groups.get(dungeon.region) ?? [];
+      dungeons.push(dungeon);
+      groups.set(dungeon.region, dungeons);
+    }
+
+    return Array.from(groups.entries()).map(([region, dungeons]) => ({
+      region,
+      dungeons: [...dungeons].sort((a, b) => a.id - b.id),
+    }));
+  }, []);
 
   const allCombos = useMemo<FarmCombo[]>(() => {
     if (!GLOBAL_BASICS || GLOBAL_BASICS.length < 3) return [];
@@ -242,6 +266,17 @@ export default function DungeonFarmPage() {
       .map(([star]) => Number(star));
 
     const result = allCombos
+      .filter((combo) => {
+        if (dungeonFilter.dungeonId !== null) {
+          return combo.dungeon.id === dungeonFilter.dungeonId;
+        }
+
+        if (dungeonFilter.region !== null) {
+          return combo.dungeon.region === dungeonFilter.region;
+        }
+
+        return true;
+      })
       .map((combo) => {
         const unowned = combo.unownedWeapons.filter((w) =>
           activeStars.includes(w.star),
@@ -305,7 +340,14 @@ export default function DungeonFarmPage() {
     });
 
     return result;
-  }, [allCombos, starFilter, showOwned, activePriorities, selectedWeapon]);
+  }, [
+    allCombos,
+    starFilter,
+    showOwned,
+    activePriorities,
+    selectedWeapon,
+    dungeonFilter,
+  ]);
 
   const {
     farmableBasics,
@@ -420,6 +462,79 @@ export default function DungeonFarmPage() {
               </div>
             </div>
           </div>
+
+          <section className="rounded-lg border border-zinc-200 bg-white px-4 py-3 text-xs">
+            <div className="flex flex-col gap-2 sm:flex-row sm:items-start">
+              <span className="shrink-0 pt-1.5 text-[11px] font-semibold text-zinc-600">
+                던전 필터
+              </span>
+
+              <div className="flex min-w-0 flex-1 flex-col gap-2">
+                {dungeonGroups.map(({ region, dungeons }) => {
+                  const regionActive =
+                    dungeonFilter.region === region &&
+                    dungeonFilter.dungeonId === null;
+
+                  return (
+                    <div
+                      key={region}
+                      className="grid grid-cols-[7rem_minmax(0,1fr)] items-center gap-2"
+                    >
+                      <button
+                        type="button"
+                        onClick={() =>
+                          setDungeonFilter((prev) =>
+                            prev.region === region && prev.dungeonId === null
+                              ? { region: null, dungeonId: null }
+                              : { region, dungeonId: null },
+                          )
+                        }
+                        className={
+                          "w-full rounded-full border px-3 py-1 text-[11px] font-semibold transition-colors " +
+                          (regionActive
+                            ? "border-blue-500 bg-blue-500 text-white"
+                            : "border-zinc-300 bg-zinc-50 text-zinc-700 hover:bg-zinc-100")
+                        }
+                      >
+                        {region} 전체
+                      </button>
+                      <div className="flex flex-wrap gap-2">
+                        {dungeons.map((dungeon) => {
+                          const dungeonActive =
+                            dungeonFilter.dungeonId === dungeon.id;
+
+                          return (
+                            <button
+                              key={dungeon.id}
+                              type="button"
+                              onClick={() =>
+                                setDungeonFilter((prev) =>
+                                  prev.dungeonId === dungeon.id
+                                    ? { region: null, dungeonId: null }
+                                    : {
+                                        region: dungeon.region,
+                                        dungeonId: dungeon.id,
+                                      },
+                                )
+                              }
+                              className={
+                                "rounded-full border px-3 py-1 text-[11px] font-medium transition-colors " +
+                                (dungeonActive
+                                  ? "border-blue-500 bg-blue-500 text-white"
+                                  : "border-zinc-200 bg-white text-zinc-600 hover:bg-zinc-50")
+                              }
+                            >
+                              {dungeon.name}
+                            </button>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          </section>
 
           {unfarmableWeapons.length > 0 && (
             <section className="rounded-lg border border-red-300 bg-red-50 px-4 py-3 text-sm text-red-900">
