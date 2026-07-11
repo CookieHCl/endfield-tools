@@ -87,7 +87,7 @@
     "image_name": "백야의_별.webp",
     "options": {
       "basic": "주요 능력치 증가",
-      "additional": "오리지늄 아츠 증가",
+      "additional": "오리지늄 아츠 강도 증가",
       "skill": "고통"
     }
   },
@@ -181,7 +181,7 @@
     "image_name": "폭발_유닛.webp",
     "options": {
       "basic": "주요 능력치 증가",
-      "additional": "오리지늄 아츠 증가",
+      "additional": "오리지늄 아츠 강도 증가",
       "skill": "방출"
     }
   },
@@ -359,7 +359,7 @@
     "image_name": "환상통.webp",
     "options": {
       "basic": "힘 증가",
-      "additional": "오리지늄 아츠 증가",
+      "additional": "오리지늄 아츠 강도 증가",
       "skill": "억제"
     }
   },
