@@ -372,5 +372,57 @@
       "additional": "궁극기 충전 효율 증가",
       "skill": "효율"
     }
+  },
+  {
+    "name": "42식·척결",
+    "star": 6,
+    "image_name": "42식_척결.webp",
+    "signature_weapon": "결.webp",
+    "options": {
+      "basic": "지능 증가",
+      "additional": "궁극기 충전 효율 증가",
+      "skill": "방출"
+    }
+  },
+  {
+    "name": "찬란한 밤의 데뷔",
+    "star": 6,
+    "image_name": "찬란한_밤의_데뷔.webp",
+    "signature_weapon": "리노.webp",
+    "options": {
+      "basic": "의지 증가",
+      "additional": "치유 효율 증가",
+      "skill": "의료"
+    }
+  },
+  {
+    "name": "공명점",
+    "star": 6,
+    "image_name": "공명점.webp",
+    "options": {
+      "basic": "지능 증가",
+      "additional": "궁극기 충전 효율 증가",
+      "skill": "효율"
+    }
+  },
+  {
+    "name": "전성기",
+    "star": 6,
+    "image_name": "전성기.webp",
+    "options": {
+      "basic": "의지 증가",
+      "additional": "치유 효율 증가",
+      "skill": "추격"
+    }
+  },
+  {
+    "name": "[조망]",
+    "star": 6,
+    "image_name": "조망.webp",
+    "options": {
+      "basic": "주요 능력치 증가",
+      "additional": "오리지늄 아츠 강도 증가",
+      "skill": "강공"
+    }
   }
 ]
