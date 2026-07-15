@@ -9,6 +9,7 @@ export function NavBar() {
   const links = [
     { href: "/dungeon-farm", label: "기질 파밍 장소" },
     { href: "/weapons", label: "보유 무기 관리" },
+    { href: "/recruitment", label: "공개모집 계산기" },
   ];
 
   return (
