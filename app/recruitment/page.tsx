@@ -70,6 +70,16 @@ interface Combo {
   chars: RecruitChar[];
   min: number;
   score: number;
+  // 2성 없이 선택된 1성이 포함된 조합 → 같은 보장 성급 내에서 우선 표시
+  boosted: boolean;
+}
+
+// 개인 설정 (localStorage 저장 + JSON 내보내기/불러오기)
+const SETTINGS_STORAGE_KEY = "recruitmentSettings";
+
+interface RecruitSettings {
+  deselected1Star: string[];
+  ignoreLowRarity: boolean;
 }
 
 // "data/character.json" + "23071f1f" → "data/character.23071f1f.json"
@@ -113,6 +123,42 @@ export default function RecruitmentPage() {
   const [data, setData] = useState<RecruitmentData | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [selectedTags, setSelectedTags] = useState<number[]>([]);
+  // 새로 추가되는 1성 오퍼가 기본 선택되도록 "선택 해제된 목록"을 저장
+  const [deselected1Star, setDeselected1Star] = useState<string[]>([]);
+  const [ignoreLowRarity, setIgnoreLowRarity] = useState(false);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    try {
+      const stored = window.localStorage.getItem(SETTINGS_STORAGE_KEY);
+      if (stored) {
+        const parsed = JSON.parse(stored) as Partial<RecruitSettings>;
+        if (Array.isArray(parsed.deselected1Star)) {
+          setDeselected1Star(
+            parsed.deselected1Star.filter((v) => typeof v === "string"),
+          );
+        }
+        if (typeof parsed.ignoreLowRarity === "boolean") {
+          setIgnoreLowRarity(parsed.ignoreLowRarity);
+        }
+      }
+    } catch {
+      // ignore parse errors
+    }
+  }, []);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    try {
+      const settings: RecruitSettings = { deselected1Star, ignoreLowRarity };
+      window.localStorage.setItem(
+        SETTINGS_STORAGE_KEY,
+        JSON.stringify(settings),
+      );
+    } catch {
+      // ignore storage errors
+    }
+  }, [deselected1Star, ignoreLowRarity]);
 
   useEffect(() => {
     let cancelled = false;
@@ -182,12 +228,26 @@ export default function RecruitmentPage() {
         scoreChars.length / avgCharTag;
       const min = Math.min(...scoreChars.map((char) => char.star));
 
-      result.push({ tags: comb, chars, min, score });
+      const boosted =
+        !chars.some((char) => char.star === 2) &&
+        chars.some(
+          (char) => char.star === 1 && !deselected1Star.includes(char.id),
+        );
+
+      // 3성 이하 무시: 보장 성급이 3성 이하인 조합을 숨김 (1성 우선 조합은 유지)
+      if (ignoreLowRarity && min <= 3 && !boosted) continue;
+
+      result.push({ tags: comb, chars, min, score, boosted });
     }
 
-    result.sort((a, b) => (a.min === b.min ? b.score - a.score : b.min - a.min));
+    result.sort(
+      (a, b) =>
+        b.min - a.min ||
+        Number(b.boosted) - Number(a.boosted) ||
+        b.score - a.score,
+    );
     return result;
-  }, [data, recruitChars, selectedTags]);
+  }, [data, recruitChars, selectedTags, deselected1Star, ignoreLowRarity]);
 
   const toggleTag = (tagId: number) => {
     setSelectedTags((prev) => {
@@ -199,6 +259,58 @@ export default function RecruitmentPage() {
       }
       return [...prev, tagId];
     });
+  };
+
+  const oneStarChars = useMemo(
+    () => recruitChars.filter((char) => char.star === 1),
+    [recruitChars],
+  );
+
+  const toggleOneStar = (id: string) => {
+    setDeselected1Star((prev) =>
+      prev.includes(id) ? prev.filter((v) => v !== id) : [...prev, id],
+    );
+  };
+
+  const handleExportSettings = () => {
+    try {
+      const settings: RecruitSettings = { deselected1Star, ignoreLowRarity };
+      const json = JSON.stringify(settings, null, 2);
+      const blob = new Blob([json], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "endfield-recruitment-settings.json";
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    } catch {
+      // ignore
+    }
+  };
+
+  const handleImportSettings = (file: File | null) => {
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = () => {
+      try {
+        const parsed = JSON.parse(
+          String(reader.result),
+        ) as Partial<RecruitSettings>;
+        if (Array.isArray(parsed.deselected1Star)) {
+          setDeselected1Star(
+            parsed.deselected1Star.filter((v) => typeof v === "string"),
+          );
+        }
+        if (typeof parsed.ignoreLowRarity === "boolean") {
+          setIgnoreLowRarity(parsed.ignoreLowRarity);
+        }
+      } catch {
+        // ignore parse errors
+      }
+    };
+    reader.readAsText(file);
   };
 
   return (
@@ -286,6 +398,83 @@ export default function RecruitmentPage() {
                   </div>
                 </div>
               ))}
+            </div>
+
+            {/* 태그와 구분되는 개인 설정 영역 */}
+            <div className="flex flex-wrap items-center justify-between gap-2 border-y border-zinc-200 bg-zinc-50 px-4 py-3 text-xs">
+              <span className="font-semibold text-zinc-600">
+                개인 설정 (브라우저에 자동 저장)
+              </span>
+              <div className="flex gap-2">
+                <button
+                  type="button"
+                  onClick={handleExportSettings}
+                  className="rounded-full border border-zinc-300 bg-white px-3 py-1 text-[11px] font-medium text-zinc-700 transition-colors hover:bg-zinc-50"
+                >
+                  JSON 내보내기
+                </button>
+                <label className="inline-flex cursor-pointer items-center rounded-full border border-zinc-300 bg-white px-3 py-1 text-[11px] font-medium text-zinc-700 transition-colors hover:bg-zinc-50">
+                  JSON 불러오기
+                  <input
+                    type="file"
+                    accept="application/json"
+                    className="hidden"
+                    onChange={(e) =>
+                      handleImportSettings(e.target.files?.[0] ?? null)
+                    }
+                  />
+                </label>
+              </div>
+            </div>
+            <div className="flex flex-col divide-y divide-zinc-100">
+              <div className="flex items-start gap-4 px-4 py-3">
+                <span
+                  className="w-14 shrink-0 rounded-md bg-indigo-600 py-2 text-center text-sm font-semibold text-white"
+                  title="2성 없이 선택된 1성이 포함된 조합은 같은 보장 성급 내에서 우선 표시됩니다."
+                >
+                  1성
+                </span>
+                <div className="flex flex-wrap gap-2 pt-0.5">
+                  {oneStarChars.map((char) => {
+                    const selected = !deselected1Star.includes(char.id);
+                    return (
+                      <button
+                        key={char.id}
+                        type="button"
+                        onClick={() => toggleOneStar(char.id)}
+                        className={
+                          "rounded-md px-4 py-1.5 text-sm font-medium transition-colors " +
+                          (selected
+                            ? "bg-indigo-600 text-white"
+                            : "bg-[#d8cfc7] text-zinc-800 hover:bg-[#c9beb4]")
+                        }
+                      >
+                        {char.name}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+              <div className="flex items-start gap-4 px-4 py-3">
+                <span className="w-14 shrink-0 rounded-md bg-indigo-600 py-2 text-center text-sm font-semibold text-white">
+                  설정
+                </span>
+                <div className="flex flex-wrap gap-2 pt-0.5">
+                  <button
+                    type="button"
+                    onClick={() => setIgnoreLowRarity((prev) => !prev)}
+                    title="보장 성급이 3성 이하인 조합을 숨깁니다. (1성 우선 조합은 계속 표시)"
+                    className={
+                      "rounded-md px-4 py-1.5 text-sm font-medium transition-colors " +
+                      (ignoreLowRarity
+                        ? "bg-indigo-600 text-white"
+                        : "bg-[#d8cfc7] text-zinc-800 hover:bg-[#c9beb4]")
+                    }
+                  >
+                    3성 이하 무시
+                  </button>
+                </div>
+              </div>
             </div>
           </section>
         )}
