@@ -23,14 +23,18 @@ const MAX_SELECTED_TAGS = 5;
 const SENIOR_TAG = 14;
 const TOP_TAG = 11;
 
-// 성급별 색상 (원본 arkntools와 동일한 material 팔레트)
-const STAR_COLORS: Record<number, string> = {
-  6: "#d32f2f",
-  5: "#e65100",
-  4: "#0097a7",
-  3: "#388e3c",
-  2: "#5d4037",
-  1: "#616161",
+// 성급별 색상 (6~4성은 weapons 페이지와 동일한 팔레트)
+// base: 대표색 / text: 연한 배경 위에 얹는 진한 글자색 / badgeText: base 배경 위 글자색
+const STAR_STYLES: Record<
+  number,
+  { base: string; text: string; badgeText: string }
+> = {
+  6: { base: "#ff7f00", text: "#9c4d00", badgeText: "#ffffff" },
+  5: { base: "#ffba03", text: "#8a6500", badgeText: "#4a3600" },
+  4: { base: "#9451f8", text: "#6d2fd6", badgeText: "#ffffff" },
+  3: { base: "#5ac4fa", text: "#0c7bb3", badgeText: "#093f5c" },
+  2: { base: "#9ccc65", text: "#55832a", badgeText: "#2f4a13" },
+  1: { base: "#616161", text: "#474747", badgeText: "#ffffff" },
 };
 
 interface CheckInfo {
@@ -117,6 +121,41 @@ async function fetchRecruitmentData(): Promise<RecruitmentData> {
   ]);
 
   return { check, characters, charNamesKr, tagNamesKr };
+}
+
+function StarBadge({ star }: { star: number }) {
+  const style = STAR_STYLES[star];
+  return (
+    <span
+      className="inline-flex items-center rounded-md px-2 py-0.5 text-xs font-bold"
+      style={{ backgroundColor: style.base, color: style.badgeText }}
+    >
+      {star}★
+    </span>
+  );
+}
+
+function CharChip({ char }: { char: RecruitChar }) {
+  const style = STAR_STYLES[char.star];
+  return (
+    <span
+      title={`${char.star}성` + (char.pubOnly ? " · 공개모집 한정" : "")}
+      className="relative inline-flex items-center overflow-hidden rounded-md border px-2.5 py-1 text-xs font-semibold"
+      style={{
+        backgroundColor: `${style.base}1f`,
+        borderColor: `${style.base}80`,
+        color: style.text,
+      }}
+    >
+      {char.pubOnly && (
+        <span
+          className="absolute bottom-0 right-0 h-0 w-0 border-b-[7px] border-l-[7px] border-l-transparent opacity-70"
+          style={{ borderBottomColor: style.text }}
+        />
+      )}
+      {char.name}
+    </span>
+  );
 }
 
 export default function RecruitmentPage() {
@@ -223,7 +262,7 @@ export default function RecruitmentPage() {
 
       const score =
         scoreChars.reduce((sum, char) => sum + char.star, 0) /
-          scoreChars.length -
+        scoreChars.length -
         comb.length / 10 -
         scoreChars.length / avgCharTag;
       const min = Math.min(...scoreChars.map((char) => char.star));
@@ -341,42 +380,55 @@ export default function RecruitmentPage() {
         </header>
 
         {error && (
-          <section className="rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+          <section className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
             데이터를 불러오지 못했습니다: {error}
           </section>
         )}
 
         {!data && !error && (
-          <section className="rounded-lg border border-zinc-200 bg-white px-4 py-8 text-center text-sm text-zinc-500 shadow-sm">
+          <section className="animate-pulse rounded-xl border border-zinc-200 bg-white px-4 py-10 text-center text-sm text-zinc-400 shadow-sm">
             데이터 불러오는 중...
           </section>
         )}
 
         {data && (
-          <section className="rounded-lg border border-zinc-200 bg-white shadow-sm">
-            <div className="flex items-center justify-between border-b border-zinc-200 px-4 py-3 text-xs">
-              <span className="font-semibold text-zinc-600">
-                태그 선택 ({selectedTags.length}/{MAX_SELECTED_TAGS})
-              </span>
+          <section className="overflow-hidden rounded-xl border border-zinc-200 bg-white shadow-sm">
+            <div className="flex items-center justify-between border-b border-zinc-200 bg-zinc-50/70 px-5 py-3">
+              <div className="flex items-center gap-2 text-xs">
+                <span className="font-bold uppercase tracking-wider text-zinc-500">
+                  태그 선택
+                </span>
+                <span
+                  className={
+                    "rounded-full px-2 py-0.5 text-[11px] font-bold " +
+                    (selectedTags.length > 0
+                      ? "bg-teal-600 text-white"
+                      : "bg-zinc-200 text-zinc-500")
+                  }
+                >
+                  {selectedTags.length}/{MAX_SELECTED_TAGS}
+                </span>
+              </div>
               <button
                 type="button"
                 onClick={() => setSelectedTags([])}
                 disabled={selectedTags.length === 0}
-                className="rounded-full border border-zinc-300 bg-white px-3 py-1 text-[11px] font-medium text-zinc-600 transition-colors hover:bg-zinc-50 disabled:cursor-not-allowed disabled:opacity-40"
+                className="rounded-full border border-zinc-300 bg-white px-3 py-1 text-[11px] font-medium text-zinc-600 transition-colors hover:bg-zinc-100 disabled:cursor-not-allowed disabled:opacity-40"
               >
                 선택 초기화
               </button>
             </div>
+
             <div className="flex flex-col divide-y divide-zinc-100">
               {TAG_GROUPS.map((group) => (
                 <div
                   key={group.label}
-                  className="flex items-start gap-4 px-4 py-3"
+                  className="flex items-start gap-4 px-5 py-3.5"
                 >
-                  <span className="w-14 shrink-0 rounded-md bg-teal-600 py-2 text-center text-sm font-semibold text-white">
+                  <span className="w-14 shrink-0 rounded-lg border border-teal-200 bg-teal-50 py-1.5 text-center text-sm font-bold text-teal-700">
                     {group.label}
                   </span>
-                  <div className="flex flex-wrap gap-2 pt-0.5">
+                  <div className="flex flex-wrap gap-2 pt-px">
                     {group.tagIds.map((tagId) => {
                       const selected = selectedTags.includes(tagId);
                       return (
@@ -385,10 +437,10 @@ export default function RecruitmentPage() {
                           type="button"
                           onClick={() => toggleTag(tagId)}
                           className={
-                            "rounded-md px-4 py-1.5 text-sm font-medium transition-colors " +
+                            "rounded-full border px-3.5 py-1.5 text-sm font-medium transition-all " +
                             (selected
-                              ? "bg-teal-600 text-white"
-                              : "bg-[#d8cfc7] text-zinc-800 hover:bg-[#c9beb4]")
+                              ? "border-teal-600 bg-teal-600 text-white shadow-sm"
+                              : "border-zinc-300 bg-white text-zinc-700 hover:border-teal-400 hover:bg-teal-50 hover:text-teal-700")
                           }
                         >
                           {data.tagNamesKr[String(tagId)] ?? `#${tagId}`}
@@ -401,19 +453,22 @@ export default function RecruitmentPage() {
             </div>
 
             {/* 태그와 구분되는 개인 설정 영역 */}
-            <div className="flex flex-wrap items-center justify-between gap-2 border-y border-zinc-200 bg-zinc-50 px-4 py-3 text-xs">
-              <span className="font-semibold text-zinc-600">
-                개인 설정 (브라우저에 자동 저장)
+            <div className="flex flex-wrap items-center justify-between gap-2 border-y border-zinc-200 bg-zinc-50/70 px-5 py-3">
+              <span className="text-xs font-bold uppercase tracking-wider text-zinc-500">
+                개인 설정
+                <span className="ml-2 font-medium normal-case tracking-normal text-zinc-400">
+                  브라우저에 자동 저장
+                </span>
               </span>
               <div className="flex gap-2">
                 <button
                   type="button"
                   onClick={handleExportSettings}
-                  className="rounded-full border border-zinc-300 bg-white px-3 py-1 text-[11px] font-medium text-zinc-700 transition-colors hover:bg-zinc-50"
+                  className="rounded-full border border-zinc-300 bg-white px-3 py-1 text-[11px] font-medium text-zinc-600 transition-colors hover:bg-zinc-100"
                 >
                   JSON 내보내기
                 </button>
-                <label className="inline-flex cursor-pointer items-center rounded-full border border-zinc-300 bg-white px-3 py-1 text-[11px] font-medium text-zinc-700 transition-colors hover:bg-zinc-50">
+                <label className="inline-flex cursor-pointer items-center rounded-full border border-zinc-300 bg-white px-3 py-1 text-[11px] font-medium text-zinc-600 transition-colors hover:bg-zinc-100">
                   JSON 불러오기
                   <input
                     type="file"
@@ -426,15 +481,16 @@ export default function RecruitmentPage() {
                 </label>
               </div>
             </div>
+
             <div className="flex flex-col divide-y divide-zinc-100">
-              <div className="flex items-start gap-4 px-4 py-3">
+              <div className="flex items-start gap-4 px-5 py-3.5">
                 <span
-                  className="w-14 shrink-0 rounded-md bg-indigo-600 py-2 text-center text-sm font-semibold text-white"
+                  className="w-14 shrink-0 rounded-lg border border-indigo-200 bg-indigo-50 py-1.5 text-center text-sm font-bold text-indigo-700"
                   title="2성 없이 선택된 1성이 포함된 조합은 같은 보장 성급 내에서 우선 표시됩니다."
                 >
                   1성
                 </span>
-                <div className="flex flex-wrap gap-2 pt-0.5">
+                <div className="flex flex-wrap gap-2 pt-px">
                   {oneStarChars.map((char) => {
                     const selected = !deselected1Star.includes(char.id);
                     return (
@@ -443,10 +499,10 @@ export default function RecruitmentPage() {
                         type="button"
                         onClick={() => toggleOneStar(char.id)}
                         className={
-                          "rounded-md px-4 py-1.5 text-sm font-medium transition-colors " +
+                          "rounded-full border px-3.5 py-1.5 text-sm font-medium transition-all " +
                           (selected
-                            ? "bg-indigo-600 text-white"
-                            : "bg-[#d8cfc7] text-zinc-800 hover:bg-[#c9beb4]")
+                            ? "border-indigo-600 bg-indigo-600 text-white shadow-sm"
+                            : "border-zinc-300 bg-white text-zinc-400 hover:border-indigo-400 hover:bg-indigo-50 hover:text-indigo-700")
                         }
                       >
                         {char.name}
@@ -455,20 +511,20 @@ export default function RecruitmentPage() {
                   })}
                 </div>
               </div>
-              <div className="flex items-start gap-4 px-4 py-3">
-                <span className="w-14 shrink-0 rounded-md bg-indigo-600 py-2 text-center text-sm font-semibold text-white">
+              <div className="flex items-start gap-4 px-5 py-3.5">
+                <span className="w-14 shrink-0 rounded-lg border border-indigo-200 bg-indigo-50 py-1.5 text-center text-sm font-bold text-indigo-700">
                   설정
                 </span>
-                <div className="flex flex-wrap gap-2 pt-0.5">
+                <div className="flex flex-wrap gap-2 pt-px">
                   <button
                     type="button"
                     onClick={() => setIgnoreLowRarity((prev) => !prev)}
                     title="보장 성급이 3성 이하인 조합을 숨깁니다. (1성 우선 조합은 계속 표시)"
                     className={
-                      "rounded-md px-4 py-1.5 text-sm font-medium transition-colors " +
+                      "rounded-full border px-3.5 py-1.5 text-sm font-medium transition-all " +
                       (ignoreLowRarity
-                        ? "bg-indigo-600 text-white"
-                        : "bg-[#d8cfc7] text-zinc-800 hover:bg-[#c9beb4]")
+                        ? "border-indigo-600 bg-indigo-600 text-white shadow-sm"
+                        : "border-zinc-300 bg-white text-zinc-700 hover:border-indigo-400 hover:bg-indigo-50 hover:text-indigo-700")
                     }
                   >
                     3성 이하 무시
@@ -480,33 +536,44 @@ export default function RecruitmentPage() {
         )}
 
         {data && (
-          <section className="rounded-lg border border-zinc-200 bg-white shadow-sm">
-            <div className="border-b border-zinc-200 px-4 py-3 text-xs font-semibold text-zinc-600">
-              조합별 결과 ({combos.length}개 조합)
+          <section className="overflow-hidden rounded-xl border border-zinc-200 bg-white shadow-sm">
+            <div className="flex flex-wrap items-center justify-between gap-2 border-b border-zinc-200 bg-zinc-50/70 px-5 py-3">
+              <span className="text-xs font-bold uppercase tracking-wider text-zinc-500">
+                조합별 결과
+                <span className="ml-2 font-medium normal-case tracking-normal text-zinc-400">
+                  {combos.length}개 조합
+                </span>
+              </span>
+              <div className="flex items-center gap-1">
+                {[6, 5, 4, 3, 2, 1].map((star) => (
+                  <StarBadge key={star} star={star} />
+                ))}
+              </div>
             </div>
+
             {selectedTags.length === 0 ? (
-              <div className="px-4 py-8 text-center text-sm text-zinc-500">
+              <div className="px-5 py-12 text-center text-sm text-zinc-400">
                 태그를 선택하면 조합별 등장 가능 오퍼레이터가 표시됩니다.
               </div>
             ) : combos.length === 0 ? (
-              <div className="px-4 py-8 text-center text-sm text-zinc-500">
+              <div className="px-5 py-12 text-center text-sm font-medium text-red-600">
                 선택한 태그로 등장 가능한 오퍼레이터가 없습니다.
               </div>
             ) : (
               <div className="overflow-x-auto">
                 <table className="min-w-full border-collapse text-sm">
-                  <thead className="bg-zinc-100 text-xs uppercase tracking-wide text-zinc-600">
+                  <thead className="bg-zinc-50 text-[11px] font-semibold uppercase tracking-wider text-zinc-500">
                     <tr>
-                      <th className="w-10 border-b border-zinc-200 px-3 py-2 text-left">
+                      <th className="w-10 border-b border-zinc-200 px-4 py-2.5 text-left">
                         #
                       </th>
-                      <th className="w-64 border-b border-zinc-200 px-3 py-2 text-left">
+                      <th className="w-60 border-b border-zinc-200 px-3 py-2.5 text-left">
                         태그
                       </th>
-                      <th className="w-16 border-b border-zinc-200 px-3 py-2 text-left">
+                      <th className="w-24 border-b border-zinc-200 px-3 py-2.5 text-left">
                         보장
                       </th>
-                      <th className="border-b border-zinc-200 px-3 py-2 text-left">
+                      <th className="border-b border-zinc-200 px-3 py-2.5 text-left">
                         오퍼레이터
                       </th>
                     </tr>
@@ -515,48 +582,40 @@ export default function RecruitmentPage() {
                     {combos.map((combo, i) => (
                       <tr
                         key={combo.tags.join("-")}
-                        className="border-b border-zinc-100 last:border-b-0"
+                        className="border-b border-zinc-100 transition-colors last:border-b-0 hover:bg-zinc-50/70"
                       >
-                        <td className="px-3 py-2 align-top text-xs text-zinc-400">
+                        <td className="px-4 py-2.5 align-top text-xs font-medium text-zinc-400">
                           {i + 1}
                         </td>
-                        <td className="px-3 py-2 align-top">
+                        <td className="px-3 py-2.5 align-top">
                           <div className="flex flex-wrap gap-1.5">
                             {combo.tags.map((tagId) => (
                               <span
                                 key={tagId}
-                                className="rounded-md bg-teal-600 px-2.5 py-1 text-xs font-medium text-white"
+                                className="rounded-md border border-teal-200 bg-teal-50 px-2.5 py-1 text-xs font-semibold text-teal-700"
                               >
                                 {data.tagNamesKr[String(tagId)] ?? `#${tagId}`}
                               </span>
                             ))}
                           </div>
                         </td>
-                        <td className="px-3 py-2 align-top">
-                          <span
-                            className="rounded-md px-2 py-1 text-xs font-semibold text-white"
-                            style={{ backgroundColor: STAR_COLORS[combo.min] }}
-                          >
-                            {combo.min}★
-                          </span>
+                        <td className="px-3 py-2.5 align-top">
+                          <div className="flex flex-wrap items-center gap-1">
+                            <StarBadge star={combo.min} />
+                            {combo.boosted && (
+                              <span
+                                title="2성 없이 선택된 1성이 포함된 조합"
+                                className="rounded-md border border-zinc-400 bg-zinc-100 px-1.5 py-0.5 text-[10px] font-bold text-zinc-600"
+                              >
+                                1★ 저격
+                              </span>
+                            )}
+                          </div>
                         </td>
-                        <td className="px-3 py-2 align-top">
+                        <td className="px-3 py-2.5 align-top">
                           <div className="flex flex-wrap gap-1.5">
                             {combo.chars.map((char) => (
-                              <span
-                                key={char.id}
-                                title={
-                                  `${char.star}성` +
-                                  (char.pubOnly ? " · 공개모집 한정" : "")
-                                }
-                                className="relative overflow-hidden rounded-md px-2.5 py-1 text-xs font-medium text-white"
-                                style={{ backgroundColor: STAR_COLORS[char.star] }}
-                              >
-                                {char.pubOnly && (
-                                  <span className="absolute bottom-0 right-0 h-0 w-0 border-b-8 border-l-8 border-b-white/70 border-l-transparent" />
-                                )}
-                                {char.name}
-                              </span>
+                              <CharChip key={char.id} char={char} />
                             ))}
                           </div>
                         </td>
