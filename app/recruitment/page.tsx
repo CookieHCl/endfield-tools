@@ -140,7 +140,7 @@ function CharChip({ char }: { char: RecruitChar }) {
   return (
     <span
       title={`${char.star}성` + (char.pubOnly ? " · 공개모집 한정" : "")}
-      className="relative inline-flex items-center overflow-hidden rounded-md border px-2.5 py-1 text-xs font-semibold"
+      className="relative inline-flex items-center overflow-hidden whitespace-nowrap rounded-md border px-2.5 py-1 text-xs font-semibold"
       style={{
         backgroundColor: `${style.base}1f`,
         borderColor: `${style.base}80`,
@@ -393,7 +393,88 @@ export default function RecruitmentPage() {
 
         {data && (
           <section className="overflow-hidden rounded-xl border border-zinc-200 bg-white shadow-sm">
-            <div className="flex items-center justify-between border-b border-zinc-200 bg-zinc-50/70 px-5 py-3">
+            {/* 태그와 구분되는 개인 설정 영역 */}
+            <div className="flex flex-wrap items-center justify-between gap-2 border-b border-zinc-200 bg-zinc-50/70 px-5 py-3">
+              <span className="text-xs font-bold uppercase tracking-wider text-zinc-500">
+                개인 설정
+                <span className="ml-2 font-medium normal-case tracking-normal text-zinc-400">
+                  브라우저에 자동 저장
+                </span>
+              </span>
+              <div className="flex gap-2">
+                <button
+                  type="button"
+                  onClick={handleExportSettings}
+                  className="whitespace-nowrap rounded-full border border-zinc-300 bg-white px-3 py-1 text-[11px] font-medium text-zinc-600 transition-colors hover:bg-zinc-100"
+                >
+                  JSON 내보내기
+                </button>
+                <label className="inline-flex cursor-pointer items-center whitespace-nowrap rounded-full border border-zinc-300 bg-white px-3 py-1 text-[11px] font-medium text-zinc-600 transition-colors hover:bg-zinc-100">
+                  JSON 불러오기
+                  <input
+                    type="file"
+                    accept="application/json"
+                    className="hidden"
+                    onChange={(e) =>
+                      handleImportSettings(e.target.files?.[0] ?? null)
+                    }
+                  />
+                </label>
+              </div>
+            </div>
+
+            <div className="flex flex-col divide-y divide-zinc-100">
+              <div className="flex flex-col gap-2 px-5 py-3.5 sm:flex-row sm:items-start sm:gap-4">
+                <span
+                  className="w-14 shrink-0 rounded-lg border border-indigo-200 bg-indigo-50 py-1.5 text-center text-sm font-bold text-indigo-700"
+                  title="2성 없이 선택된 1성이 포함된 조합은 같은 보장 성급 내에서 우선 표시됩니다."
+                >
+                  1성
+                </span>
+                <div className="flex flex-wrap gap-2 pt-px">
+                  {oneStarChars.map((char) => {
+                    const selected = !deselected1Star.includes(char.id);
+                    return (
+                      <button
+                        key={char.id}
+                        type="button"
+                        onClick={() => toggleOneStar(char.id)}
+                        className={
+                          "whitespace-nowrap rounded-full border px-3.5 py-1.5 text-sm font-medium transition-all " +
+                          (selected
+                            ? "border-indigo-600 bg-indigo-600 text-white shadow-sm"
+                            : "border-zinc-300 bg-white text-zinc-400 hover:border-indigo-400 hover:bg-indigo-50 hover:text-indigo-700")
+                        }
+                      >
+                        {char.name}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+              <div className="flex flex-col gap-2 px-5 py-3.5 sm:flex-row sm:items-start sm:gap-4">
+                <span className="w-14 shrink-0 rounded-lg border border-indigo-200 bg-indigo-50 py-1.5 text-center text-sm font-bold text-indigo-700">
+                  설정
+                </span>
+                <div className="flex flex-wrap gap-2 pt-px">
+                  <button
+                    type="button"
+                    onClick={() => setIgnoreLowRarity((prev) => !prev)}
+                    title="보장 성급이 3성 이하인 조합을 숨깁니다. (1성 우선 조합은 계속 표시)"
+                    className={
+                      "whitespace-nowrap rounded-full border px-3.5 py-1.5 text-sm font-medium transition-all " +
+                      (ignoreLowRarity
+                        ? "border-indigo-600 bg-indigo-600 text-white shadow-sm"
+                        : "border-zinc-300 bg-white text-zinc-700 hover:border-indigo-400 hover:bg-indigo-50 hover:text-indigo-700")
+                    }
+                  >
+                    3성 이하 무시
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div className="flex flex-wrap items-center justify-between gap-2 border-y border-zinc-200 bg-zinc-50/70 px-5 py-3">
               <div className="flex items-center gap-2 text-xs">
                 <span className="font-bold uppercase tracking-wider text-zinc-500">
                   태그 선택
@@ -413,7 +494,7 @@ export default function RecruitmentPage() {
                 type="button"
                 onClick={() => setSelectedTags([])}
                 disabled={selectedTags.length === 0}
-                className="rounded-full border border-zinc-300 bg-white px-3 py-1 text-[11px] font-medium text-zinc-600 transition-colors hover:bg-zinc-100 disabled:cursor-not-allowed disabled:opacity-40"
+                className="whitespace-nowrap rounded-full border border-zinc-300 bg-white px-3 py-1 text-[11px] font-medium text-zinc-600 transition-colors hover:bg-zinc-100 disabled:cursor-not-allowed disabled:opacity-40"
               >
                 선택 초기화
               </button>
@@ -423,7 +504,7 @@ export default function RecruitmentPage() {
               {TAG_GROUPS.map((group) => (
                 <div
                   key={group.label}
-                  className="flex items-start gap-4 px-5 py-3.5"
+                  className="flex flex-col gap-2 px-5 py-3.5 sm:flex-row sm:items-start sm:gap-4"
                 >
                   <span className="w-14 shrink-0 rounded-lg border border-teal-200 bg-teal-50 py-1.5 text-center text-sm font-bold text-teal-700">
                     {group.label}
@@ -437,7 +518,7 @@ export default function RecruitmentPage() {
                           type="button"
                           onClick={() => toggleTag(tagId)}
                           className={
-                            "rounded-full border px-3.5 py-1.5 text-sm font-medium transition-all " +
+                            "whitespace-nowrap rounded-full border px-3.5 py-1.5 text-sm font-medium transition-all " +
                             (selected
                               ? "border-teal-600 bg-teal-600 text-white shadow-sm"
                               : "border-zinc-300 bg-white text-zinc-700 hover:border-teal-400 hover:bg-teal-50 hover:text-teal-700")
@@ -450,87 +531,6 @@ export default function RecruitmentPage() {
                   </div>
                 </div>
               ))}
-            </div>
-
-            {/* 태그와 구분되는 개인 설정 영역 */}
-            <div className="flex flex-wrap items-center justify-between gap-2 border-y border-zinc-200 bg-zinc-50/70 px-5 py-3">
-              <span className="text-xs font-bold uppercase tracking-wider text-zinc-500">
-                개인 설정
-                <span className="ml-2 font-medium normal-case tracking-normal text-zinc-400">
-                  브라우저에 자동 저장
-                </span>
-              </span>
-              <div className="flex gap-2">
-                <button
-                  type="button"
-                  onClick={handleExportSettings}
-                  className="rounded-full border border-zinc-300 bg-white px-3 py-1 text-[11px] font-medium text-zinc-600 transition-colors hover:bg-zinc-100"
-                >
-                  JSON 내보내기
-                </button>
-                <label className="inline-flex cursor-pointer items-center rounded-full border border-zinc-300 bg-white px-3 py-1 text-[11px] font-medium text-zinc-600 transition-colors hover:bg-zinc-100">
-                  JSON 불러오기
-                  <input
-                    type="file"
-                    accept="application/json"
-                    className="hidden"
-                    onChange={(e) =>
-                      handleImportSettings(e.target.files?.[0] ?? null)
-                    }
-                  />
-                </label>
-              </div>
-            </div>
-
-            <div className="flex flex-col divide-y divide-zinc-100">
-              <div className="flex items-start gap-4 px-5 py-3.5">
-                <span
-                  className="w-14 shrink-0 rounded-lg border border-indigo-200 bg-indigo-50 py-1.5 text-center text-sm font-bold text-indigo-700"
-                  title="2성 없이 선택된 1성이 포함된 조합은 같은 보장 성급 내에서 우선 표시됩니다."
-                >
-                  1성
-                </span>
-                <div className="flex flex-wrap gap-2 pt-px">
-                  {oneStarChars.map((char) => {
-                    const selected = !deselected1Star.includes(char.id);
-                    return (
-                      <button
-                        key={char.id}
-                        type="button"
-                        onClick={() => toggleOneStar(char.id)}
-                        className={
-                          "rounded-full border px-3.5 py-1.5 text-sm font-medium transition-all " +
-                          (selected
-                            ? "border-indigo-600 bg-indigo-600 text-white shadow-sm"
-                            : "border-zinc-300 bg-white text-zinc-400 hover:border-indigo-400 hover:bg-indigo-50 hover:text-indigo-700")
-                        }
-                      >
-                        {char.name}
-                      </button>
-                    );
-                  })}
-                </div>
-              </div>
-              <div className="flex items-start gap-4 px-5 py-3.5">
-                <span className="w-14 shrink-0 rounded-lg border border-indigo-200 bg-indigo-50 py-1.5 text-center text-sm font-bold text-indigo-700">
-                  설정
-                </span>
-                <div className="flex flex-wrap gap-2 pt-px">
-                  <button
-                    type="button"
-                    onClick={() => setIgnoreLowRarity((prev) => !prev)}
-                    title="보장 성급이 3성 이하인 조합을 숨깁니다. (1성 우선 조합은 계속 표시)"
-                    className={
-                      "rounded-full border px-3.5 py-1.5 text-sm font-medium transition-all " +
-                      (ignoreLowRarity
-                        ? "border-indigo-600 bg-indigo-600 text-white shadow-sm"
-                        : "border-zinc-300 bg-white text-zinc-700 hover:border-indigo-400 hover:bg-indigo-50 hover:text-indigo-700")
-                    }
-                  >
-                    3성 이하 무시
-                  </button>
-                </div>
-              </div>
             </div>
           </section>
         )}
@@ -592,7 +592,7 @@ export default function RecruitmentPage() {
                             {combo.tags.map((tagId) => (
                               <span
                                 key={tagId}
-                                className="rounded-md border border-teal-200 bg-teal-50 px-2.5 py-1 text-xs font-semibold text-teal-700"
+                                className="whitespace-nowrap rounded-md border border-teal-200 bg-teal-50 px-2.5 py-1 text-xs font-semibold text-teal-700"
                               >
                                 {data.tagNamesKr[String(tagId)] ?? `#${tagId}`}
                               </span>
