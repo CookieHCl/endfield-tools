@@ -1,0 +1,91 @@
+name: Sync upstream data
+
+on:
+  schedule:
+    # GitHub Actions cannot subscribe directly to another repository's pushes,
+    # so poll once per day.
+    - cron: "17 16 * * *"
+  workflow_dispatch:
+
+permissions:
+  actions: write
+  contents: write
+
+concurrency:
+  group: sync-upstream-data
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout this repository
+        uses: actions/checkout@v6
+        with:
+          path: repository
+          ref: main
+
+      - name: Checkout upstream repository
+        uses: actions/checkout@v6
+        with:
+          repository: dlwlsdn3642/EnergyAlluviumCalc
+          ref: main
+          path: upstream
+          persist-credentials: false
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: repository/package-lock.json
+
+      - name: Sync and transform data
+        working-directory: repository
+        run: node scripts/sync-upstream-data.mjs ../upstream/data
+
+      - name: Detect changes
+        id: changes
+        working-directory: repository
+        shell: bash
+        run: |
+          git add data/dungeon_data.json data/weapons_4star.json data/weapons_5star.json data/weapons_6star.json
+          git add public/characters public/dungeon_images public/weapon_images
+
+          if git diff --cached --quiet; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            git diff --cached --check
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Install dependencies
+        if: steps.changes.outputs.changed == 'true'
+        working-directory: repository
+        run: npm ci
+
+      - name: Verify build
+        if: steps.changes.outputs.changed == 'true'
+        working-directory: repository
+        run: npm run build
+
+      - name: Commit and push
+        if: steps.changes.outputs.changed == 'true'
+        working-directory: repository
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          upstream_sha=$(git -C ../upstream rev-parse --short HEAD)
+          git commit -m "chore(data): sync upstream ${upstream_sha}"
+          git push
+
+      # Pushes authenticated with GITHUB_TOKEN do not start push-triggered
+      # workflows, so dispatch the existing Pages workflow explicitly.
+      - name: Trigger Pages deployment
+        if: steps.changes.outputs.changed == 'true'
+        working-directory: repository
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run deploy.yml --ref main
