@@ -19,6 +19,9 @@ const TAG_GROUPS = [
 // 게임에서 한 번에 고를 수 있는 태그 수
 const MAX_SELECTED_TAGS = 5;
 
+// 앞글자 검색에 사용할 전체 태그 id 목록
+const ALL_TAG_IDS = TAG_GROUPS.flatMap((group) => group.tagIds);
+
 // 성급 파생 태그: 5성 → 특별 채용, 6성 → 고급 특별 채용
 const SENIOR_TAG = 14;
 const TOP_TAG = 11;
@@ -162,6 +165,8 @@ export default function RecruitmentPage() {
   const [data, setData] = useState<RecruitmentData | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [selectedTags, setSelectedTags] = useState<number[]>([]);
+  // 앞글자 검색용 텍스트 (한글 5글자까지)
+  const [tagFilter, setTagFilter] = useState("");
   // 새로 추가되는 1성 오퍼가 기본 선택되도록 "선택 해제된 목록"을 저장
   const [deselected1Star, setDeselected1Star] = useState<string[]>([]);
   const [ignoreLowRarity, setIgnoreLowRarity] = useState(false);
@@ -300,6 +305,40 @@ export default function RecruitmentPage() {
     });
   };
 
+  // 앞글자별 후보 태그 목록 (앞글자가 같은 태그가 여럿이면 직접 고르도록 하이라이트)
+  const highlightedTags = useMemo(() => {
+    const highlight = new Set<number>();
+    if (!data || !tagFilter) return highlight;
+    for (const ch of Array.from(tagFilter)) {
+      const matches = ALL_TAG_IDS.filter(
+        (id) => (data.tagNamesKr[String(id)] ?? "")[0] === ch,
+      );
+      if (matches.length > 1) matches.forEach((id) => highlight.add(id));
+    }
+    return highlight;
+  }, [data, tagFilter]);
+
+  // 텍스트 입력 시 기존 선택을 모두 취소하고 앞글자가 유일하게 일치하는 태그만 자동 선택
+  const handleTagFilterChange = (value: string) => {
+    const chars = Array.from(value).slice(0, MAX_SELECTED_TAGS);
+    setTagFilter(chars.join(""));
+    if (!data) {
+      setSelectedTags([]);
+      return;
+    }
+    const selected: number[] = [];
+    for (const ch of chars) {
+      const matches = ALL_TAG_IDS.filter(
+        (id) => (data.tagNamesKr[String(id)] ?? "")[0] === ch,
+      );
+      // 앞글자가 유일한 경우에만 자동 선택 (여럿이면 하이라이트만 하고 직접 선택)
+      if (matches.length === 1 && !selected.includes(matches[0])) {
+        selected.push(matches[0]);
+      }
+    }
+    setSelectedTags(selected);
+  };
+
   const oneStarChars = useMemo(
     () => recruitChars.filter((char) => char.star === 1),
     [recruitChars],
@@ -393,8 +432,82 @@ export default function RecruitmentPage() {
 
         {data && (
           <section className="overflow-hidden rounded-xl border border-zinc-200 bg-white shadow-sm">
+            <div className="flex flex-wrap items-center gap-2 border-b border-zinc-200 bg-zinc-50/70 px-5 py-3">
+              <div className="flex items-center gap-2 text-xs">
+                <span className="font-bold uppercase tracking-wider text-zinc-500">
+                  태그 선택
+                </span>
+                <span
+                  className={
+                    "rounded-full px-2 py-0.5 text-[11px] font-bold " +
+                    (selectedTags.length > 0
+                      ? "bg-teal-600 text-white"
+                      : "bg-zinc-200 text-zinc-500")
+                  }
+                >
+                  {selectedTags.length}/{MAX_SELECTED_TAGS}
+                </span>
+              </div>
+              <input
+                type="text"
+                value={tagFilter}
+                onChange={(e) => handleTagFilterChange(e.target.value)}
+                maxLength={MAX_SELECTED_TAGS}
+                placeholder="앞글자 입력"
+                className="min-w-0 flex-1 basis-40 rounded-full border border-zinc-300 bg-white px-3 py-1 text-xs text-zinc-700 placeholder:text-zinc-400 focus:border-teal-500 focus:outline-none focus:ring-1 focus:ring-teal-500"
+              />
+              <button
+                type="button"
+                onClick={() => {
+                  setSelectedTags([]);
+                  setTagFilter("");
+                }}
+                disabled={selectedTags.length === 0 && tagFilter === ""}
+                className="whitespace-nowrap rounded-full border border-zinc-300 bg-white px-3 py-1 text-[11px] font-medium text-zinc-600 transition-colors hover:bg-zinc-100 disabled:cursor-not-allowed disabled:opacity-40"
+              >
+                선택 초기화
+              </button>
+            </div>
+
+            <div className="flex flex-col divide-y divide-zinc-100">
+              {TAG_GROUPS.map((group) => (
+                <div
+                  key={group.label}
+                  className="flex flex-col gap-2 px-5 py-3.5 sm:flex-row sm:items-start sm:gap-4"
+                >
+                  <span className="w-14 shrink-0 rounded-lg border border-teal-200 bg-teal-50 py-1.5 text-center text-sm font-bold text-teal-700">
+                    {group.label}
+                  </span>
+                  <div className="flex flex-wrap gap-2 pt-px">
+                    {group.tagIds.map((tagId) => {
+                      const selected = selectedTags.includes(tagId);
+                      const highlighted =
+                        !selected && highlightedTags.has(tagId);
+                      return (
+                        <button
+                          key={tagId}
+                          type="button"
+                          onClick={() => toggleTag(tagId)}
+                          className={
+                            "whitespace-nowrap rounded-full border px-3.5 py-1.5 text-sm font-medium transition-all " +
+                            (selected
+                              ? "border-teal-600 bg-teal-600 text-white shadow-sm"
+                              : highlighted
+                                ? "border-amber-500 bg-amber-50 text-amber-700 ring-2 ring-amber-300 hover:bg-amber-100"
+                                : "border-zinc-300 bg-white text-zinc-700 hover:border-teal-400 hover:bg-teal-50 hover:text-teal-700")
+                          }
+                        >
+                          {data.tagNamesKr[String(tagId)] ?? `#${tagId}`}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+              ))}
+            </div>
+
             {/* 태그와 구분되는 개인 설정 영역 */}
-            <div className="flex flex-wrap items-center justify-between gap-2 border-b border-zinc-200 bg-zinc-50/70 px-5 py-3">
+            <div className="flex flex-wrap items-center justify-between gap-2 border-y border-zinc-200 bg-zinc-50/70 px-5 py-3">
               <span className="text-xs font-bold uppercase tracking-wider text-zinc-500">
                 개인 설정
                 <span className="ml-2 font-medium normal-case tracking-normal text-zinc-400">
@@ -472,65 +585,6 @@ export default function RecruitmentPage() {
                   </button>
                 </div>
               </div>
-            </div>
-
-            <div className="flex flex-wrap items-center justify-between gap-2 border-y border-zinc-200 bg-zinc-50/70 px-5 py-3">
-              <div className="flex items-center gap-2 text-xs">
-                <span className="font-bold uppercase tracking-wider text-zinc-500">
-                  태그 선택
-                </span>
-                <span
-                  className={
-                    "rounded-full px-2 py-0.5 text-[11px] font-bold " +
-                    (selectedTags.length > 0
-                      ? "bg-teal-600 text-white"
-                      : "bg-zinc-200 text-zinc-500")
-                  }
-                >
-                  {selectedTags.length}/{MAX_SELECTED_TAGS}
-                </span>
-              </div>
-              <button
-                type="button"
-                onClick={() => setSelectedTags([])}
-                disabled={selectedTags.length === 0}
-                className="whitespace-nowrap rounded-full border border-zinc-300 bg-white px-3 py-1 text-[11px] font-medium text-zinc-600 transition-colors hover:bg-zinc-100 disabled:cursor-not-allowed disabled:opacity-40"
-              >
-                선택 초기화
-              </button>
-            </div>
-
-            <div className="flex flex-col divide-y divide-zinc-100">
-              {TAG_GROUPS.map((group) => (
-                <div
-                  key={group.label}
-                  className="flex flex-col gap-2 px-5 py-3.5 sm:flex-row sm:items-start sm:gap-4"
-                >
-                  <span className="w-14 shrink-0 rounded-lg border border-teal-200 bg-teal-50 py-1.5 text-center text-sm font-bold text-teal-700">
-                    {group.label}
-                  </span>
-                  <div className="flex flex-wrap gap-2 pt-px">
-                    {group.tagIds.map((tagId) => {
-                      const selected = selectedTags.includes(tagId);
-                      return (
-                        <button
-                          key={tagId}
-                          type="button"
-                          onClick={() => toggleTag(tagId)}
-                          className={
-                            "whitespace-nowrap rounded-full border px-3.5 py-1.5 text-sm font-medium transition-all " +
-                            (selected
-                              ? "border-teal-600 bg-teal-600 text-white shadow-sm"
-                              : "border-zinc-300 bg-white text-zinc-700 hover:border-teal-400 hover:bg-teal-50 hover:text-teal-700")
-                          }
-                        >
-                          {data.tagNamesKr[String(tagId)] ?? `#${tagId}`}
-                        </button>
-                      );
-                    })}
-                  </div>
-                </div>
-              ))}
             </div>
           </section>
         )}
