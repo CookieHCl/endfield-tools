@@ -26,6 +26,11 @@ const ALL_TAG_IDS = TAG_GROUPS.flatMap((group) => group.tagIds);
 const SENIOR_TAG = 14;
 const TOP_TAG = 11;
 
+// "가치 있는 조합" 정리에 쓸 태그: 특별채용/고급특별채용은 성급 파생 태그라 제외
+const COMBO_TAG_IDS = ALL_TAG_IDS.filter(
+  (id) => id !== TOP_TAG && id !== SENIOR_TAG,
+);
+
 // 성급별 색상 (6~4성은 weapons 페이지와 동일한 팔레트)
 // base: 대표색 / text: 연한 배경 위에 얹는 진한 글자색 / badgeText: base 배경 위 글자색
 const STAR_STYLES: Record<
@@ -79,6 +84,15 @@ interface Combo {
   score: number;
   // 2성 없이 선택된 1성이 포함된 조합 → 같은 보장 성급 내에서 우선 표시
   boosted: boolean;
+}
+
+// 같은 가치(보장 성급 + 1성 저격 여부)를 지니는 태그 조합 묶음
+interface ValueGroup {
+  key: string;
+  label: string;
+  min: number;
+  boosted: boolean;
+  combos: number[][];
 }
 
 // 개인 설정 (localStorage 저장 + JSON 내보내기/불러오기)
@@ -292,6 +306,116 @@ export default function RecruitmentPage() {
     );
     return result;
   }, [data, recruitChars, selectedTags, deselected1Star, ignoreLowRarity]);
+
+  // 태그 선택과 무관하게, "3성 이하 무시"에 걸리지 않는(= 3성 + 1성 저격 이상)
+  // 모든 태그 조합을 가치별로 묶어 정리 (누가 등장하는지는 무시하고 조합만)
+  const valueGroups = useMemo<ValueGroup[]>(() => {
+    if (!data || recruitChars.length === 0) return [];
+
+    // 특별채용/고급특별채용을 뺀 태그로 만들 수 있는 1~3개 조합 전체
+    const tagCombos: number[][] = [];
+    const n = COMBO_TAG_IDS.length;
+    for (let a = 0; a < n; a++) {
+      tagCombos.push([COMBO_TAG_IDS[a]]);
+      for (let b = a + 1; b < n; b++) {
+        tagCombos.push([COMBO_TAG_IDS[a], COMBO_TAG_IDS[b]]);
+        for (let c = b + 1; c < n; c++) {
+          tagCombos.push([COMBO_TAG_IDS[a], COMBO_TAG_IDS[b], COMBO_TAG_IDS[c]]);
+        }
+      }
+    }
+
+    // 가치 순위: 보장 성급이 높을수록, 같은 성급이면 1성 저격이 붙을수록 높음
+    const rankOf = (min: number, boosted: boolean) =>
+      min * 2 + (boosted ? 1 : 0);
+    // 태그 순서와 무관하게 조합을 식별하는 키
+    const comboKey = (tags: number[]) =>
+      [...tags].sort((a, b) => a - b).join(",");
+
+    // 조합별 보장 성급/1성 저격 여부 평가 (combos useMemo와 동일 규칙)
+    const rankByKey = new Map<string, number>();
+    const evaluated: {
+      tags: number[];
+      min: number;
+      boosted: boolean;
+      rank: number;
+    }[] = [];
+    for (const comb of tagCombos) {
+      let chars = recruitChars.filter((char) =>
+        comb.every((tag) => char.tagSet.has(tag)),
+      );
+      // 고급 특별 채용 태그 없이는 6성이 등장하지 않음
+      chars = chars.filter((char) => char.star !== 6);
+      if (chars.length === 0) continue;
+
+      let scoreChars = chars.filter((char) => char.star >= 3);
+      if (scoreChars.length === 0) scoreChars = chars;
+      const min = Math.min(...scoreChars.map((char) => char.star));
+      const boosted =
+        !chars.some((char) => char.star === 2) &&
+        chars.some(
+          (char) => char.star === 1 && !deselected1Star.includes(char.id),
+        );
+
+      const rank = rankOf(min, boosted);
+      rankByKey.set(comboKey(comb), rank);
+      evaluated.push({ tags: comb, min, boosted, rank });
+    }
+
+    // 조합에서 태그를 뺀(= 부분집합) 조합들을 모두 열거
+    const properSubsets = (tags: number[]) => {
+      const subs: number[][] = [];
+      for (let mask = 1; mask < (1 << tags.length) - 1; mask++) {
+        subs.push(tags.filter((_, i) => mask & (1 << i)));
+      }
+      return subs;
+    };
+
+    const tagName = (id: number) => data.tagNamesKr[String(id)] ?? `#${id}`;
+
+    const groupsMap = new Map<string, ValueGroup>();
+    for (const combo of evaluated) {
+      // "3성 이하 무시"에서 살아남는, 3성 + 1성 저격 이상의 가치만 유지
+      if (!(combo.min >= 4 || (combo.min === 3 && combo.boosted))) continue;
+      // 태그를 뺀 조합 중 가치가 같거나 높은 게 있으면 제외
+      // (태그를 더해서 가치가 오르지 않으면 더 넓은 조합에 밀림)
+      const dominated = properSubsets(combo.tags).some(
+        (sub) => (rankByKey.get(comboKey(sub)) ?? -1) >= combo.rank,
+      );
+      if (dominated) continue;
+
+      const key = `${combo.min}-${combo.boosted}`;
+      let group = groupsMap.get(key);
+      if (!group) {
+        group = {
+          key,
+          label: combo.boosted
+            ? `${combo.min}성 + 1성 저격`
+            : `${combo.min}성`,
+          min: combo.min,
+          boosted: combo.boosted,
+          combos: [],
+        };
+        groupsMap.set(key, group);
+      }
+      group.combos.push(combo.tags);
+    }
+
+    const groups = Array.from(groupsMap.values());
+    for (const group of groups) {
+      group.combos.sort(
+        (a, b) =>
+          a.length - b.length ||
+          a.map(tagName).join().localeCompare(b.map(tagName).join(), "ko-KR"),
+      );
+    }
+
+    // 가치 높은 순 (보장 성급 내림차순, 같은 성급이면 1성 저격 우선)
+    groups.sort(
+      (a, b) => b.min - a.min || Number(b.boosted) - Number(a.boosted),
+    );
+    return groups;
+  }, [data, recruitChars, deselected1Star]);
 
   const toggleTag = (tagId: number) => {
     setSelectedTags((prev) => {
@@ -679,6 +803,65 @@ export default function RecruitmentPage() {
                 </table>
               </div>
             )}
+          </section>
+        )}
+
+        {data && valueGroups.length > 0 && (
+          <section className="overflow-hidden rounded-xl border border-zinc-200 bg-white shadow-sm">
+            <div className="flex flex-wrap items-center justify-between gap-2 border-b border-zinc-200 bg-zinc-50/70 px-5 py-3">
+              <span className="text-xs font-bold uppercase tracking-wider text-zinc-500">
+                가치 있는 태그 조합 총정리
+                <span className="ml-2 font-medium normal-case tracking-normal text-zinc-400">
+                  3성 + 1성 저격 이상
+                </span>
+              </span>
+              <span className="text-xs text-zinc-400">
+                {valueGroups.reduce((sum, g) => sum + g.combos.length, 0)}개 조합
+              </span>
+            </div>
+
+            <div className="flex flex-col divide-y divide-zinc-100">
+              {valueGroups.map((group) => (
+                <div key={group.key} className="flex flex-col gap-3 px-5 py-4">
+                  <div className="flex items-center gap-2">
+                    <StarBadge star={group.min} />
+                    {group.boosted && (
+                      <span
+                        title="2성 없이 선택된 1성이 포함된 조합"
+                        className="rounded-md border border-zinc-400 bg-zinc-100 px-1.5 py-0.5 text-[10px] font-bold text-zinc-600"
+                      >
+                        1★ 저격
+                      </span>
+                    )}
+                    <span className="text-sm font-bold text-zinc-800">
+                      {group.label}
+                    </span>
+                    <span className="text-xs font-medium text-zinc-400">
+                      {group.combos.length}개
+                    </span>
+                  </div>
+                  <div className="flex flex-wrap gap-2">
+                    {group.combos.map((combo) => (
+                      <div
+                        key={combo.join("-")}
+                        className="flex flex-wrap items-center gap-1 rounded-lg border border-zinc-200 bg-zinc-50 px-2 py-1.5"
+                      >
+                        {combo.map((tagId, idx) => (
+                          <span key={tagId} className="flex items-center gap-1">
+                            {idx > 0 && (
+                              <span className="text-zinc-300">+</span>
+                            )}
+                            <span className="whitespace-nowrap rounded-md border border-teal-200 bg-teal-50 px-2.5 py-1 text-xs font-semibold text-teal-700">
+                              {data.tagNamesKr[String(tagId)] ?? `#${tagId}`}
+                            </span>
+                          </span>
+                        ))}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
           </section>
         )}
       </main>
