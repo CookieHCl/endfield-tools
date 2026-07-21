@@ -17,12 +17,16 @@ import { cleanNumber, formatNumber } from "@/lib/factory";
 type FactoryNum = 1 | 2 | 3 | 4;
 const FACTORIES: FactoryNum[] = [1, 2, 3, 4];
 
+// 입력이 귀속되는 대상: "all"이면 공장 전체(총합에만), 숫자면 해당 공장 열에만.
+type InputTarget = FactoryNum | "all";
+
 // 공짜로 들어오는 자원. infinite면 rate는 무시하고 무한 공급으로 취급.
 interface InputRow {
   id: string;
   itemId: string;
   rate: number;
   infinite: boolean;
+  target: InputTarget;
 }
 
 // 공장에 배치한 레시피 한 줄. count는 실행 배수(소수 가능), 나머지 필드는 전부 파생.
@@ -47,10 +51,12 @@ interface FactoryState {
   targetPerMin: number;
 }
 
-// 결산 셀: 무한 입력 여부 + 유한 순량
+// 결산 셀: 무한 공급 여부 + 유한 순량(공장 열은 로컬 수지, 전체 열은 공유풀 순수지).
+// idle = 그 공장에만 남아 다른 공장은 못 쓰는 유휴량 (공장 열 전용).
 interface Cell {
   inf: boolean;
   delta: number;
+  idle?: number;
 }
 
 /// 헬퍼 -----------------------------------------------------------------
@@ -414,33 +420,51 @@ export default function FactoryPage() {
 
   /// 결산 계산 ----------------------------------------------------------
   const summary = useMemo(() => {
-    // factoryNet[0..3] = 공장 1..4의 아이템별 분당 순생산
-    const factoryNet: Map<string, number>[] = [
+    const add = (map: Map<string, number>, key: string, v: number) =>
+      map.set(key, (map.get(key) ?? 0) + v);
+    const maps4 = (): Map<string, number>[] => [
       new Map(),
       new Map(),
       new Map(),
       new Map(),
     ];
-    const add = (map: Map<string, number>, key: string, v: number) =>
-      map.set(key, (map.get(key) ?? 0) + v);
 
+    // 공장별 레시피 생산량/소비량 (분당). 생산물은 공유풀로 흐른다.
+    const prodByF = maps4();
+    const consByF = maps4();
     for (const line of lines) {
       const recipe = RECIPE_BY_ID.get(line.recipeId);
       if (!recipe) continue;
       const per = (60 / recipe.time) * line.count;
-      const fm = factoryNet[line.factory - 1];
       for (const [item, qty] of Object.entries(recipe.out ?? {}))
-        add(fm, item, qty * per);
+        add(prodByF[line.factory - 1], item, qty * per);
       for (const [item, qty] of Object.entries(recipe.in ?? {}))
-        add(fm, item, -qty * per);
+        add(consByF[line.factory - 1], item, qty * per);
     }
 
-    // 자유 입력 (총합에만 반영)
-    const inputDelta = new Map<string, number>();
-    const inputInf = new Set<string>();
+    // 입력: 배치(공장 전용)는 그 공장 부족분만 메우고 남으면 유휴. 전체는 공유풀에만.
+    const exclByF = maps4();
+    const exclInfByF: Set<string>[] = [
+      new Set(),
+      new Set(),
+      new Set(),
+      new Set(),
+    ];
+    const allDelta = new Map<string, number>();
+    const allInf = new Set<string>();
     for (const inp of inputs) {
-      if (inp.infinite) inputInf.add(inp.itemId);
-      else add(inputDelta, inp.itemId, inp.rate);
+      const target: InputTarget =
+        inp.target === 1 || inp.target === 2 || inp.target === 3 || inp.target === 4
+          ? inp.target
+          : "all";
+      if (target === "all") {
+        if (inp.infinite) allInf.add(inp.itemId);
+        else add(allDelta, inp.itemId, inp.rate);
+      } else if (inp.infinite) {
+        exclInfByF[target - 1].add(inp.itemId);
+      } else {
+        add(exclByF[target - 1], inp.itemId, inp.rate);
+      }
     }
 
     // 결산 대상 = 입력으로 지정했거나 레시피 입출력에 쓰인 자원만
@@ -455,13 +479,35 @@ export default function FactoryPage() {
 
     const totalById = new Map<string, Cell>();
     const rows = Array.from(resourceIds, (item) => {
-      const factories: Cell[] = factoryNet.map((m) => ({
-        inf: false,
-        delta: m.get(item) ?? 0,
-      }));
-      const delta =
-        factories.reduce((s, c) => s + c.delta, 0) + (inputDelta.get(item) ?? 0);
-      const total: Cell = { inf: inputInf.has(item), delta };
+      let contributionSum = 0; // 각 공장이 공유풀에 실제로 기여하는 유한량 합
+      const factories: Cell[] = FACTORIES.map((f) => {
+        const prod = prodByF[f - 1].get(item) ?? 0;
+        const cons = consByF[f - 1].get(item) ?? 0;
+        const excl = exclByF[f - 1].get(item) ?? 0;
+        const exclInf = exclInfByF[f - 1].has(item);
+        const net = prod - cons; // 레시피 순생산 (이동 가능)
+        const shortfall = Math.max(0, cons - prod); // 자체 생산으로 못 메우는 소비
+        const localBalance = net + excl; // 공장 열에 보이는 값
+
+        let usedExcl: number; // 실제로 그 공장 소비를 메운 배치입력
+        let idle: number; // 못 쓰고 남은 배치입력 (유휴)
+        if (exclInf) {
+          usedExcl = shortfall; // 무한 배치입력은 부족분을 전부 메움
+          idle = Infinity; // 남는 무한 공급 (배지 표기 안 함)
+        } else if (excl > 0) {
+          usedExcl = Math.min(excl, shortfall);
+          idle = excl - usedExcl;
+        } else {
+          usedExcl = excl; // 음수 = 드레인, 전량 반영
+          idle = 0;
+        }
+        contributionSum += net + usedExcl; // 공유풀 기여분 (유한)
+        return { inf: exclInf, delta: localBalance, idle };
+      });
+
+      // 전체 합 = 전체입력 + 공유풀 기여분 합. 배치된 무한 공급은 갇히므로 총합을 무한으로 만들지 않는다.
+      const delta = (allDelta.get(item) ?? 0) + contributionSum;
+      const total: Cell = { inf: allInf.has(item), delta };
       totalById.set(item, total);
       return { itemId: item, name: itemName(item), total, factories };
     });
@@ -505,7 +551,7 @@ export default function FactoryPage() {
   const addInput = () =>
     setInputs((prev) => [
       ...prev,
-      { id: uid(), itemId: ITEMS[0].id, rate: 0, infinite: false },
+      { id: uid(), itemId: ITEMS[0].id, rate: 0, infinite: false, target: "all" },
     ]);
   const addLine = (recipeId: string) =>
     setLines((prev) => [
@@ -613,6 +659,30 @@ export default function FactoryPage() {
                       />
                     </div>
                   </label>
+                  <div className="flex items-center gap-1.5">
+                    <span className="text-xs text-zinc-500">배치</span>
+                    <div className="flex gap-1">
+                      {(["all", 1, 2, 3, 4] as const).map((t) => {
+                        const active = (row.target ?? "all") === t;
+                        return (
+                          <button
+                            key={t}
+                            type="button"
+                            onClick={() => patchInput(row.id, { target: t })}
+                            title={t === "all" ? "공장 전체" : `공장 ${t}에만 공급`}
+                            className={
+                              "h-7 rounded-md border px-1.5 text-xs font-semibold transition-colors " +
+                              (active
+                                ? "border-amber-500 bg-amber-500 text-white"
+                                : "border-zinc-300 bg-white text-zinc-500 hover:bg-zinc-100")
+                            }
+                          >
+                            {t === "all" ? "전체" : t}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
                   <button
                     type="button"
                     onClick={() =>
@@ -916,17 +986,33 @@ export default function FactoryPage() {
                       >
                         {cellText(row.total)}
                       </td>
-                      {row.factories.map((cell, i) => (
-                        <td
-                          key={i}
-                          className={
-                            "px-3 py-2 text-right tabular-nums " +
-                            cellClass(cell)
-                          }
-                        >
-                          {cellText(cell)}
-                        </td>
-                      ))}
+                      {row.factories.map((cell, i) => {
+                        const idle =
+                          cell.idle !== undefined && Number.isFinite(cell.idle)
+                            ? cleanNumber(cell.idle)
+                            : 0;
+                        return (
+                          <td
+                            key={i}
+                            className={
+                              "px-3 py-2 text-right tabular-nums " +
+                              cellClass(cell)
+                            }
+                          >
+                            <span className="inline-flex items-center justify-end gap-1">
+                              {cellText(cell)}
+                              {idle > 0 && (
+                                <span
+                                  title="이 공장에서만 남아 다른 공장은 못 씀 (전체 합에 안 잡힘)"
+                                  className="rounded bg-zinc-100 px-1 text-[10px] font-medium text-zinc-400"
+                                >
+                                  유휴 {formatNumber(idle)}
+                                </span>
+                              )}
+                            </span>
+                          </td>
+                        );
+                      })}
                     </tr>
                   ))}
                 </tbody>
