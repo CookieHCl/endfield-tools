@@ -10,6 +10,7 @@ import {
   type FactoryRecipe,
 } from "@/data/factory-db";
 import { FactoryIcon } from "@/components/factory-icon";
+import { ImportExportButtons } from "@/components/import-export-buttons";
 import { cleanNumber, formatNumber } from "@/lib/factory";
 
 /// 타입 -----------------------------------------------------------------
@@ -609,13 +610,16 @@ export default function FactoryPage() {
               브라우저에 자동 저장 · 자원 {ITEMS.length}종 · 레시피 {RECIPES.length}종
             </p>
           </div>
-          <button
-            type="button"
-            onClick={resetAll}
-            className="shrink-0 rounded-full border border-zinc-300 bg-white px-3 py-1 text-xs font-medium text-zinc-600 transition-colors hover:bg-zinc-100"
-          >
-            전체 초기화
-          </button>
+          <div className="flex shrink-0 flex-col items-end gap-1">
+            <ImportExportButtons />
+            <button
+              type="button"
+              onClick={resetAll}
+              className="rounded-full border border-zinc-300 bg-white px-3 py-1 text-[11px] font-medium text-zinc-600 transition-colors hover:bg-zinc-100"
+            >
+              공장만 초기화
+            </button>
+          </div>
         </header>
 
         {/* 1. 공장 입력 -------------------------------------------------- */}

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import { ImportExportButtons } from "@/components/import-export-buttons";
 
 // 명일방주 원작 데이터 (arkntools.app이 쓰는 데이터 소스, GitHub Pages라 CORS 허용됨)
 const DATA_BASE = "https://data.arkntools.app";
@@ -474,46 +475,6 @@ export default function RecruitmentPage() {
     );
   };
 
-  const handleExportSettings = () => {
-    try {
-      const settings: RecruitSettings = { deselected1Star, ignoreLowRarity };
-      const json = JSON.stringify(settings, null, 2);
-      const blob = new Blob([json], { type: "application/json" });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = "endfield-recruitment-settings.json";
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      URL.revokeObjectURL(url);
-    } catch {
-      // ignore
-    }
-  };
-
-  const handleImportSettings = (file: File | null) => {
-    if (!file) return;
-    const reader = new FileReader();
-    reader.onload = () => {
-      try {
-        const parsed = JSON.parse(
-          String(reader.result),
-        ) as Partial<RecruitSettings>;
-        if (Array.isArray(parsed.deselected1Star)) {
-          setDeselected1Star(
-            parsed.deselected1Star.filter((v) => typeof v === "string"),
-          );
-        }
-        if (typeof parsed.ignoreLowRarity === "boolean") {
-          setIgnoreLowRarity(parsed.ignoreLowRarity);
-        }
-      } catch {
-        // ignore parse errors
-      }
-    };
-    reader.readAsText(file);
-  };
 
   return (
     <div className="min-h-screen bg-zinc-50 py-10 px-4 text-zinc-900">
@@ -638,26 +599,7 @@ export default function RecruitmentPage() {
                   브라우저에 자동 저장
                 </span>
               </span>
-              <div className="flex gap-2">
-                <button
-                  type="button"
-                  onClick={handleExportSettings}
-                  className="whitespace-nowrap rounded-full border border-zinc-300 bg-white px-3 py-1 text-[11px] font-medium text-zinc-600 transition-colors hover:bg-zinc-100"
-                >
-                  JSON 내보내기
-                </button>
-                <label className="inline-flex cursor-pointer items-center whitespace-nowrap rounded-full border border-zinc-300 bg-white px-3 py-1 text-[11px] font-medium text-zinc-600 transition-colors hover:bg-zinc-100">
-                  JSON 불러오기
-                  <input
-                    type="file"
-                    accept="application/json"
-                    className="hidden"
-                    onChange={(e) =>
-                      handleImportSettings(e.target.files?.[0] ?? null)
-                    }
-                  />
-                </label>
-              </div>
+              <ImportExportButtons />
             </div>
 
             <div className="flex flex-col divide-y divide-zinc-100">

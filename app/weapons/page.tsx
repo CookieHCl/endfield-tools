@@ -5,6 +5,7 @@ import { useMemo, useState } from "react";
 import { ALL_WEAPONS } from "../../data/db";
 import { useOwnedWeapons } from "../owned-weapons-provider";
 import { imgPath } from "@/lib/utils";
+import { ImportExportButtons } from "@/components/import-export-buttons";
 
 const STAR_COLORS: Record<number, string> = {
   4: "#9451f8",
@@ -13,47 +14,13 @@ const STAR_COLORS: Record<number, string> = {
 };
 
 export default function WeaponsPage() {
-  const { ownedNames, setOwnedNames, toggleOwned } = useOwnedWeapons();
+  const { ownedNames, toggleOwned } = useOwnedWeapons();
   const [starFilter, setStarFilter] = useState<{ 4: boolean; 5: boolean; 6: boolean }>({
     4: false,
     5: true,
     6: true,
   });
   const [prioritizeOwned, setPrioritizeOwned] = useState(false);
-
-  const handleExportJson = () => {
-    try {
-      const data = JSON.stringify(ownedNames, null, 2);
-      const blob = new Blob([data], { type: "application/json" });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = "endfield-weapons-owned.json";
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      URL.revokeObjectURL(url);
-    } catch {
-      // ignore
-    }
-  };
-
-  const handleImportJson = (file: File | null) => {
-    if (!file) return;
-    const reader = new FileReader();
-    reader.onload = () => {
-      try {
-        const parsed = JSON.parse(String(reader.result));
-        if (Array.isArray(parsed)) {
-          const names = parsed.filter((v) => typeof v === "string");
-          setOwnedNames(names);
-        }
-      } catch {
-        // ignore parse errors
-      }
-    };
-    reader.readAsText(file);
-  };
 
   const toggleStarFilter = (star: 4 | 5 | 6) => {
     setStarFilter((prev) => ({
@@ -105,26 +72,7 @@ export default function WeaponsPage() {
                 현재 보유: {ownedNames.length} / {ALL_WEAPONS.length}
               </p>
             </div>
-            <div className="flex flex-col items-end gap-1 text-[11px]">
-              <div className="flex gap-2">
-                <button
-                  type="button"
-                  onClick={handleExportJson}
-                  className="rounded-full border border-zinc-300 bg-white px-3 py-1 font-medium text-zinc-700 transition-colors hover:bg-zinc-50"
-                >
-                  JSON 내보내기
-                </button>
-                <label className="inline-flex cursor-pointer items-center rounded-full border border-zinc-300 bg-white px-3 py-1 font-medium text-zinc-700 transition-colors hover:bg-zinc-50">
-                  JSON 불러오기
-                  <input
-                    type="file"
-                    accept="application/json"
-                    className="hidden"
-                    onChange={(e) => handleImportJson(e.target.files?.[0] ?? null)}
-                  />
-                </label>
-              </div>
-            </div>
+            <ImportExportButtons />
           </div>
         </header>
 
