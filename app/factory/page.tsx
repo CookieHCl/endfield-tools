@@ -910,7 +910,7 @@ export default function FactoryPage() {
 
         {/* 3. 결산 ------------------------------------------------------ */}
         <Section title="결산" hint="분당 순생산 기준">
-          {/* 관리권 생산량 */}
+          {/* 관리권 생산량 (생산량 / 목표) */}
           <div className="flex flex-wrap items-end gap-6 border-b border-zinc-200 bg-zinc-50/70 px-5 py-4">
             <div>
               <div className="text-xs font-semibold uppercase tracking-wider text-zinc-500">
@@ -918,6 +918,12 @@ export default function FactoryPage() {
               </div>
               <div className="text-2xl font-bold tabular-nums text-amber-600">
                 {voucherText}
+                {targetPerMin > 0 && (
+                  <span className="font-medium text-zinc-400">
+                    {" / "}
+                    {formatNumber(targetPerMin)}
+                  </span>
+                )}
               </div>
             </div>
             <div>
@@ -926,21 +932,26 @@ export default function FactoryPage() {
               </div>
               <div className="text-2xl font-bold tabular-nums text-amber-600">
                 {voucherHourText}
+                {targetPerMin > 0 && (
+                  <span className="font-medium text-zinc-400">
+                    {" / "}
+                    {formatNumber(targetPerMin * 60)}
+                  </span>
+                )}
               </div>
             </div>
-            {targetPerMin > 0 && !summary.voucherInf && (
-              <div className="ml-auto text-right">
-                <div className="text-xs text-zinc-500">목표 대비</div>
-                <div
-                  className={
-                    "text-lg font-bold tabular-nums " +
-                    (summary.voucherPerMin >= targetPerMin
-                      ? "text-blue-600"
-                      : "text-red-600")
-                  }
-                >
-                  {formatNumber((summary.voucherPerMin / targetPerMin) * 100)}%
-                </div>
+            {targetPerMin > 0 && (
+              <div
+                className={
+                  "ml-auto text-lg font-bold " +
+                  (summary.voucherInf || summary.voucherPerMin >= targetPerMin
+                    ? "text-blue-600"
+                    : "text-red-600")
+                }
+              >
+                {summary.voucherInf || summary.voucherPerMin >= targetPerMin
+                  ? "관리권 목표 달성!"
+                  : "관리권 목표 미달"}
               </div>
             )}
           </div>
