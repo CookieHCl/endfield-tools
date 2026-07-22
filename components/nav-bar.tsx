@@ -10,6 +10,7 @@ export function NavBar() {
     { href: "/dungeon-farm", label: "기질 파밍 장소" },
     { href: "/weapons", label: "보유 무기 관리" },
     { href: "/factory", label: "공장 계산기" },
+    { href: "/process", label: "공정 관리" },
     { href: "/recruitment", label: "공개모집 계산기" },
   ];
 

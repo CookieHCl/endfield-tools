@@ -12,18 +12,25 @@ export function FactoryIcon({
   size = 32,
   className = "",
   title,
+  ring = false,
 }: {
   id: string;
   size?: number;
   className?: string;
   title?: string;
+  // 공정(사용자 정의) 레시피 아이콘 구분용 파란 테두리
+  ring?: boolean;
 }) {
   const icon = ICON_BY_ID.get(id);
   // 시트 크기를 몰라도 되도록 64px 셀을 그린 뒤 transform으로 축소한다.
   const scale = size / CELL;
   return (
     <span
-      className={"inline-block shrink-0 " + className}
+      className={
+        "inline-block shrink-0 " +
+        (ring ? "rounded-md ring-2 ring-blue-500 " : "") +
+        className
+      }
       style={{ width: size, height: size, overflow: "hidden" }}
       title={title}
       aria-hidden={title ? undefined : true}

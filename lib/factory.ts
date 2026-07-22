@@ -13,3 +13,11 @@ export function cleanNumber(x: number): number {
 export function formatNumber(x: number): string {
   return String(cleanNumber(x));
 }
+
+/** 목록 항목용 고유 id */
+export function uid(): string {
+  if (typeof crypto !== "undefined" && crypto.randomUUID) {
+    return crypto.randomUUID();
+  }
+  return `${Date.now()}-${Math.random().toString(36).slice(2)}`;
+}

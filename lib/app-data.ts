@@ -4,6 +4,7 @@ const KEYS = {
   ownedWeapons: "ownedWeapons",
   recruitmentSettings: "recruitmentSettings",
   factoryCalculator: "factoryCalculator",
+  factoryProcesses: "factoryProcesses",
 } as const;
 
 export interface AppData {
@@ -11,6 +12,7 @@ export interface AppData {
   ownedWeapons?: unknown;
   recruitmentSettings?: unknown;
   factoryCalculator?: unknown;
+  factoryProcesses?: unknown;
 }
 
 function readKey(key: string): unknown {
@@ -29,6 +31,7 @@ export function exportAllData(): string {
     ownedWeapons: readKey(KEYS.ownedWeapons),
     recruitmentSettings: readKey(KEYS.recruitmentSettings),
     factoryCalculator: readKey(KEYS.factoryCalculator),
+    factoryProcesses: readKey(KEYS.factoryProcesses),
   };
   return JSON.stringify(data, null, 2);
 }
@@ -76,11 +79,13 @@ export function importAllData(text: string): boolean {
   if (
     "ownedWeapons" in obj ||
     "recruitmentSettings" in obj ||
-    "factoryCalculator" in obj
+    "factoryCalculator" in obj ||
+    "factoryProcesses" in obj
   ) {
     set(KEYS.ownedWeapons, obj.ownedWeapons);
     set(KEYS.recruitmentSettings, obj.recruitmentSettings);
     set(KEYS.factoryCalculator, obj.factoryCalculator);
+    set(KEYS.factoryProcesses, obj.factoryProcesses);
     return true;
   }
 
