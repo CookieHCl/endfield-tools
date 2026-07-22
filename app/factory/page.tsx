@@ -93,6 +93,154 @@ function cellClass(cell: Cell): string {
   return "text-zinc-400";
 }
 
+/// 자원별 수지 계산 -----------------------------------------------------
+// 전체 합(공유풀) + 공장별 결산 셀을 자원 id별로 반환한다.
+// 결산 표(summary)와 "최대화" 계산에서 공유한다.
+function computeBalances(
+  lines: RecipeLine[],
+  inputs: InputRow[],
+): Map<string, { total: Cell; factories: Cell[] }> {
+  const add = (map: Map<string, number>, key: string, v: number) =>
+    map.set(key, (map.get(key) ?? 0) + v);
+  const maps4 = (): Map<string, number>[] => [
+    new Map(),
+    new Map(),
+    new Map(),
+    new Map(),
+  ];
+
+  // 공장별 레시피 생산량/소비량 (분당). 생산물은 공유풀로 흐른다.
+  const prodByF = maps4();
+  const consByF = maps4();
+  for (const line of lines) {
+    const recipe = RECIPE_BY_ID.get(line.recipeId);
+    if (!recipe) continue;
+    const per = (60 / recipe.time) * line.count;
+    for (const [item, qty] of Object.entries(recipe.out ?? {}))
+      add(prodByF[line.factory - 1], item, qty * per);
+    for (const [item, qty] of Object.entries(recipe.in ?? {}))
+      add(consByF[line.factory - 1], item, qty * per);
+  }
+
+  // 입력: 배치(공장 전용)는 그 공장 부족분만 메우고 남으면 유휴. 전체는 공유풀에만.
+  const exclByF = maps4();
+  const exclInfByF: Set<string>[] = [
+    new Set(),
+    new Set(),
+    new Set(),
+    new Set(),
+  ];
+  const allDelta = new Map<string, number>();
+  const allInf = new Set<string>();
+  for (const inp of inputs) {
+    const target: InputTarget =
+      inp.target === 1 || inp.target === 2 || inp.target === 3 || inp.target === 4
+        ? inp.target
+        : "all";
+    if (target === "all") {
+      if (inp.infinite) allInf.add(inp.itemId);
+      else add(allDelta, inp.itemId, inp.rate);
+    } else if (inp.infinite) {
+      exclInfByF[target - 1].add(inp.itemId);
+    } else {
+      add(exclByF[target - 1], inp.itemId, inp.rate);
+    }
+  }
+
+  // 결산 대상 = 입력으로 지정했거나 레시피 입출력에 쓰인 자원만
+  const resourceIds = new Set<string>();
+  inputs.forEach((i) => resourceIds.add(i.itemId));
+  for (const line of lines) {
+    const recipe = RECIPE_BY_ID.get(line.recipeId);
+    if (!recipe) continue;
+    Object.keys(recipe.out ?? {}).forEach((k) => resourceIds.add(k));
+    Object.keys(recipe.in ?? {}).forEach((k) => resourceIds.add(k));
+  }
+
+  const byId = new Map<string, { total: Cell; factories: Cell[] }>();
+  for (const item of resourceIds) {
+    let contributionSum = 0; // 각 공장이 공유풀에 실제로 기여하는 유한량 합
+    const factories: Cell[] = FACTORIES.map((f) => {
+      const prod = prodByF[f - 1].get(item) ?? 0;
+      const cons = consByF[f - 1].get(item) ?? 0;
+      const excl = exclByF[f - 1].get(item) ?? 0;
+      const exclInf = exclInfByF[f - 1].has(item);
+      const net = prod - cons; // 레시피 순생산 (이동 가능)
+      const shortfall = Math.max(0, cons - prod); // 자체 생산으로 못 메우는 소비
+      const localBalance = net + excl; // 공장 열에 보이는 값
+
+      let usedExcl: number; // 실제로 그 공장 소비를 메운 배치입력
+      let idle: number; // 못 쓰고 남은 배치입력 (유휴)
+      if (exclInf) {
+        usedExcl = shortfall; // 무한 배치입력은 부족분을 전부 메움
+        idle = Infinity; // 남는 무한 공급 (배지 표기 안 함)
+      } else if (excl > 0) {
+        usedExcl = Math.min(excl, shortfall);
+        idle = excl - usedExcl;
+      } else {
+        usedExcl = excl; // 음수 = 드레인, 전량 반영
+        idle = 0;
+      }
+      contributionSum += net + usedExcl; // 공유풀 기여분 (유한)
+      return { inf: exclInf, delta: localBalance, idle };
+    });
+
+    // 전체 합 = 전체입력 + 공유풀 기여분 합. 배치된 무한 공급은 갇히므로 총합을 무한으로 만들지 않는다.
+    const delta = (allDelta.get(item) ?? 0) + contributionSum;
+    const total: Cell = { inf: allInf.has(item), delta };
+    byId.set(item, { total, factories });
+  }
+
+  return byId;
+}
+
+/// "최대화" 가능 여부 ---------------------------------------------------
+// ok       → 계산된 최대 수량으로 맞출 수 있음
+// no-input → 입력이 없는 레시피 (맞출 게 없음)
+// deficit  → 입력 자원의 가용 합이 0 이하 (부족해서 최대화 불가) → 빨간 비활성
+// unbounded→ 입력이 전부 무한 공급 (상한을 정할 수 없음)
+type MaxState =
+  | { kind: "ok"; value: number }
+  | { kind: "no-input" }
+  | { kind: "deficit" }
+  | { kind: "unbounded" };
+
+function maxStateForLine(
+  line: RecipeLine,
+  lines: RecipeLine[],
+  inputs: InputRow[],
+): MaxState {
+  const recipe = RECIPE_BY_ID.get(line.recipeId);
+  if (!recipe) return { kind: "no-input" };
+  const ins = Object.entries(recipe.in ?? {});
+  if (ins.length === 0) return { kind: "no-input" };
+
+  // 이 레시피를 제외한 나머지 상태에서의 가용량
+  const balances = computeBalances(
+    lines.filter((l) => l.id !== line.id),
+    inputs,
+  );
+
+  let raw = Infinity;
+  for (const [item, qty] of ins) {
+    const perCount = (qty * 60) / recipe.time; // 수량 1개당 분당 소비
+    if (perCount <= 0) continue;
+    const b = balances.get(item);
+    const total = b?.total ?? { inf: false, delta: 0 };
+    if (total.inf) continue; // 전체 무한 공급 → 제한 안 함
+    const cell = b?.factories[line.factory - 1];
+    if (cell?.inf) continue; // 이 공장에 무한 배치입력 → 제한 안 함
+    // 가용량 = 공유풀 순량 + 이 공장에 남아도는 배치입력(유휴)
+    const idle = cell && Number.isFinite(cell.idle ?? 0) ? cell.idle ?? 0 : 0;
+    raw = Math.min(raw, (total.delta + idle) / perCount);
+  }
+
+  if (!Number.isFinite(raw)) return { kind: "unbounded" };
+  const value = cleanNumber(raw);
+  if (value <= 0) return { kind: "deficit" };
+  return { kind: "ok", value };
+}
+
 /// 숫자 입력 (연동 필드) --------------------------------------------------
 // value는 외부 상태에서 내려오고, 포커스 중에는 로컬 문자열을 유지해 자유 입력을 허용한다.
 // 유효한 숫자가 입력되면 즉시 onChange → 형제 필드들이 같이 갱신된다.
@@ -166,6 +314,39 @@ function RecipeFormula({ recipe }: { recipe: FactoryRecipe }) {
       <span className="ml-1 rounded bg-zinc-100 px-1 text-[10px] text-zinc-400">
         {recipe.time}s
       </span>
+    </div>
+  );
+}
+
+/// 배치된 레시피의 입출력 자원 한 칸 (큰 아이콘 · 이름 · 분당 수량 입력) ----
+// 세로 카드 형태라 자원이 많아도 그리드로 깔끔하게 줄바꿈된다.
+function ResourceField({
+  itemId,
+  ratePerMin,
+  onRate,
+  titleSuffix,
+}: {
+  itemId: string;
+  ratePerMin: number;
+  onRate: (n: number) => void;
+  titleSuffix: string;
+}) {
+  return (
+    <div
+      className="flex w-28 flex-col items-center gap-1 text-center"
+      title={`${itemName(itemId)} ${titleSuffix}`}
+    >
+      <FactoryIcon id={itemId} size={40} />
+      {/* 이름 영역 높이를 2줄로 고정 → 이름 길이와 무관하게 카드 높이가 일정하다.
+          2줄을 넘으면 …으로 자르고, 전체 이름은 카드 hover 툴팁으로 확인. */}
+      <div className="flex h-8 items-center">
+        <span className="line-clamp-2 text-xs leading-tight text-zinc-600">
+          {itemName(itemId)}
+        </span>
+      </div>
+      <div className="w-full">
+        <NumInput value={ratePerMin} onChange={onRate} allowNegative={false} />
+      </div>
     </div>
   );
 }
@@ -421,94 +602,9 @@ export default function FactoryPage() {
 
   /// 결산 계산 ----------------------------------------------------------
   const summary = useMemo(() => {
-    const add = (map: Map<string, number>, key: string, v: number) =>
-      map.set(key, (map.get(key) ?? 0) + v);
-    const maps4 = (): Map<string, number>[] => [
-      new Map(),
-      new Map(),
-      new Map(),
-      new Map(),
-    ];
-
-    // 공장별 레시피 생산량/소비량 (분당). 생산물은 공유풀로 흐른다.
-    const prodByF = maps4();
-    const consByF = maps4();
-    for (const line of lines) {
-      const recipe = RECIPE_BY_ID.get(line.recipeId);
-      if (!recipe) continue;
-      const per = (60 / recipe.time) * line.count;
-      for (const [item, qty] of Object.entries(recipe.out ?? {}))
-        add(prodByF[line.factory - 1], item, qty * per);
-      for (const [item, qty] of Object.entries(recipe.in ?? {}))
-        add(consByF[line.factory - 1], item, qty * per);
-    }
-
-    // 입력: 배치(공장 전용)는 그 공장 부족분만 메우고 남으면 유휴. 전체는 공유풀에만.
-    const exclByF = maps4();
-    const exclInfByF: Set<string>[] = [
-      new Set(),
-      new Set(),
-      new Set(),
-      new Set(),
-    ];
-    const allDelta = new Map<string, number>();
-    const allInf = new Set<string>();
-    for (const inp of inputs) {
-      const target: InputTarget =
-        inp.target === 1 || inp.target === 2 || inp.target === 3 || inp.target === 4
-          ? inp.target
-          : "all";
-      if (target === "all") {
-        if (inp.infinite) allInf.add(inp.itemId);
-        else add(allDelta, inp.itemId, inp.rate);
-      } else if (inp.infinite) {
-        exclInfByF[target - 1].add(inp.itemId);
-      } else {
-        add(exclByF[target - 1], inp.itemId, inp.rate);
-      }
-    }
-
-    // 결산 대상 = 입력으로 지정했거나 레시피 입출력에 쓰인 자원만
-    const resourceIds = new Set<string>();
-    inputs.forEach((i) => resourceIds.add(i.itemId));
-    for (const line of lines) {
-      const recipe = RECIPE_BY_ID.get(line.recipeId);
-      if (!recipe) continue;
-      Object.keys(recipe.out ?? {}).forEach((k) => resourceIds.add(k));
-      Object.keys(recipe.in ?? {}).forEach((k) => resourceIds.add(k));
-    }
-
+    const byId = computeBalances(lines, inputs);
     const totalById = new Map<string, Cell>();
-    const rows = Array.from(resourceIds, (item) => {
-      let contributionSum = 0; // 각 공장이 공유풀에 실제로 기여하는 유한량 합
-      const factories: Cell[] = FACTORIES.map((f) => {
-        const prod = prodByF[f - 1].get(item) ?? 0;
-        const cons = consByF[f - 1].get(item) ?? 0;
-        const excl = exclByF[f - 1].get(item) ?? 0;
-        const exclInf = exclInfByF[f - 1].has(item);
-        const net = prod - cons; // 레시피 순생산 (이동 가능)
-        const shortfall = Math.max(0, cons - prod); // 자체 생산으로 못 메우는 소비
-        const localBalance = net + excl; // 공장 열에 보이는 값
-
-        let usedExcl: number; // 실제로 그 공장 소비를 메운 배치입력
-        let idle: number; // 못 쓰고 남은 배치입력 (유휴)
-        if (exclInf) {
-          usedExcl = shortfall; // 무한 배치입력은 부족분을 전부 메움
-          idle = Infinity; // 남는 무한 공급 (배지 표기 안 함)
-        } else if (excl > 0) {
-          usedExcl = Math.min(excl, shortfall);
-          idle = excl - usedExcl;
-        } else {
-          usedExcl = excl; // 음수 = 드레인, 전량 반영
-          idle = 0;
-        }
-        contributionSum += net + usedExcl; // 공유풀 기여분 (유한)
-        return { inf: exclInf, delta: localBalance, idle };
-      });
-
-      // 전체 합 = 전체입력 + 공유풀 기여분 합. 배치된 무한 공급은 갇히므로 총합을 무한으로 만들지 않는다.
-      const delta = (allDelta.get(item) ?? 0) + contributionSum;
-      const total: Cell = { inf: allInf.has(item), delta };
+    const rows = Array.from(byId, ([item, { total, factories }]) => {
       totalById.set(item, total);
       return { itemId: item, name: itemName(item), total, factories };
     });
@@ -573,6 +669,22 @@ export default function FactoryPage() {
     setVouchers((prev) =>
       prev.map((r) => (r.id === id ? { ...r, ...patch } : r)),
     );
+
+  // 각 레시피 줄의 "최대화" 가능 여부 (버튼 상태·계산값 공유)
+  const maxStateByLine = useMemo(() => {
+    const m = new Map<string, MaxState>();
+    for (const line of lines) {
+      m.set(line.id, maxStateForLine(line, lines, inputs));
+    }
+    return m;
+  }, [lines, inputs]);
+
+  // 최대화: 계산된 최대 수량으로 맞춘다. (가능한 경우에만 작동, 다른 설정은 유지)
+  const maximizeLine = (line: RecipeLine) => {
+    const st = maxStateByLine.get(line.id);
+    if (!st || st.kind !== "ok") return;
+    patchLine(line.id, { count: st.value });
+  };
 
   const resetAll = () => {
     if (!window.confirm("공장 계산기의 모든 입력을 초기화할까요?")) return;
@@ -796,9 +908,9 @@ export default function FactoryPage() {
                 const ins = Object.entries(recipe.in ?? {});
                 return (
                   <div key={line.id} className="flex flex-col gap-3 px-5 py-4">
-                    <div className="flex items-center gap-3">
+                    <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
                       <FactoryIcon id={recipe.icon} size={32} />
-                      <div className="min-w-0 flex-1">
+                      <div className="min-w-0 max-w-56">
                         <div className="truncate text-sm font-semibold text-zinc-800">
                           {recipe.name}
                         </div>
@@ -808,27 +920,64 @@ export default function FactoryPage() {
                           </div>
                         )}
                       </div>
-                      <label className="flex items-center gap-1.5">
-                        <span className="text-xs text-zinc-500">수량</span>
-                        <div className="w-24">
-                          <NumInput
-                            value={line.count}
-                            onChange={(n) => patchLine(line.id, { count: n })}
-                            allowNegative={false}
-                          />
-                        </div>
-                      </label>
-                      <button
-                        type="button"
-                        onClick={() =>
-                          setLines((prev) =>
-                            prev.filter((r) => r.id !== line.id),
-                          )
-                        }
-                        className={delBtn}
-                      >
-                        삭제
-                      </button>
+                      {/* 원조 레시피 요약 (레시피당 입력 개수 · 소요 시간) */}
+                      <RecipeFormula recipe={recipe} />
+                      <div className="ml-auto flex items-center gap-2">
+                        {(() => {
+                          const st = maxStateByLine.get(line.id) ?? {
+                            kind: "no-input" as const,
+                          };
+                          const style =
+                            st.kind === "ok"
+                              ? "border-blue-300 bg-blue-50 text-blue-700 hover:bg-blue-100"
+                              : st.kind === "deficit"
+                                ? "cursor-not-allowed border-red-200 bg-red-50 text-red-300"
+                                : "cursor-not-allowed border-zinc-200 bg-zinc-50 text-zinc-300";
+                          const title =
+                            st.kind === "deficit"
+                              ? "입력 자원의 가용 합이 0 이하라 최대화할 수 없습니다"
+                              : st.kind === "no-input"
+                                ? "입력이 없는 레시피라 최대화할 게 없습니다"
+                                : st.kind === "unbounded"
+                                  ? "입력이 무한 공급이라 최대 수량을 정할 수 없습니다"
+                                  : "입력 자원이 모자라지 않는 최대 수량으로 맞춥니다 (다른 설정은 유지)";
+                          return (
+                            <button
+                              type="button"
+                              onClick={() => maximizeLine(line)}
+                              disabled={st.kind !== "ok"}
+                              title={title}
+                              className={
+                                "rounded-full border px-3 py-1 text-xs font-medium transition-colors " +
+                                style
+                              }
+                            >
+                              최대화
+                            </button>
+                          );
+                        })()}
+                        <label className="flex items-center gap-1.5">
+                          <span className="text-xs text-zinc-500">수량</span>
+                          <div className="w-24">
+                            <NumInput
+                              value={line.count}
+                              onChange={(n) => patchLine(line.id, { count: n })}
+                              allowNegative={false}
+                            />
+                          </div>
+                        </label>
+                        <button
+                          type="button"
+                          onClick={() =>
+                            setLines((prev) =>
+                              prev.filter((r) => r.id !== line.id),
+                            )
+                          }
+                          className={delBtn}
+                        >
+                          삭제
+                        </button>
+                      </div>
                     </div>
 
                     <div className="flex flex-wrap items-center gap-x-6 gap-y-3">
@@ -854,52 +1003,50 @@ export default function FactoryPage() {
                         </div>
                       </div>
 
-                      {/* 출력 (분당 산출) */}
-                      {outs.map(([item, qty]) => {
-                        const base = (qty * 60) / recipe.time;
-                        return (
-                          <div
-                            key={"out-" + item}
-                            className="flex items-center gap-1.5"
-                            title={`${itemName(item)} 분당 산출`}
-                          >
-                            <FactoryIcon id={item} size={22} />
-                            <div className="w-24">
-                              <NumInput
-                                value={line.count * base}
-                                onChange={(n) =>
+                      {/* 입력 → 출력 (분당 소비/산출) */}
+                      <div className="flex flex-1 flex-wrap items-center gap-x-4 gap-y-2">
+                        {/* 입력 (분당 소비) */}
+                        {ins.length === 0 ? (
+                          <span className="text-xs text-zinc-400">원자재</span>
+                        ) : (
+                          ins.map(([item, qty]) => {
+                            const base = (qty * 60) / recipe.time;
+                            return (
+                              <ResourceField
+                                key={"in-" + item}
+                                itemId={item}
+                                ratePerMin={line.count * base}
+                                onRate={(n) =>
                                   patchLine(line.id, { count: n / base })
                                 }
-                                allowNegative={false}
+                                titleSuffix="분당 소비"
                               />
-                            </div>
-                          </div>
-                        );
-                      })}
+                            );
+                          })
+                        )}
 
-                      {/* 입력 (분당 소비) */}
-                      {ins.map(([item, qty]) => {
-                        const base = (qty * 60) / recipe.time;
-                        return (
-                          <div
-                            key={"in-" + item}
-                            className="flex items-center gap-1.5"
-                            title={`${itemName(item)} 분당 소비`}
-                          >
-                            <FactoryIcon id={item} size={22} />
-                            <span className="text-xs text-red-400">−</span>
-                            <div className="w-24">
-                              <NumInput
-                                value={line.count * base}
-                                onChange={(n) =>
+                        <span className="px-1 text-lg text-zinc-400">→</span>
+
+                        {/* 출력 (분당 산출) */}
+                        {outs.length === 0 ? (
+                          <span className="text-xs text-zinc-400">소비</span>
+                        ) : (
+                          outs.map(([item, qty]) => {
+                            const base = (qty * 60) / recipe.time;
+                            return (
+                              <ResourceField
+                                key={"out-" + item}
+                                itemId={item}
+                                ratePerMin={line.count * base}
+                                onRate={(n) =>
                                   patchLine(line.id, { count: n / base })
                                 }
-                                allowNegative={false}
+                                titleSuffix="분당 산출"
                               />
-                            </div>
-                          </div>
-                        );
-                      })}
+                            );
+                          })
+                        )}
+                      </div>
                     </div>
                   </div>
                 );
