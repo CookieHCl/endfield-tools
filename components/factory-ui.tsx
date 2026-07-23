@@ -308,15 +308,15 @@ export function ItemPicker({
               } as const;
               return openUp
                 ? {
-                    ...common,
-                    bottom: window.innerHeight - rect.top + 4,
-                    maxHeight: Math.min(320, rect.top - 8),
-                  }
+                  ...common,
+                  bottom: window.innerHeight - rect.top + 4,
+                  maxHeight: Math.min(320, rect.top - 8),
+                }
                 : {
-                    ...common,
-                    top: rect.bottom + 4,
-                    maxHeight: Math.min(320, spaceBelow - 8),
-                  };
+                  ...common,
+                  top: rect.bottom + 4,
+                  maxHeight: Math.min(320, spaceBelow - 8),
+                };
             })()}
           >
             {matches.length === 0 ? (
@@ -407,8 +407,13 @@ export function RecipePicker({
 }) {
   const [filterItemId, setFilterItemId] = useState<string | null>(null);
   const [recipeSearch, setRecipeSearch] = useState("");
+  // 자원 필터를 어디에서 찾을지 (기본은 입력·출력 둘 다)
+  const [matchIn, setMatchIn] = useState(true);
+  const [matchOut, setMatchOut] = useState(true);
 
   const filtered = useMemo(() => {
+    // 입력·출력 둘 다 해제하면 아무것도 안 보여준다. (별도 예외처리 없음)
+    if (!matchIn && !matchOut) return [];
     const q = recipeSearch.trim().toLowerCase();
     // 검색어·자원 필터가 모두 비었을 때, 정의된 공정이 있으면 그 공정만 먼저 보여준다.
     // (기본 레시피 수백 개에 묻히지 않도록 사용자가 만든 공정을 바로 노출)
@@ -418,14 +423,16 @@ export function RecipePicker({
     }
     return recipes.filter((r) => {
       if (filterItemId) {
+        // 선택한 방향(입력/출력)에 이 자원이 있는 레시피만
         const involved =
-          filterItemId in (r.in ?? {}) || filterItemId in (r.out ?? {});
+          (matchIn && filterItemId in (r.in ?? {})) ||
+          (matchOut && filterItemId in (r.out ?? {}));
         if (!involved) return false;
       }
       if (q && !r.name.toLowerCase().includes(q)) return false;
       return true;
     });
-  }, [recipes, filterItemId, recipeSearch]);
+  }, [recipes, filterItemId, recipeSearch, matchIn, matchOut]);
 
   // 위 기본 상태(검색어·필터 없음)에서 공정만 보여주는 중인지
   const showingProcessesOnly =
@@ -438,9 +445,40 @@ export function RecipePicker({
     <div className="border-b border-zinc-200 bg-amber-50/40 px-5 py-4">
       <div className="flex flex-col gap-3 sm:flex-row">
         <div className="flex-1">
-          <label className="mb-1 block text-xs font-semibold text-zinc-500">
-            자원으로 필터
-          </label>
+          <div className="mb-1 flex h-7 items-center justify-between gap-2">
+            <label className="text-xs font-semibold text-zinc-500">
+              자원으로 필터
+            </label>
+            {/* 자원이 입력/출력 어디에 있는 레시피를 찾을지 (입력|출력) */}
+            <div className="inline-flex overflow-hidden rounded-md border border-zinc-300 text-xs font-medium">
+              <button
+                type="button"
+                onClick={() => setMatchIn((v) => !v)}
+                title="입력에 이 자원이 있는 레시피"
+                className={
+                  "px-2.5 py-0.5 transition-colors " +
+                  (matchIn
+                    ? "bg-amber-500 text-white"
+                    : "bg-white text-zinc-500 hover:bg-zinc-100")
+                }
+              >
+                입력
+              </button>
+              <button
+                type="button"
+                onClick={() => setMatchOut((v) => !v)}
+                title="출력에 이 자원이 있는 레시피"
+                className={
+                  "border-l border-zinc-300 px-2.5 py-0.75 transition-colors " +
+                  (matchOut
+                    ? "bg-amber-500 text-white"
+                    : "bg-white text-zinc-500 hover:bg-zinc-100")
+                }
+              >
+                출력
+              </button>
+            </div>
+          </div>
           <ItemPicker
             value={filterItemId}
             onSelect={setFilterItemId}
@@ -448,9 +486,11 @@ export function RecipePicker({
           />
         </div>
         <div className="flex-1">
-          <label className="mb-1 block text-xs font-semibold text-zinc-500">
-            레시피 이름 검색
-          </label>
+          <div className="mb-1 flex h-7 items-center">
+            <label className="text-xs font-semibold text-zinc-500">
+              레시피 이름 검색
+            </label>
+          </div>
           <div className="flex items-center gap-2">
             <input
               type="text"
