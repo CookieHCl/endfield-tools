@@ -4,7 +4,9 @@ import { fileURLToPath } from "node:url";
 
 const upstreamData = process.argv[2];
 if (!upstreamData) {
-  throw new Error("Usage: node scripts/sync-upstream-data.mjs <upstream-data>");
+  throw new Error(
+    "Usage: node scripts/sync-endfield-essence-data.mjs <upstream-data>",
+  );
 }
 
 /// helpers

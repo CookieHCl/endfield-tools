@@ -4,7 +4,9 @@ import { fileURLToPath } from "node:url";
 
 const aefDir = process.argv[2];
 if (!aefDir) {
-  throw new Error("Usage: node scripts/sync-endfield-data.mjs <upstream-aef-dir>");
+  throw new Error(
+    "Usage: node scripts/sync-endfield-factory-data.mjs <upstream-aef-dir>",
+  );
 }
 
 /// helpers
@@ -32,6 +34,18 @@ const localize = (section, entries) =>
     return { ...entry, name };
   });
 
+/// 의미 없는 레시피는 버린다:
+///  - 입력이 아예 없고 출력이 단 하나 (원자재 채취) — 공장 입력으로 넣으면 된다.
+///  - 출력이 아예 없고 입력이 단 하나 (발전·폐수 처리) — 실제 가공이 아니다.
+const isMeaninglessRecipe = (recipe) => {
+  const ins = Object.keys(recipe.in ?? {}).length;
+  const outs = Object.keys(recipe.out ?? {}).length;
+  return (ins === 0 && outs === 1) || (outs === 0 && ins === 1);
+};
+const usefulRecipes = data.recipes.filter(
+  (recipe) => !isMeaninglessRecipe(recipe),
+);
+
 /// data.json의 top-level 구조를 그대로 유지하되 이름만 영어로 바꾼다.
 /// hash.json / ja,ru,zh 번역은 이 프로젝트에서 안 쓰므로 버린다.
 const localized = {
@@ -39,7 +53,7 @@ const localized = {
   icons: data.icons, // 아이콘은 이름 필드가 없다.
   categories: localize("categories", data.categories),
   items: localize("items", data.items),
-  recipes: localize("recipes", data.recipes),
+  recipes: localize("recipes", usefulRecipes),
   locations: localize("locations", data.locations),
   ...(data.limitations ? { limitations: data.limitations } : {}),
   ...(data.defaults ? { defaults: data.defaults } : {}),

@@ -1,4 +1,4 @@
-name: Sync Endfield factory data
+name: Sync Endfield essence data
 
 on:
   schedule:
@@ -12,7 +12,7 @@ permissions:
   contents: write
 
 concurrency:
-  group: sync-endfield-data
+  group: sync-endfield-essence-data
   cancel-in-progress: false
 
 jobs:
@@ -29,11 +29,9 @@ jobs:
       - name: Checkout upstream repository
         uses: actions/checkout@v6
         with:
-          repository: endfield-calc/factoriolab
-          ref: ark-endfield-3rd-test
+          repository: dlwlsdn3642/EnergyAlluviumCalc
+          ref: main
           path: upstream
-          # Only the Endfield mod data lives here; skip the rest of the app.
-          sparse-checkout: src/data/aef
           persist-credentials: false
 
       - name: Set up Node.js
@@ -45,14 +43,15 @@ jobs:
 
       - name: Sync and transform data
         working-directory: repository
-        run: node scripts/sync-endfield-data.mjs ../upstream/src/data/aef
+        run: node scripts/sync-endfield-essence-data.mjs ../upstream/data
 
       - name: Detect changes
         id: changes
         working-directory: repository
         shell: bash
         run: |
-          git add data/factory_data.json public/factory
+          git add data/dungeon_data.json data/weapons_4star.json data/weapons_5star.json data/weapons_6star.json
+          git add public/characters public/dungeon_images public/weapon_images
 
           if git diff --cached --quiet; then
             echo "changed=false" >> "$GITHUB_OUTPUT"
@@ -79,7 +78,7 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           upstream_sha=$(git -C ../upstream rev-parse --short HEAD)
-          git commit -m "chore(data): sync endfield ${upstream_sha}"
+          git commit -m "chore(data): sync upstream ${upstream_sha}"
           git push
 
       # Pushes authenticated with GITHUB_TOKEN do not start push-triggered

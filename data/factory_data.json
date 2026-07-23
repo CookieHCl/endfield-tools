@@ -3322,25 +3322,6 @@
       "icon": "tF0KCVMNv"
     },
     {
-      "time": 3,
-      "in": {},
-      "out": {
-        "originium_ore": 1
-      },
-      "producers": [
-        "miner_2",
-        "miner_3"
-      ],
-      "flags": [
-        "mining"
-      ],
-      "id": "originium_ore",
-      "name": "Originium Ore",
-      "category": "material",
-      "row": 2,
-      "icon": "originium_ore"
-    },
-    {
       "time": 2,
       "in": {
         "originium_powder": 1
@@ -3567,25 +3548,6 @@
       "icon": "carbon_enr"
     },
     {
-      "time": 3,
-      "in": {},
-      "out": {
-        "quartz_sand": 1
-      },
-      "producers": [
-        "miner_2",
-        "miner_3"
-      ],
-      "flags": [
-        "mining"
-      ],
-      "id": "quartz_sand",
-      "name": "Amethyst Ore",
-      "category": "material",
-      "row": 3,
-      "icon": "quartz_sand"
-    },
-    {
       "time": 2,
       "in": {
         "quartz_glass": 1
@@ -3739,24 +3701,6 @@
       "category": "material",
       "row": 3,
       "icon": "glass_enr_cmpt"
-    },
-    {
-      "time": 3,
-      "in": {},
-      "out": {
-        "iron_ore": 1
-      },
-      "producers": [
-        "miner_3"
-      ],
-      "flags": [
-        "mining"
-      ],
-      "id": "iron_ore",
-      "name": "Ferrium Ore",
-      "category": "material",
-      "row": 4,
-      "icon": "iron_ore"
     },
     {
       "time": 2,
@@ -4694,24 +4638,6 @@
       "icon": "qUq983O5F"
     },
     {
-      "time": 1,
-      "in": {},
-      "out": {
-        "liquid_water": 1
-      },
-      "producers": [
-        "pump_1"
-      ],
-      "flags": [
-        "mining"
-      ],
-      "id": "liquid_water",
-      "name": "Clean Water",
-      "category": "material",
-      "row": 8,
-      "icon": "liquid_water"
-    },
-    {
       "time": 2,
       "in": {
         "gas_water": 1,
@@ -4728,24 +4654,6 @@
       "category": "material",
       "row": 8,
       "icon": "tnHAWZomJ"
-    },
-    {
-      "time": 1,
-      "in": {},
-      "out": {
-        "liquid_acid": 1
-      },
-      "producers": [
-        "pump_2"
-      ],
-      "flags": [
-        "mining"
-      ],
-      "id": "liquid_acid",
-      "name": "Precipitation Acid",
-      "category": "material",
-      "row": 8,
-      "icon": "liquid_acid"
     },
     {
       "time": 2,
@@ -4907,109 +4815,6 @@
       "category": "material",
       "row": 8,
       "icon": "BTDiP1-WN"
-    },
-    {
-      "time": 3,
-      "in": {},
-      "out": {
-        "gas_inert": 1
-      },
-      "producers": [
-        "gas_pump_1"
-      ],
-      "flags": [
-        "mining"
-      ],
-      "id": "gas_inert",
-      "name": "Inergen",
-      "category": "material",
-      "row": 999,
-      "icon": "gas_inert"
-    },
-    {
-      "time": 3,
-      "in": {},
-      "out": {
-        "gas_xiranite": 1
-      },
-      "producers": [
-        "gas_pump_1"
-      ],
-      "flags": [
-        "mining"
-      ],
-      "id": "gas_xiranite",
-      "name": "Xiragen",
-      "category": "material",
-      "row": 999,
-      "icon": "gas_xiranite"
-    },
-    {
-      "usage": 50,
-      "time": 2,
-      "in": {
-        "liquid_sewage": 1
-      },
-      "out": {},
-      "cost": -1,
-      "producers": [
-        "liquid_cleaner_1"
-      ],
-      "id": "liquid_cleaner_1-sewage",
-      "name": "Water Treatment Unit(Sewage)",
-      "category": "material",
-      "row": 999,
-      "icon": "gMs3wV6Mc"
-    },
-    {
-      "usage": 50,
-      "time": 2,
-      "in": {
-        "liquid_xiranite_lowpoly": 1
-      },
-      "out": {},
-      "cost": 0,
-      "producers": [
-        "liquid_cleaner_1"
-      ],
-      "id": "liquid_cleaner_1-xiranite_lowpoly",
-      "name": "Water Treatment Unit(Inert Xircon Effluent)",
-      "category": "material",
-      "row": 999,
-      "icon": "LIU8uRWtP"
-    },
-    {
-      "usage": 50,
-      "time": 2,
-      "in": {
-        "liquid_xiranite_poly": 1
-      },
-      "out": {},
-      "cost": 0,
-      "producers": [
-        "liquid_cleaner_1"
-      ],
-      "id": "liquid_cleaner_1-xiranite_poly",
-      "name": "Water Treatment Unit(Xircon Effluent)",
-      "category": "material",
-      "row": 999,
-      "icon": "MZA0Aj7xM"
-    },
-    {
-      "time": 1,
-      "in": {
-        "liquid_sewage": 2
-      },
-      "out": {},
-      "producers": [
-        "liquid_clean_gate"
-      ],
-      "cost": -30,
-      "id": "sewage-treat",
-      "name": "Purification Node",
-      "category": "material",
-      "row": 999,
-      "icon": "RSg0ZawgK"
     },
     {
       "time": 60,
@@ -5442,102 +5247,6 @@
       "category": "product",
       "row": 4,
       "icon": "proc_bomb_1"
-    },
-    {
-      "usage": -50,
-      "time": 8,
-      "in": {
-        "originium_ore": 1
-      },
-      "out": {},
-      "producers": [
-        "power_sta_1"
-      ],
-      "id": "power_originium_ore",
-      "name": "Power(Originium Ore)",
-      "category": "gen-power",
-      "row": 0,
-      "icon": "vzHASkcwW"
-    },
-    {
-      "usage": -220,
-      "time": 40,
-      "in": {
-        "proc_battery_1": 1
-      },
-      "out": {},
-      "producers": [
-        "power_sta_1"
-      ],
-      "id": "power_proc_battery_1",
-      "name": "Power(LC Valley Battery)",
-      "category": "gen-power",
-      "row": 1,
-      "icon": "DCZK3_Hum"
-    },
-    {
-      "usage": -420,
-      "time": 40,
-      "in": {
-        "proc_battery_2": 1
-      },
-      "out": {},
-      "producers": [
-        "power_sta_1"
-      ],
-      "id": "power_proc_battery_2",
-      "name": "Power(SC Valley Battery)",
-      "category": "gen-power",
-      "row": 1,
-      "icon": "PZWgDQOzb"
-    },
-    {
-      "usage": -1100,
-      "time": 40,
-      "in": {
-        "proc_battery_3": 1
-      },
-      "out": {},
-      "producers": [
-        "power_sta_1"
-      ],
-      "id": "power_proc_battery_3",
-      "name": "Power(HC Valley Battery)",
-      "category": "gen-power",
-      "row": 1,
-      "icon": "YvRkgjni9"
-    },
-    {
-      "usage": -1600,
-      "time": 40,
-      "in": {
-        "proc_battery_4": 1
-      },
-      "out": {},
-      "producers": [
-        "power_sta_1"
-      ],
-      "id": "power_proc_battery_4",
-      "name": "Power(LC Wuling Battery)",
-      "category": "gen-power",
-      "row": 2,
-      "icon": "u_hgkzqGZ"
-    },
-    {
-      "usage": -3200,
-      "time": 40,
-      "in": {
-        "proc_battery_5": 1
-      },
-      "out": {},
-      "producers": [
-        "power_sta_1"
-      ],
-      "id": "power_proc_battery_5",
-      "name": "Power(SC Wuling Battery)",
-      "category": "gen-power",
-      "row": 2,
-      "icon": "uE4Xzd-Nt"
     },
     {
       "time": 2,
@@ -7087,24 +6796,6 @@
       "category": "__domain_transfer",
       "row": 999,
       "icon": "quartz_powder"
-    },
-    {
-      "time": 1,
-      "in": {},
-      "out": {
-        "__miner_water": 1
-      },
-      "producers": [
-        "__miner_pump_1"
-      ],
-      "flags": [
-        "mining"
-      ],
-      "id": "__miner_water",
-      "name": "Clean Water",
-      "category": "__internal",
-      "row": 999,
-      "icon": "liquid_water"
     }
   ],
   "locations": [
