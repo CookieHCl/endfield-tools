@@ -97,6 +97,24 @@ function cellClass(cell: Cell): string {
   return "text-zinc-400";
 }
 
+// 자원이 만들어내는 관리권 양 표시 ("관리권 +300" / "관리권 -200" / "관리권 0")
+function voucherAmountText(inf: boolean, amount: number): string {
+  if (inf) return "관리권 ∞";
+  const d = cleanNumber(amount);
+  if (d > 0) return `관리권 +${formatNumber(d)}`;
+  if (d < 0) return `관리권 -${formatNumber(-d)}`;
+  return "관리권 0";
+}
+
+// 양수 파랑 / 음수 빨강 / 0 회색 (무한은 양수 취급)
+function voucherAmountClass(inf: boolean, amount: number): string {
+  if (inf) return "text-blue-600";
+  const d = cleanNumber(amount);
+  if (d > 0) return "text-blue-600";
+  if (d < 0) return "text-red-600";
+  return "text-zinc-400";
+}
+
 /// 자원별 수지 계산 -----------------------------------------------------
 // 전체 합(공유풀) + 공장별 결산 셀을 자원 id별로 반환한다.
 // 결산 표(summary)와 "최대화" 계산에서 공유한다.
@@ -309,13 +327,44 @@ export default function FactoryPage() {
   /// 결산 계산 ----------------------------------------------------------
   const summary = useMemo(() => {
     const byId = computeBalances(lines, inputs, recipeById);
+    // 관리권으로 지정한 자원별 개당 관리권 합 (같은 자원이 여러 번 지정될 수 있음)
+    // 결산에 이미 잡힌 자원만 강조/우선 표시; 새로 추가하진 않는다.
+    const voucherPerUnitById = new Map<string, number>();
+    for (const v of vouchers) {
+      voucherPerUnitById.set(
+        v.itemId,
+        (voucherPerUnitById.get(v.itemId) ?? 0) + v.perUnit,
+      );
+    }
     const totalById = new Map<string, Cell>();
     const rows = Array.from(byId, ([item, { total, factories }]) => {
       totalById.set(item, total);
-      return { itemId: item, name: itemName(item), total, factories };
+      const perUnit = voucherPerUnitById.get(item);
+      const isVoucher = perUnit !== undefined;
+      // 이 자원이 만들어내는 관리권 양(분당) = 총생산량 × 개당 관리권
+      const voucherAmount = perUnit ? cleanNumber(total.delta * perUnit) : 0;
+      const voucherInf = isVoucher && total.inf && (perUnit ?? 0) > 0;
+      return {
+        itemId: item,
+        name: itemName(item),
+        total,
+        factories,
+        isVoucher,
+        voucherAmount,
+        voucherInf,
+      };
     });
 
     rows.sort((a, b) => {
+      // 관리권으로 지정한 자원을 맨 위로 모은다.
+      if (a.isVoucher !== b.isVoucher) return a.isVoucher ? -1 : 1;
+      // 관리권 자원끼리는 관리권 생산량 기준 (무한 우선 → 큰 값 순).
+      if (a.isVoucher && b.isVoucher) {
+        if (a.voucherInf !== b.voucherInf) return a.voucherInf ? -1 : 1;
+        if (a.voucherAmount !== b.voucherAmount)
+          return b.voucherAmount - a.voucherAmount;
+        return a.name.localeCompare(b.name, "en");
+      }
       const ka = [bucket(a.total), ...a.factories.map(bucket)];
       const kb = [bucket(b.total), ...b.factories.map(bucket)];
       for (let i = 0; i < ka.length; i++) {
@@ -726,12 +775,34 @@ export default function FactoryPage() {
                   {summary.rows.map((row) => (
                     <tr
                       key={row.itemId}
-                      className="border-b border-zinc-100 transition-colors last:border-b-0 hover:bg-zinc-50/70"
+                      className={
+                        "border-b border-zinc-100 transition-colors last:border-b-0 " +
+                        (row.isVoucher
+                          ? "bg-amber-50/50 hover:bg-amber-50"
+                          : "hover:bg-zinc-50/70")
+                      }
                     >
                       <td className="px-4 py-2 align-middle">
                         <div className="flex items-center gap-2">
                           <FactoryIcon id={row.itemId} size={22} />
                           <span className="text-zinc-800">{row.name}</span>
+                          {row.isVoucher && (
+                            <span
+                              title="이 자원이 만들어내는 분당 관리권"
+                              className={
+                                "ml-auto pl-3 text-xs font-semibold tabular-nums " +
+                                voucherAmountClass(
+                                  row.voucherInf,
+                                  row.voucherAmount,
+                                )
+                              }
+                            >
+                              {voucherAmountText(
+                                row.voucherInf,
+                                row.voucherAmount,
+                              )}
+                            </span>
+                          )}
                         </div>
                       </td>
                       <td

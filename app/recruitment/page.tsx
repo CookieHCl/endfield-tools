@@ -46,6 +46,16 @@ const STAR_STYLES: Record<
   1: { base: "#616161", text: "#474747", badgeText: "#ffffff" },
 };
 
+// 좁은 화면에서도 쓰기 편하도록 기본은 촘촘하게, sm 이상에서 넉넉하게.
+const CHIP_BASE =
+  "whitespace-nowrap rounded-full border px-2.5 py-1 text-xs font-medium transition-all sm:px-3.5 sm:py-1.5 sm:text-sm";
+// 그룹 한 줄: 라벨을 항상 왼쪽에 두고 태그가 오른쪽에서 줄바꿈 (세로 공간 절약)
+const GROUP_ROW =
+  "flex items-start gap-2 px-3 py-2.5 sm:gap-4 sm:px-5 sm:py-3.5";
+const GROUP_TAGS = "flex flex-wrap gap-1.5 pt-px sm:gap-2";
+const GROUP_LABEL_BASE =
+  "w-11 shrink-0 rounded-lg border py-1 text-center text-xs font-bold sm:w-14 sm:py-1.5 sm:text-sm";
+
 interface CheckInfo {
   mapMd5: string;
   timestamp: number;
@@ -477,10 +487,10 @@ export default function RecruitmentPage() {
 
 
   return (
-    <div className="min-h-screen bg-zinc-50 py-10 px-4 text-zinc-900">
-      <main className="mx-auto flex max-w-5xl flex-col gap-6">
+    <div className="min-h-screen bg-zinc-50 py-6 px-3 text-zinc-900 sm:py-10 sm:px-4">
+      <main className="mx-auto flex max-w-5xl flex-col gap-4 sm:gap-6">
         <header className="flex flex-col gap-1">
-          <h1 className="text-2xl font-bold">공개모집 계산기</h1>
+          <h1 className="text-xl font-bold sm:text-2xl">공개모집 계산기</h1>
           <p className="text-sm text-zinc-600">
             명일방주 원작의 공개모집 계산기입니다. 데이터는{" "}
             <a
@@ -517,7 +527,80 @@ export default function RecruitmentPage() {
 
         {data && (
           <section className="overflow-hidden rounded-xl border border-zinc-200 bg-white shadow-sm">
-            <div className="flex flex-wrap items-center gap-2 border-b border-zinc-200 bg-zinc-50/70 px-5 py-3">
+            {/* 개인 설정 (태그 선택보다 위) --------------------------------- */}
+            <div className="flex flex-wrap items-center justify-between gap-2 border-b border-zinc-200 bg-zinc-50/70 px-3 py-2.5 sm:px-5 sm:py-3">
+              <span className="text-xs font-bold uppercase tracking-wider text-zinc-500">
+                개인 설정
+                <span className="ml-2 font-medium normal-case tracking-normal text-zinc-400">
+                  브라우저에 자동 저장
+                </span>
+              </span>
+              <ImportExportButtons />
+            </div>
+
+            <div className="flex flex-col divide-y divide-zinc-100">
+              <div className={GROUP_ROW}>
+                <span
+                  className={
+                    GROUP_LABEL_BASE +
+                    " border-indigo-200 bg-indigo-50 text-indigo-700"
+                  }
+                  title="2성 없이 선택된 1성이 포함된 조합은 같은 보장 성급 내에서 우선 표시됩니다."
+                >
+                  1성
+                </span>
+                <div className={GROUP_TAGS}>
+                  {oneStarChars.map((char) => {
+                    const selected = !deselected1Star.includes(char.id);
+                    return (
+                      <button
+                        key={char.id}
+                        type="button"
+                        onClick={() => toggleOneStar(char.id)}
+                        className={
+                          CHIP_BASE +
+                          " " +
+                          (selected
+                            ? "border-indigo-600 bg-indigo-600 text-white shadow-sm"
+                            : "border-zinc-300 bg-white text-zinc-400 hover:border-indigo-400 hover:bg-indigo-50 hover:text-indigo-700")
+                        }
+                      >
+                        {char.name}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+              <div className={GROUP_ROW}>
+                <span
+                  className={
+                    GROUP_LABEL_BASE +
+                    " border-indigo-200 bg-indigo-50 text-indigo-700"
+                  }
+                >
+                  설정
+                </span>
+                <div className={GROUP_TAGS}>
+                  <button
+                    type="button"
+                    onClick={() => setIgnoreLowRarity((prev) => !prev)}
+                    title="보장 성급이 3성 이하인 조합을 숨깁니다. (1성 우선 조합은 계속 표시)"
+                    className={
+                      CHIP_BASE +
+                      " " +
+                      (ignoreLowRarity
+                        ? "border-indigo-600 bg-indigo-600 text-white shadow-sm"
+                        : "border-zinc-300 bg-white text-zinc-700 hover:border-indigo-400 hover:bg-indigo-50 hover:text-indigo-700")
+                    }
+                  >
+                    3성 이하 무시
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            {/* 태그 선택 --------------------------------------------------- */}
+            <div className="flex flex-wrap items-center gap-2 border-y border-zinc-200 bg-zinc-50/70 px-3 py-2.5 sm:px-5 sm:py-3">
               <div className="flex items-center gap-2 text-xs">
                 <span className="font-bold uppercase tracking-wider text-zinc-500">
                   태그 선택
@@ -539,7 +622,7 @@ export default function RecruitmentPage() {
                 onChange={(e) => handleTagFilterChange(e.target.value)}
                 maxLength={MAX_SELECTED_TAGS}
                 placeholder="앞글자 입력"
-                className="min-w-0 flex-1 basis-40 rounded-full border border-zinc-300 bg-white px-3 py-1 text-xs text-zinc-700 placeholder:text-zinc-400 focus:border-teal-500 focus:outline-none focus:ring-1 focus:ring-teal-500"
+                className="min-w-0 flex-1 basis-32 rounded-full border border-zinc-300 bg-white px-3 py-1 text-xs text-zinc-700 placeholder:text-zinc-400 focus:border-teal-500 focus:outline-none focus:ring-1 focus:ring-teal-500 sm:basis-40"
               />
               <button
                 type="button"
@@ -556,14 +639,16 @@ export default function RecruitmentPage() {
 
             <div className="flex flex-col divide-y divide-zinc-100">
               {TAG_GROUPS.map((group) => (
-                <div
-                  key={group.label}
-                  className="flex flex-col gap-2 px-5 py-3.5 sm:flex-row sm:items-start sm:gap-4"
-                >
-                  <span className="w-14 shrink-0 rounded-lg border border-teal-200 bg-teal-50 py-1.5 text-center text-sm font-bold text-teal-700">
+                <div key={group.label} className={GROUP_ROW}>
+                  <span
+                    className={
+                      GROUP_LABEL_BASE +
+                      " border-teal-200 bg-teal-50 text-teal-700"
+                    }
+                  >
                     {group.label}
                   </span>
-                  <div className="flex flex-wrap gap-2 pt-px">
+                  <div className={GROUP_TAGS}>
                     {group.tagIds.map((tagId) => {
                       const selected = selectedTags.includes(tagId);
                       const highlighted =
@@ -574,7 +659,8 @@ export default function RecruitmentPage() {
                           type="button"
                           onClick={() => toggleTag(tagId)}
                           className={
-                            "whitespace-nowrap rounded-full border px-3.5 py-1.5 text-sm font-medium transition-all " +
+                            CHIP_BASE +
+                            " " +
                             (selected
                               ? "border-teal-600 bg-teal-600 text-white shadow-sm"
                               : highlighted
@@ -590,74 +676,12 @@ export default function RecruitmentPage() {
                 </div>
               ))}
             </div>
-
-            {/* 태그와 구분되는 개인 설정 영역 */}
-            <div className="flex flex-wrap items-center justify-between gap-2 border-y border-zinc-200 bg-zinc-50/70 px-5 py-3">
-              <span className="text-xs font-bold uppercase tracking-wider text-zinc-500">
-                개인 설정
-                <span className="ml-2 font-medium normal-case tracking-normal text-zinc-400">
-                  브라우저에 자동 저장
-                </span>
-              </span>
-              <ImportExportButtons />
-            </div>
-
-            <div className="flex flex-col divide-y divide-zinc-100">
-              <div className="flex flex-col gap-2 px-5 py-3.5 sm:flex-row sm:items-start sm:gap-4">
-                <span
-                  className="w-14 shrink-0 rounded-lg border border-indigo-200 bg-indigo-50 py-1.5 text-center text-sm font-bold text-indigo-700"
-                  title="2성 없이 선택된 1성이 포함된 조합은 같은 보장 성급 내에서 우선 표시됩니다."
-                >
-                  1성
-                </span>
-                <div className="flex flex-wrap gap-2 pt-px">
-                  {oneStarChars.map((char) => {
-                    const selected = !deselected1Star.includes(char.id);
-                    return (
-                      <button
-                        key={char.id}
-                        type="button"
-                        onClick={() => toggleOneStar(char.id)}
-                        className={
-                          "whitespace-nowrap rounded-full border px-3.5 py-1.5 text-sm font-medium transition-all " +
-                          (selected
-                            ? "border-indigo-600 bg-indigo-600 text-white shadow-sm"
-                            : "border-zinc-300 bg-white text-zinc-400 hover:border-indigo-400 hover:bg-indigo-50 hover:text-indigo-700")
-                        }
-                      >
-                        {char.name}
-                      </button>
-                    );
-                  })}
-                </div>
-              </div>
-              <div className="flex flex-col gap-2 px-5 py-3.5 sm:flex-row sm:items-start sm:gap-4">
-                <span className="w-14 shrink-0 rounded-lg border border-indigo-200 bg-indigo-50 py-1.5 text-center text-sm font-bold text-indigo-700">
-                  설정
-                </span>
-                <div className="flex flex-wrap gap-2 pt-px">
-                  <button
-                    type="button"
-                    onClick={() => setIgnoreLowRarity((prev) => !prev)}
-                    title="보장 성급이 3성 이하인 조합을 숨깁니다. (1성 우선 조합은 계속 표시)"
-                    className={
-                      "whitespace-nowrap rounded-full border px-3.5 py-1.5 text-sm font-medium transition-all " +
-                      (ignoreLowRarity
-                        ? "border-indigo-600 bg-indigo-600 text-white shadow-sm"
-                        : "border-zinc-300 bg-white text-zinc-700 hover:border-indigo-400 hover:bg-indigo-50 hover:text-indigo-700")
-                    }
-                  >
-                    3성 이하 무시
-                  </button>
-                </div>
-              </div>
-            </div>
           </section>
         )}
 
         {data && (
           <section className="overflow-hidden rounded-xl border border-zinc-200 bg-white shadow-sm">
-            <div className="flex flex-wrap items-center justify-between gap-2 border-b border-zinc-200 bg-zinc-50/70 px-5 py-3">
+            <div className="flex flex-wrap items-center justify-between gap-2 border-b border-zinc-200 bg-zinc-50/70 px-3 py-2.5 sm:px-5 sm:py-3">
               <span className="text-xs font-bold uppercase tracking-wider text-zinc-500">
                 조합별 결과
                 <span className="ml-2 font-medium normal-case tracking-normal text-zinc-400">
@@ -684,16 +708,16 @@ export default function RecruitmentPage() {
                 <table className="min-w-full border-collapse text-sm">
                   <thead className="bg-zinc-50 text-[11px] font-semibold uppercase tracking-wider text-zinc-500">
                     <tr>
-                      <th className="w-10 border-b border-zinc-200 px-4 py-2.5 text-left">
+                      <th className="w-8 border-b border-zinc-200 px-2.5 py-2 text-left sm:w-10 sm:px-4 sm:py-2.5">
                         #
                       </th>
-                      <th className="w-60 border-b border-zinc-200 px-3 py-2.5 text-left">
+                      <th className="border-b border-zinc-200 px-2 py-2 text-left sm:w-60 sm:px-3 sm:py-2.5">
                         태그
                       </th>
-                      <th className="w-24 border-b border-zinc-200 px-3 py-2.5 text-left">
+                      <th className="border-b border-zinc-200 px-2 py-2 text-left sm:w-24 sm:px-3 sm:py-2.5">
                         보장
                       </th>
-                      <th className="border-b border-zinc-200 px-3 py-2.5 text-left">
+                      <th className="border-b border-zinc-200 px-2 py-2 text-left sm:px-3 sm:py-2.5">
                         오퍼레이터
                       </th>
                     </tr>
@@ -704,10 +728,10 @@ export default function RecruitmentPage() {
                         key={combo.tags.join("-")}
                         className="border-b border-zinc-100 transition-colors last:border-b-0 hover:bg-zinc-50/70"
                       >
-                        <td className="px-4 py-2.5 align-top text-xs font-medium text-zinc-400">
+                        <td className="px-2.5 py-2 align-top text-xs font-medium text-zinc-400 sm:px-4 sm:py-2.5">
                           {i + 1}
                         </td>
-                        <td className="px-3 py-2.5 align-top">
+                        <td className="px-2 py-2 align-top sm:px-3 sm:py-2.5">
                           <div className="flex flex-wrap gap-1.5">
                             {combo.tags.map((tagId) => (
                               <span
@@ -719,7 +743,7 @@ export default function RecruitmentPage() {
                             ))}
                           </div>
                         </td>
-                        <td className="px-3 py-2.5 align-top">
+                        <td className="px-2 py-2 align-top sm:px-3 sm:py-2.5">
                           <div className="flex flex-wrap items-center gap-1">
                             <StarBadge star={combo.min} />
                             {combo.boosted && (
@@ -732,7 +756,7 @@ export default function RecruitmentPage() {
                             )}
                           </div>
                         </td>
-                        <td className="px-3 py-2.5 align-top">
+                        <td className="px-2 py-2 align-top sm:px-3 sm:py-2.5">
                           <div className="flex flex-wrap gap-1.5">
                             {combo.chars.map((char) => (
                               <CharChip key={char.id} char={char} />
@@ -750,7 +774,7 @@ export default function RecruitmentPage() {
 
         {data && valueGroups.length > 0 && (
           <section className="overflow-hidden rounded-xl border border-zinc-200 bg-white shadow-sm">
-            <div className="flex flex-wrap items-center justify-between gap-2 border-b border-zinc-200 bg-zinc-50/70 px-5 py-3">
+            <div className="flex flex-wrap items-center justify-between gap-2 border-b border-zinc-200 bg-zinc-50/70 px-3 py-2.5 sm:px-5 sm:py-3">
               <span className="text-xs font-bold uppercase tracking-wider text-zinc-500">
                 가치 있는 태그 조합 총정리
                 <span className="ml-2 font-medium normal-case tracking-normal text-zinc-400">
@@ -764,7 +788,7 @@ export default function RecruitmentPage() {
 
             <div className="flex flex-col divide-y divide-zinc-100">
               {valueGroups.map((group) => (
-                <div key={group.key} className="flex flex-col gap-3 px-5 py-4">
+                <div key={group.key} className="flex flex-col gap-2.5 px-3 py-3 sm:gap-3 sm:px-5 sm:py-4">
                   <div className="flex items-center gap-2">
                     <StarBadge star={group.min} />
                     {group.boosted && (

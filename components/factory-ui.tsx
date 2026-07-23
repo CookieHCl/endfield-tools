@@ -410,6 +410,12 @@ export function RecipePicker({
 
   const filtered = useMemo(() => {
     const q = recipeSearch.trim().toLowerCase();
+    // 검색어·자원 필터가 모두 비었을 때, 정의된 공정이 있으면 그 공정만 먼저 보여준다.
+    // (기본 레시피 수백 개에 묻히지 않도록 사용자가 만든 공정을 바로 노출)
+    if (!q && !filterItemId) {
+      const processRecipes = recipes.filter((r) => isProcessRecipeId(r.id));
+      if (processRecipes.length > 0) return processRecipes;
+    }
     return recipes.filter((r) => {
       if (filterItemId) {
         const involved =
@@ -420,6 +426,13 @@ export function RecipePicker({
       return true;
     });
   }, [recipes, filterItemId, recipeSearch]);
+
+  // 위 기본 상태(검색어·필터 없음)에서 공정만 보여주는 중인지
+  const showingProcessesOnly =
+    !recipeSearch.trim() &&
+    !filterItemId &&
+    filtered.length > 0 &&
+    filtered.every((r) => isProcessRecipeId(r.id));
 
   return (
     <div className="border-b border-zinc-200 bg-amber-50/40 px-5 py-4">
@@ -438,15 +451,33 @@ export function RecipePicker({
           <label className="mb-1 block text-xs font-semibold text-zinc-500">
             레시피 이름 검색
           </label>
-          <input
-            type="text"
-            value={recipeSearch}
-            onChange={(e) => setRecipeSearch(e.target.value)}
-            placeholder="레시피 이름…"
-            className="w-full rounded-md border border-zinc-300 bg-white px-2 py-1 text-sm text-zinc-900 placeholder:text-zinc-400 focus:border-amber-500 focus:outline-none focus:ring-1 focus:ring-amber-500"
-          />
+          <div className="flex items-center gap-2">
+            <input
+              type="text"
+              value={recipeSearch}
+              onChange={(e) => setRecipeSearch(e.target.value)}
+              placeholder="레시피 이름…"
+              className="min-w-0 flex-1 rounded-md border border-zinc-300 bg-white px-2 py-1 text-sm text-zinc-900 placeholder:text-zinc-400 focus:border-amber-500 focus:outline-none focus:ring-1 focus:ring-amber-500"
+            />
+            {recipeSearch && (
+              <button
+                type="button"
+                onClick={() => setRecipeSearch("")}
+                className="rounded-md border border-zinc-300 px-2 py-1 text-xs text-zinc-500 hover:bg-zinc-100"
+              >
+                해제
+              </button>
+            )}
+          </div>
         </div>
       </div>
+
+      {showingProcessesOnly && (
+        <p className="mt-2 text-xs text-zinc-400">
+          정의한 공정 {filtered.length}개를 보여줍니다. 기본 레시피는 이름을
+          검색하거나 자원으로 필터하세요.
+        </p>
+      )}
 
       <div className="mt-3 max-h-64 overflow-auto rounded-lg border border-zinc-200 bg-white">
         {filtered.length === 0 ? (
