@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { ITEMS, RECIPES, itemName, type FactoryRecipe } from "@/data/factory-db";
 import { FactoryIcon } from "@/components/factory-icon";
 import { ImportExportButtons } from "@/components/import-export-buttons";
@@ -276,6 +276,15 @@ export default function FactoryPage() {
 
   // 현재 편집 중인 공장. 레시피 추가/수정/삭제·목록 필터가 모두 이 값을 따른다.
   const [selectedFactory, setSelectedFactory] = useState<FactoryNum>(1);
+
+  // 레시피 추가 패널의 "자원으로 필터" 값. 결산/입출력 아이콘 클릭으로도 세팅된다.
+  const [filterItemId, setFilterItemId] = useState<string | null>(null);
+  const pickerRef = useRef<HTMLDivElement>(null);
+  // 자원 아이콘 클릭 → 그 자원으로 필터하고 추가 패널로 스크롤.
+  const pickFilterItem = (itemId: string) => {
+    setFilterItemId(itemId);
+    pickerRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
+  };
 
   // 사용자 정의 공정 (공정 관리 페이지에서 만든 것). 여기서는 읽기만 한다.
   const [processes, setProcesses] = useState<Process[]>([]);
@@ -635,7 +644,14 @@ export default function FactoryPage() {
           }
         >
           {/* 레시피 추가 패널 (기본 레시피 + 공정) → 선택한 공장에 추가된다 */}
-          <RecipePicker recipes={allRecipes} onAdd={addLine} />
+          <div ref={pickerRef}>
+            <RecipePicker
+              recipes={allRecipes}
+              onAdd={addLine}
+              filterItemId={filterItemId}
+              onFilterItemId={setFilterItemId}
+            />
+          </div>
 
           {/* 선택한 공장에 배치된 레시피 목록 */}
           {factoryLines.length === 0 ? (
@@ -726,6 +742,7 @@ export default function FactoryPage() {
                       recipe={recipe}
                       count={line.count}
                       onCount={(n) => patchLine(line.id, { count: n })}
+                      onPickItem={pickFilterItem}
                     />
                   </div>
                 );
@@ -820,7 +837,14 @@ export default function FactoryPage() {
                     >
                       <td className="px-4 py-2 align-middle">
                         <div className="flex items-center gap-2">
-                          <FactoryIcon id={row.itemId} size={22} />
+                          <button
+                            type="button"
+                            onClick={() => pickFilterItem(row.itemId)}
+                            title={`${row.name} · 클릭해서 자원으로 필터`}
+                            className="rounded-md transition-colors hover:bg-amber-100"
+                          >
+                            <FactoryIcon id={row.itemId} size={22} />
+                          </button>
                           <span className="text-zinc-800">{row.name}</span>
                           {row.isVoucher && (
                             <span

@@ -118,18 +118,32 @@ export function ResourceField({
   ratePerMin,
   onRate,
   titleSuffix,
+  onPick,
 }: {
   itemId: string;
   ratePerMin: number;
   onRate: (n: number) => void;
   titleSuffix: string;
+  // 있으면 아이콘이 클릭 가능해지고, 누르면 이 자원으로 필터하도록 콜백한다.
+  onPick?: (itemId: string) => void;
 }) {
   return (
     <div
       className="flex w-28 flex-col items-center gap-1 text-center"
       title={`${itemName(itemId)} ${titleSuffix}`}
     >
-      <FactoryIcon id={itemId} size={40} />
+      {onPick ? (
+        <button
+          type="button"
+          onClick={() => onPick(itemId)}
+          title={`${itemName(itemId)} · 클릭해서 자원으로 필터`}
+          className="rounded-md transition-colors hover:bg-amber-100"
+        >
+          <FactoryIcon id={itemId} size={40} />
+        </button>
+      ) : (
+        <FactoryIcon id={itemId} size={40} />
+      )}
       {/* 이름 영역 높이를 2줄로 고정 → 이름 길이와 무관하게 카드 높이가 일정하다.
           2줄을 넘으면 …으로 자르고, 전체 이름은 카드 hover 툴팁으로 확인. */}
       <div className="flex h-8 items-center">
@@ -150,10 +164,13 @@ export function RecipeIOFields({
   recipe,
   count,
   onCount,
+  onPickItem,
 }: {
   recipe: FactoryRecipe;
   count: number;
   onCount: (n: number) => void;
+  // 있으면 각 자원 아이콘을 클릭해 그 자원으로 필터할 수 있다.
+  onPickItem?: (itemId: string) => void;
 }) {
   const ins = Object.entries(recipe.in ?? {});
   const outs = Object.entries(recipe.out ?? {});
@@ -172,6 +189,7 @@ export function RecipeIOFields({
               ratePerMin={count * base}
               onRate={(n) => onCount(n / base)}
               titleSuffix="분당 소비"
+              onPick={onPickItem}
             />
           );
         })
@@ -192,6 +210,7 @@ export function RecipeIOFields({
               ratePerMin={count * base}
               onRate={(n) => onCount(n / base)}
               titleSuffix="분당 산출"
+              onPick={onPickItem}
             />
           );
         })
@@ -401,11 +420,15 @@ export function Section({
 export function RecipePicker({
   recipes,
   onAdd,
+  filterItemId,
+  onFilterItemId,
 }: {
   recipes: FactoryRecipe[];
   onAdd: (recipeId: string) => void;
+  // "자원으로 필터"는 부모가 제어한다 (아이콘 클릭으로도 세팅되도록).
+  filterItemId: string | null;
+  onFilterItemId: (id: string | null) => void;
 }) {
-  const [filterItemId, setFilterItemId] = useState<string | null>(null);
   const [recipeSearch, setRecipeSearch] = useState("");
   // 자원 필터를 어디에서 찾을지 (기본은 입력·출력 둘 다)
   const [matchIn, setMatchIn] = useState(true);
@@ -481,7 +504,7 @@ export function RecipePicker({
           </div>
           <ItemPicker
             value={filterItemId}
-            onSelect={setFilterItemId}
+            onSelect={onFilterItemId}
             placeholder="자원 아이콘/이름으로 레시피 찾기…"
           />
         </div>

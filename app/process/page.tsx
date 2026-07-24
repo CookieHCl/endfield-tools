@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import {
   RECIPES,
   RECIPE_BY_ID,
@@ -39,6 +39,15 @@ export default function ProcessPage() {
   const [icon, setIcon] = useState(DEFAULT_ICON);
   const [iconChosen, setIconChosen] = useState(false);
   const [lines, setLines] = useState<ProcessLine[]>([]);
+
+  // 레시피 추가 패널의 "자원으로 필터" 값. 입출력 아이콘 클릭으로도 세팅된다.
+  const [filterItemId, setFilterItemId] = useState<string | null>(null);
+  const pickerRef = useRef<HTMLDivElement>(null);
+  // 자원 아이콘 클릭 → 그 자원으로 필터하고 추가 패널로 스크롤.
+  const pickFilterItem = (itemId: string) => {
+    setFilterItemId(itemId);
+    pickerRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
+  };
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -214,7 +223,14 @@ export default function ProcessPage() {
           </div>
 
           {/* 레시피 추가 패널 (기존 레시피만) */}
-          <RecipePicker recipes={RECIPES} onAdd={addLine} />
+          <div ref={pickerRef}>
+            <RecipePicker
+              recipes={RECIPES}
+              onAdd={addLine}
+              filterItemId={filterItemId}
+              onFilterItemId={setFilterItemId}
+            />
+          </div>
 
           {/* 추가된 레시피 목록 */}
           {lines.length === 0 ? (
@@ -267,6 +283,7 @@ export default function ProcessPage() {
                       recipe={recipe}
                       count={line.count}
                       onCount={(n) => patchLine(line.id, { count: n })}
+                      onPickItem={pickFilterItem}
                     />
                   </div>
                 );
