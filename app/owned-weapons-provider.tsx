@@ -15,13 +15,23 @@ const OwnedWeaponsContext = createContext<OwnedWeaponsContextValue | null>(
 
 const STORAGE_KEY = "ownedWeapons";
 
+function saveOwned(names: string[]): void {
+  if (typeof window === "undefined") return;
+  try {
+    window.localStorage.setItem(STORAGE_KEY, JSON.stringify(names));
+  } catch {
+    // ignore storage errors
+  }
+}
+
 export function OwnedWeaponsProvider({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const [ownedNames, setOwnedNames] = useState<string[]>([]);
+  const [ownedNames, setOwnedNamesState] = useState<string[]>([]);
 
+  // 불러오기 (localStorage → 상태). 저장은 setOwnedNames가 변경 지점에서 동기로 한다.
   useEffect(() => {
     if (typeof window === "undefined") return;
     try {
@@ -29,7 +39,7 @@ export function OwnedWeaponsProvider({
       if (stored) {
         const parsed = JSON.parse(stored);
         if (Array.isArray(parsed)) {
-          setOwnedNames(parsed.filter((v) => typeof v === "string"));
+          setOwnedNamesState(parsed.filter((v) => typeof v === "string"));
         }
       }
     } catch {
@@ -37,18 +47,18 @@ export function OwnedWeaponsProvider({
     }
   }, []);
 
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-    try {
-      window.localStorage.setItem(STORAGE_KEY, JSON.stringify(ownedNames));
-    } catch {
-      // ignore storage errors
-    }
-  }, [ownedNames]);
+  // 상태 변경과 저장을 함께 한다.
+  // effect로 저장하면 초기 로드 전에 빈 배열로 덮어써 데이터가 날아가므로 쓰지 않는다.
+  const setOwnedNames = (names: string[]) => {
+    setOwnedNamesState(names);
+    saveOwned(names);
+  };
 
   const toggleOwned = (name: string) => {
-    setOwnedNames((prev) =>
-      prev.includes(name) ? prev.filter((n) => n !== name) : [...prev, name],
+    setOwnedNames(
+      ownedNames.includes(name)
+        ? ownedNames.filter((n) => n !== name)
+        : [...ownedNames, name],
     );
   };
 

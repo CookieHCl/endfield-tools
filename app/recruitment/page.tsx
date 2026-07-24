@@ -195,7 +195,7 @@ export default function RecruitmentPage() {
   // 새로 추가되는 1성 오퍼가 기본 선택되도록 "선택 해제된 목록"을 저장
   const [deselected1Star, setDeselected1Star] = useState<string[]>([]);
   const [ignoreLowRarity, setIgnoreLowRarity] = useState(false);
-
+  // 불러오기 (localStorage → 상태). 저장은 아래 commit 헬퍼로 변경 지점에서 동기로 한다.
   useEffect(() => {
     if (typeof window === "undefined") return;
     try {
@@ -216,10 +216,10 @@ export default function RecruitmentPage() {
     }
   }, []);
 
-  useEffect(() => {
+  // 저장: effect가 아니라 변경 지점에서 바로 쓴다 (초기 로드 전에 기본값으로 덮어쓰는 문제 원천 차단).
+  const persistSettings = (settings: RecruitSettings) => {
     if (typeof window === "undefined") return;
     try {
-      const settings: RecruitSettings = { deselected1Star, ignoreLowRarity };
       window.localStorage.setItem(
         SETTINGS_STORAGE_KEY,
         JSON.stringify(settings),
@@ -227,7 +227,7 @@ export default function RecruitmentPage() {
     } catch {
       // ignore storage errors
     }
-  }, [deselected1Star, ignoreLowRarity]);
+  };
 
   useEffect(() => {
     let cancelled = false;
@@ -480,9 +480,17 @@ export default function RecruitmentPage() {
   );
 
   const toggleOneStar = (id: string) => {
-    setDeselected1Star((prev) =>
-      prev.includes(id) ? prev.filter((v) => v !== id) : [...prev, id],
-    );
+    const next = deselected1Star.includes(id)
+      ? deselected1Star.filter((v) => v !== id)
+      : [...deselected1Star, id];
+    setDeselected1Star(next);
+    persistSettings({ deselected1Star: next, ignoreLowRarity });
+  };
+
+  const toggleIgnoreLowRarity = () => {
+    const next = !ignoreLowRarity;
+    setIgnoreLowRarity(next);
+    persistSettings({ deselected1Star, ignoreLowRarity: next });
   };
 
 
@@ -583,7 +591,7 @@ export default function RecruitmentPage() {
                 <div className={GROUP_TAGS}>
                   <button
                     type="button"
-                    onClick={() => setIgnoreLowRarity((prev) => !prev)}
+                    onClick={toggleIgnoreLowRarity}
                     title="보장 성급이 3성 이하인 조합을 숨깁니다. (1성 우선 조합은 계속 표시)"
                     className={
                       CHIP_BASE +

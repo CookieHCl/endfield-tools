@@ -280,7 +280,7 @@ export default function FactoryPage() {
   // 사용자 정의 공정 (공정 관리 페이지에서 만든 것). 여기서는 읽기만 한다.
   const [processes, setProcesses] = useState<Process[]>([]);
 
-  // 불러오기
+  // 불러오기 (localStorage → 상태). 저장은 effect가 아니라 아래 commit 헬퍼로 변경 지점에서 동기로 한다.
   useEffect(() => {
     if (typeof window === "undefined") return;
     setProcesses(loadProcesses());
@@ -306,16 +306,32 @@ export default function FactoryPage() {
     }
   }, []);
 
-  // 저장 (불러오기 effect가 먼저 실행돼 상태를 채운 뒤 값 기준으로 다시 저장됨)
-  useEffect(() => {
+  // 저장: 상태를 바꾸는 즉시 localStorage에도 쓴다.
+  // effect로 저장하면 초기 로드 전에 빈 상태로 덮어써 데이터가 날아가므로(공정 페이지 참고) 쓰지 않는다.
+  const persist = (state: FactoryState) => {
     if (typeof window === "undefined") return;
     try {
-      const state: FactoryState = { inputs, lines, vouchers, targetPerMin };
       window.localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
     } catch {
       // ignore storage errors
     }
-  }, [inputs, lines, vouchers, targetPerMin]);
+  };
+  const commitInputs = (next: InputRow[]) => {
+    setInputs(next);
+    persist({ inputs: next, lines, vouchers, targetPerMin });
+  };
+  const commitLines = (next: RecipeLine[]) => {
+    setLines(next);
+    persist({ inputs, lines: next, vouchers, targetPerMin });
+  };
+  const commitVouchers = (next: VoucherRow[]) => {
+    setVouchers(next);
+    persist({ inputs, lines, vouchers: next, targetPerMin });
+  };
+  const commitTargetPerMin = (next: number) => {
+    setTargetPerMin(next);
+    persist({ inputs, lines, vouchers, targetPerMin: next });
+  };
 
   // 기본 레시피 + 공정 레시피를 합친 목록/조회맵
   const allRecipes = useMemo<FactoryRecipe[]>(
@@ -390,29 +406,24 @@ export default function FactoryPage() {
 
   /// 액션 --------------------------------------------------------------
   const addInput = () =>
-    setInputs((prev) => [
-      ...prev,
+    commitInputs([
+      ...inputs,
       { id: uid(), itemId: ITEMS[0].id, rate: 0, infinite: false, target: "all" },
     ]);
   const addLine = (recipeId: string) =>
-    setLines((prev) => [
-      ...prev,
+    commitLines([
+      ...lines,
       { id: uid(), recipeId, count: 1, factory: selectedFactory },
     ]);
   const addVoucher = () =>
-    setVouchers((prev) => [
-      ...prev,
-      { id: uid(), itemId: ITEMS[0].id, perUnit: 1 },
-    ]);
+    commitVouchers([...vouchers, { id: uid(), itemId: ITEMS[0].id, perUnit: 1 }]);
 
   const patchInput = (id: string, patch: Partial<InputRow>) =>
-    setInputs((prev) => prev.map((r) => (r.id === id ? { ...r, ...patch } : r)));
+    commitInputs(inputs.map((r) => (r.id === id ? { ...r, ...patch } : r)));
   const patchLine = (id: string, patch: Partial<RecipeLine>) =>
-    setLines((prev) => prev.map((r) => (r.id === id ? { ...r, ...patch } : r)));
+    commitLines(lines.map((r) => (r.id === id ? { ...r, ...patch } : r)));
   const patchVoucher = (id: string, patch: Partial<VoucherRow>) =>
-    setVouchers((prev) =>
-      prev.map((r) => (r.id === id ? { ...r, ...patch } : r)),
-    );
+    commitVouchers(vouchers.map((r) => (r.id === id ? { ...r, ...patch } : r)));
 
   // 현재 선택한 공장에 배치된 레시피만 (목록 표시·편집 대상)
   const factoryLines = useMemo(
@@ -442,6 +453,7 @@ export default function FactoryPage() {
     setLines([]);
     setVouchers([]);
     setTargetPerMin(0);
+    persist({ inputs: [], lines: [], vouchers: [], targetPerMin: 0 });
   };
 
   const voucherText = summary.voucherInf ? "∞" : formatNumber(summary.voucherPerMin);
@@ -567,7 +579,7 @@ export default function FactoryPage() {
                   <button
                     type="button"
                     onClick={() =>
-                      setInputs((prev) => prev.filter((r) => r.id !== row.id))
+                      commitInputs(inputs.filter((r) => r.id !== row.id))
                     }
                     className={delBtn}
                   >
@@ -700,9 +712,7 @@ export default function FactoryPage() {
                         <button
                           type="button"
                           onClick={() =>
-                            setLines((prev) =>
-                              prev.filter((r) => r.id !== line.id),
-                            )
+                            commitLines(lines.filter((r) => r.id !== line.id))
                           }
                           className={delBtn}
                         >
@@ -890,7 +900,7 @@ export default function FactoryPage() {
               <div className="w-28">
                 <NumInput
                   value={targetPerMin}
-                  onChange={setTargetPerMin}
+                  onChange={commitTargetPerMin}
                   allowNegative={false}
                 />
               </div>
@@ -900,7 +910,7 @@ export default function FactoryPage() {
               <div className="w-28">
                 <NumInput
                   value={targetPerMin * 60}
-                  onChange={(n) => setTargetPerMin(n / 60)}
+                  onChange={(n) => commitTargetPerMin(n / 60)}
                   allowNegative={false}
                 />
               </div>
@@ -940,7 +950,7 @@ export default function FactoryPage() {
                   <button
                     type="button"
                     onClick={() =>
-                      setVouchers((prev) => prev.filter((r) => r.id !== row.id))
+                      commitVouchers(vouchers.filter((r) => r.id !== row.id))
                     }
                     className={delBtn}
                   >
