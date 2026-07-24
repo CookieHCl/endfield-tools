@@ -2,7 +2,8 @@
 
 import Image from "next/image";
 import { useMemo, useState } from "react";
-import { ALL_WEAPONS, DUNGEONS, GLOBAL_BASICS } from "../../data/db";
+import { DUNGEONS, GLOBAL_BASICS } from "@/data/dungeon-db";
+import { ALL_WEAPONS } from "@/data/weapon-db";
 import type { Dungeon, Weapon, WeaponOption } from "../../lib/types";
 import { useOwnedWeapons } from "../owned-weapons-provider";
 import { imgPath } from "@/lib/utils";

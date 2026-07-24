@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useMemo, useState } from "react";
-import { ALL_WEAPONS } from "../../data/db";
+import { ALL_WEAPONS } from "@/data/weapon-db";
 import { useOwnedWeapons } from "../owned-weapons-provider";
 import { imgPath } from "@/lib/utils";
 import { ImportExportButtons } from "@/components/import-export-buttons";
