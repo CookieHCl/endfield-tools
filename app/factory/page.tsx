@@ -274,6 +274,9 @@ export default function FactoryPage() {
   const [vouchers, setVouchers] = useState<VoucherRow[]>([]);
   const [targetPerMin, setTargetPerMin] = useState(0);
 
+  // 현재 편집 중인 공장. 레시피 추가/수정/삭제·목록 필터가 모두 이 값을 따른다.
+  const [selectedFactory, setSelectedFactory] = useState<FactoryNum>(1);
+
   // 사용자 정의 공정 (공정 관리 페이지에서 만든 것). 여기서는 읽기만 한다.
   const [processes, setProcesses] = useState<Process[]>([]);
 
@@ -394,7 +397,7 @@ export default function FactoryPage() {
   const addLine = (recipeId: string) =>
     setLines((prev) => [
       ...prev,
-      { id: uid(), recipeId, count: 1, factory: 1 },
+      { id: uid(), recipeId, count: 1, factory: selectedFactory },
     ]);
   const addVoucher = () =>
     setVouchers((prev) => [
@@ -410,6 +413,12 @@ export default function FactoryPage() {
     setVouchers((prev) =>
       prev.map((r) => (r.id === id ? { ...r, ...patch } : r)),
     );
+
+  // 현재 선택한 공장에 배치된 레시피만 (목록 표시·편집 대상)
+  const factoryLines = useMemo(
+    () => lines.filter((l) => l.factory === selectedFactory),
+    [lines, selectedFactory],
+  );
 
   // 각 레시피 줄의 "최대화" 가능 여부 (버튼 상태·계산값 공유)
   const maxStateByLine = useMemo(() => {
@@ -571,19 +580,60 @@ export default function FactoryPage() {
         </Section>
 
         {/* 2. 공장 설정 -------------------------------------------------- */}
-        <Section title="공장 설정" hint={`${lines.length}개 레시피 배치`}>
-          {/* 레시피 추가 패널 (기본 레시피 + 공정) */}
+        <Section
+          title="공장 설정"
+          hint={`공장 ${selectedFactory} · 레시피 ${factoryLines.length}개`}
+          right={
+            <div className="flex items-center gap-1.5">
+              <span className="text-xs text-zinc-500">공장</span>
+              <div className="flex gap-1">
+                {FACTORIES.map((f) => {
+                  const count = lines.filter((l) => l.factory === f).length;
+                  return (
+                    <button
+                      key={f}
+                      type="button"
+                      onClick={() => setSelectedFactory(f)}
+                      title={`공장 ${f} (레시피 ${count}개)`}
+                      className={
+                        "h-7 min-w-7 rounded-md border px-1.5 text-xs font-semibold transition-colors " +
+                        (selectedFactory === f
+                          ? "border-amber-500 bg-amber-500 text-white"
+                          : "border-zinc-300 bg-white text-zinc-500 hover:bg-zinc-100")
+                      }
+                    >
+                      {f}
+                      {count > 0 && (
+                        <span
+                          className={
+                            "ml-1 tabular-nums " +
+                            (selectedFactory === f
+                              ? "text-amber-100"
+                              : "text-zinc-400")
+                          }
+                        >
+                          {count}
+                        </span>
+                      )}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          }
+        >
+          {/* 레시피 추가 패널 (기본 레시피 + 공정) → 선택한 공장에 추가된다 */}
           <RecipePicker recipes={allRecipes} onAdd={addLine} />
 
-          {/* 배치된 레시피 목록 */}
-          {lines.length === 0 ? (
+          {/* 선택한 공장에 배치된 레시피 목록 */}
+          {factoryLines.length === 0 ? (
             <p className="px-5 py-8 text-center text-sm text-zinc-400">
-              위에서 레시피를 추가하면 여기서 수량·입출력·공장 배치를 조정할 수
-              있습니다.
+              위에서 레시피를 추가하면 공장 {selectedFactory}에 배치되어 여기서
+              수량·입출력을 조정할 수 있습니다.
             </p>
           ) : (
             <div className="flex flex-col divide-y divide-zinc-100">
-              {lines.map((line) => {
+              {factoryLines.map((line) => {
                 const recipe = recipeById.get(line.recipeId);
                 if (!recipe) return null;
                 const isProcess = isProcessRecipeId(recipe.id);
@@ -661,36 +711,12 @@ export default function FactoryPage() {
                       </div>
                     </div>
 
-                    <div className="flex flex-wrap items-center gap-x-6 gap-y-3">
-                      {/* 공장 배치 */}
-                      <div className="flex items-center gap-1.5">
-                        <span className="text-xs text-zinc-500">공장</span>
-                        <div className="flex gap-1">
-                          {FACTORIES.map((f) => (
-                            <button
-                              key={f}
-                              type="button"
-                              onClick={() => patchLine(line.id, { factory: f })}
-                              className={
-                                "h-7 w-7 rounded-md border text-xs font-semibold transition-colors " +
-                                (line.factory === f
-                                  ? "border-amber-500 bg-amber-500 text-white"
-                                  : "border-zinc-300 bg-white text-zinc-500 hover:bg-zinc-100")
-                              }
-                            >
-                              {f}
-                            </button>
-                          ))}
-                        </div>
-                      </div>
-
-                      {/* 입력 → 출력 (분당 소비/산출) */}
-                      <RecipeIOFields
-                        recipe={recipe}
-                        count={line.count}
-                        onCount={(n) => patchLine(line.id, { count: n })}
-                      />
-                    </div>
+                    {/* 입력 → 출력 (분당 소비/산출) */}
+                    <RecipeIOFields
+                      recipe={recipe}
+                      count={line.count}
+                      onCount={(n) => patchLine(line.id, { count: n })}
+                    />
                   </div>
                 );
               })}
