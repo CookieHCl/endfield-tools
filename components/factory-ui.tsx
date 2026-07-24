@@ -2,7 +2,12 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import { createPortal } from "react-dom";
-import { ITEMS, itemName, type FactoryRecipe } from "@/data/factory-db";
+import {
+  RESOURCE_ITEMS,
+  itemName,
+  type FactoryItem,
+  type FactoryRecipe,
+} from "@/data/factory-db";
 import { FactoryIcon } from "@/components/factory-icon";
 import { formatNumber } from "@/lib/factory";
 import { isProcessRecipeId } from "@/lib/process";
@@ -223,16 +228,20 @@ export function RecipeIOFields({
 // 이름 검색: 검색어 입력 → 이름 리스트에서 선택.
 // 아이콘 검색: 검색어가 비면 전체 자원 아이콘 그리드를 보여줘 아이콘만 보고 선택.
 // 드롭다운은 섹션의 overflow-hidden에 잘리지 않도록 portal로 body에 띄운다.
+// items 기본값은 실제 자원만 (설비·벨트 제외). 아이콘 자체를 고르는 용도라면
+// 호출부에서 ITEMS 전체를 넘긴다.
 export function ItemPicker({
   value,
   onSelect,
   placeholder = "자원 이름 검색…",
   clearable = true,
+  items = RESOURCE_ITEMS,
 }: {
   value: string | null;
   onSelect: (id: string | null) => void;
   placeholder?: string;
   clearable?: boolean;
+  items?: FactoryItem[];
 }) {
   const [search, setSearch] = useState("");
   const [open, setOpen] = useState(false);
@@ -271,8 +280,8 @@ export function ItemPicker({
   const query = search.trim().toLowerCase();
   const matches = useMemo(
     () =>
-      query ? ITEMS.filter((it) => it.name.toLowerCase().includes(query)) : ITEMS,
-    [query],
+      query ? items.filter((it) => it.name.toLowerCase().includes(query)) : items,
+    [items, query],
   );
 
   const selected = value ? itemName(value) : "";

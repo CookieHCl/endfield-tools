@@ -188,9 +188,11 @@ export default function ProcessPage() {
               <span className="mb-1 block text-xs font-semibold text-zinc-500">
                 아이콘 (자원에서 선택)
               </span>
+              {/* 아이콘은 설비·벨트까지 전부 고를 수 있어야 하므로 ITEMS 전체를 넘긴다. */}
               <ItemPicker
                 value={icon}
                 clearable={false}
+                items={ITEMS}
                 placeholder="아이콘으로 쓸 자원 검색…"
                 onSelect={(id) => {
                   if (id) {

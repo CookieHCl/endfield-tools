@@ -1,7 +1,12 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
-import { ITEMS, RECIPES, itemName, type FactoryRecipe } from "@/data/factory-db";
+import {
+  RESOURCE_ITEMS,
+  RECIPES,
+  itemName,
+  type FactoryRecipe,
+} from "@/data/factory-db";
 import { FactoryIcon } from "@/components/factory-icon";
 import { ImportExportButtons } from "@/components/import-export-buttons";
 import { cleanNumber, formatNumber, uid } from "@/lib/factory";
@@ -425,7 +430,13 @@ export default function FactoryPage() {
   const addInput = () =>
     commitInputs([
       ...inputs,
-      { id: uid(), itemId: ITEMS[0].id, rate: 0, infinite: false, target: "all" },
+      {
+        id: uid(),
+        itemId: RESOURCE_ITEMS[0].id,
+        rate: 0,
+        infinite: false,
+        target: "all",
+      },
     ]);
   const addLine = (recipeId: string) =>
     commitLines([
@@ -433,7 +444,10 @@ export default function FactoryPage() {
       { id: uid(), recipeId, count: 1, factory: selectedFactory },
     ]);
   const addVoucher = () =>
-    commitVouchers([...vouchers, { id: uid(), itemId: ITEMS[0].id, perUnit: 1 }]);
+    commitVouchers([
+      ...vouchers,
+      { id: uid(), itemId: RESOURCE_ITEMS[0].id, perUnit: 1 },
+    ]);
 
   const patchInput = (id: string, patch: Partial<InputRow>) =>
     commitInputs(inputs.map((r) => (r.id === id ? { ...r, ...patch } : r)));
@@ -498,7 +512,8 @@ export default function FactoryPage() {
               에서 가져옵니다.
             </p>
             <p className="text-xs text-zinc-500">
-              브라우저에 자동 저장 · 자원 {ITEMS.length}종 · 레시피 {RECIPES.length}종
+              브라우저에 자동 저장 · 자원 {RESOURCE_ITEMS.length}종 · 레시피{" "}
+              {RECIPES.length}종
               {processes.length > 0 && ` · 공정 ${processes.length}개`}
             </p>
           </div>
