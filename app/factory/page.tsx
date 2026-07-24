@@ -608,37 +608,22 @@ export default function FactoryPage() {
             <div className="flex items-center gap-1.5">
               <span className="text-xs text-zinc-500">공장</span>
               <div className="flex gap-1">
-                {FACTORIES.map((f) => {
-                  const count = lines.filter((l) => l.factory === f).length;
-                  return (
-                    <button
-                      key={f}
-                      type="button"
-                      onClick={() => setSelectedFactory(f)}
-                      title={`공장 ${f} (레시피 ${count}개)`}
-                      className={
-                        "h-7 min-w-7 rounded-md border px-1.5 text-xs font-semibold transition-colors " +
-                        (selectedFactory === f
-                          ? "border-amber-500 bg-amber-500 text-white"
-                          : "border-zinc-300 bg-white text-zinc-500 hover:bg-zinc-100")
-                      }
-                    >
-                      {f}
-                      {count > 0 && (
-                        <span
-                          className={
-                            "ml-1 tabular-nums " +
-                            (selectedFactory === f
-                              ? "text-amber-100"
-                              : "text-zinc-400")
-                          }
-                        >
-                          {count}
-                        </span>
-                      )}
-                    </button>
-                  );
-                })}
+                {FACTORIES.map((f) => (
+                  <button
+                    key={f}
+                    type="button"
+                    onClick={() => setSelectedFactory(f)}
+                    title={`공장 ${f}`}
+                    className={
+                      "h-7 min-w-7 rounded-md border px-1.5 text-xs font-semibold transition-colors " +
+                      (selectedFactory === f
+                        ? "border-amber-500 bg-amber-500 text-white"
+                        : "border-zinc-300 bg-white text-zinc-500 hover:bg-zinc-100")
+                    }
+                  >
+                    {f}
+                  </button>
+                ))}
               </div>
             </div>
           }
