@@ -62,3 +62,13 @@ export const ICON_BY_ID = new Map(ICONS.map((icon) => [icon.id, icon]));
 export function itemName(id: string): string {
   return ITEM_BY_ID.get(id)?.name ?? id;
 }
+
+/// 아이콘 스프라이트 id 해석 -------------------------------------------
+// 아이템·레시피의 icon 필드는 대개 자기 id와 같지만, 다른 아이콘을 가리키는
+// 경우가 있어 id로 바로 ICON_BY_ID를 찾으면 빈칸이 된다.
+//  - 다른 아이콘 재사용: __miner_water → liquid_water, settlement-jinlong → jinlong
+//  - 합성 아이콘: copper_bottle-liquid_plant_grass_1 → g6eZC2ckR (스프라이트에 구워진 해시 id)
+// 호출부가 아이템 id와 recipe.icon을 섞어서 넘기므로 여기서 둘 다 흡수한다.
+export function iconId(id: string): string {
+  return ITEM_BY_ID.get(id)?.icon ?? RECIPE_BY_ID.get(id)?.icon ?? id;
+}
