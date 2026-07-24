@@ -75,6 +75,10 @@ type RecipeMap = Map<string, FactoryRecipe>;
 
 const STORAGE_KEY = "factoryCalculator";
 
+// 결산 행 그룹: 관리권 → 공장 입력 → 나머지 순으로 모으고 배경색을 달리한다.
+// (관리권이면서 입력인 자원은 관리권이 먼저라 관리권으로 취급된다.)
+const ROW_GROUP = { voucher: 0, input: 1, rest: 2 } as const;
+
 // 표에서 총합 정렬 버킷: 음수(0) < 양수(1) < ∞음수(2) < ∞양수(3) < 0(4) < ∞0(5)
 function bucket(cell: Cell): number {
   const d = cleanNumber(cell.delta);
@@ -364,40 +368,44 @@ export default function FactoryPage() {
         (voucherPerUnitById.get(v.itemId) ?? 0) + v.perUnit,
       );
     }
+    // 공장 입력으로 지정한 자원 집합 (파란색 강조 대상)
+    const inputItemIds = new Set(inputs.map((i) => i.itemId));
     const totalById = new Map<string, Cell>();
     const rows = Array.from(byId, ([item, { total, factories }]) => {
       totalById.set(item, total);
       const perUnit = voucherPerUnitById.get(item);
       const isVoucher = perUnit !== undefined;
+      // 그룹: 0 관리권 · 1 공장 입력 · 2 나머지. 관리권이 입력보다 우선.
+      const group = isVoucher ? ROW_GROUP.voucher : inputItemIds.has(item) ? ROW_GROUP.input : ROW_GROUP.rest;
       // 이 자원이 만들어내는 관리권 양(분당) = 총생산량 × 개당 관리권
       const voucherAmount = perUnit ? cleanNumber(total.delta * perUnit) : 0;
       const voucherInf = isVoucher && total.inf && (perUnit ?? 0) > 0;
+      // 정렬용 관리권 생산량: 무한은 맨 위(+∞), 관리권이 아니면 0이라 그룹 정렬에 영향 없음.
+      const voucherSort = voucherInf ? Infinity : voucherAmount;
       return {
         itemId: item,
         name: itemName(item),
         total,
         factories,
-        isVoucher,
+        group,
         voucherAmount,
         voucherInf,
+        voucherSort,
       };
     });
 
     rows.sort((a, b) => {
-      // 관리권으로 지정한 자원을 맨 위로 모은다.
-      if (a.isVoucher !== b.isVoucher) return a.isVoucher ? -1 : 1;
-      // 관리권 자원끼리는 관리권 생산량 기준 (무한 우선 → 큰 값 순).
-      if (a.isVoucher && b.isVoucher) {
-        if (a.voucherInf !== b.voucherInf) return a.voucherInf ? -1 : 1;
-        if (a.voucherAmount !== b.voucherAmount)
-          return b.voucherAmount - a.voucherAmount;
-        return a.name.localeCompare(b.name, "en");
-      }
+      // 1) 그룹: 관리권 → 공장 입력 → 나머지
+      if (a.group !== b.group) return a.group - b.group;
+      // 2) 관리권 생산량 (무한 우선 → 큰 값 순). 관리권 그룹이 아니면 둘 다 0이라 넘어감.
+      if (a.voucherSort !== b.voucherSort) return b.voucherSort - a.voucherSort;
+      // 3) 전체 합·공장별 수지 버킷
       const ka = [bucket(a.total), ...a.factories.map(bucket)];
       const kb = [bucket(b.total), ...b.factories.map(bucket)];
       for (let i = 0; i < ka.length; i++) {
         if (ka[i] !== kb[i]) return ka[i] - kb[i];
       }
+      // 4) 이름
       return a.name.localeCompare(b.name, "en");
     });
 
@@ -815,9 +823,11 @@ export default function FactoryPage() {
                       key={row.itemId}
                       className={
                         "border-b border-zinc-100 transition-colors last:border-b-0 " +
-                        (row.isVoucher
+                        (row.group === ROW_GROUP.voucher
                           ? "bg-amber-50/50 hover:bg-amber-50"
-                          : "hover:bg-zinc-50/70")
+                          : row.group === ROW_GROUP.input
+                            ? "bg-blue-50/70 hover:bg-blue-100/70"
+                            : "hover:bg-zinc-50/70")
                       }
                     >
                       <td className="px-4 py-2 align-middle">
@@ -826,12 +836,19 @@ export default function FactoryPage() {
                             type="button"
                             onClick={() => pickFilterItem(row.itemId)}
                             title={`${row.name} · 클릭해서 자원으로 필터`}
-                            className="rounded-md transition-colors hover:bg-amber-100"
+                            className={
+                              "rounded-md transition-colors " +
+                              (row.group === ROW_GROUP.voucher
+                                ? "hover:bg-amber-100"
+                                : row.group === ROW_GROUP.input
+                                  ? "hover:bg-blue-100"
+                                  : "hover:bg-zinc-100")
+                            }
                           >
                             <FactoryIcon id={row.itemId} size={22} />
                           </button>
                           <span className="text-zinc-800">{row.name}</span>
-                          {row.isVoucher && (
+                          {row.group === ROW_GROUP.voucher && (
                             <span
                               title="이 자원이 만들어내는 분당 관리권"
                               className={
