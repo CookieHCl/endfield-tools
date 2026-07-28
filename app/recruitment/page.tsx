@@ -56,6 +56,13 @@ const GROUP_TAGS = "flex flex-wrap gap-1.5 pt-px sm:gap-2";
 const GROUP_LABEL_BASE =
   "w-11 shrink-0 rounded-lg border py-1 text-center text-xs font-bold sm:w-14 sm:py-1.5 sm:text-sm";
 
+// 조합 안에 들어가는 태그 칩 (기본 / 선택된 태그 하이라이트)
+const COMBO_TAG_CHIP =
+  "whitespace-nowrap rounded-md border px-2.5 py-1 text-xs font-semibold";
+const COMBO_TAG_PLAIN = "border-teal-200 bg-teal-50 text-teal-700";
+const COMBO_TAG_HIGHLIGHT =
+  "border-amber-500 bg-amber-100 text-amber-800 ring-1 ring-amber-300";
+
 interface CheckInfo {
   mapMd5: string;
   timestamp: number;
@@ -149,6 +156,67 @@ async function fetchRecruitmentData(): Promise<RecruitmentData> {
   ]);
 
   return { check, characters, charNamesKr, tagNamesKr };
+}
+
+// 앞글자 입력을 "표시할 태그 / 하이라이트할 후보 / 선택할 태그 / 해당 태그가 없는 글자"로 변환한다.
+// - 앞글자에 해당하는 태그가 하나면 바로 선택
+// - 후보가 여럿이면 같은 앞글자를 후보 수만큼 입력했을 때 전부 선택 (스스 → 스나이퍼 + 스페셜리스트),
+//   그렇지 않으면 후보만 하이라이트해서 직접 고르게 한다
+// - 어느 경우든 입력한 앞글자에 해당하는 태그만 표시 대상으로 남긴다
+function resolveTagFilter(
+  tagNamesKr: Record<string, string>,
+  filter: string,
+): {
+  visible: Set<number>;
+  highlighted: Set<number>;
+  selected: number[];
+  unmatched: string[];
+} {
+  const visible = new Set<number>();
+  const highlighted = new Set<number>();
+  const selected: number[] = [];
+  const unmatched: string[] = [];
+  if (!filter) return { visible, highlighted, selected, unmatched };
+
+  const chars = Array.from(filter);
+  const handled = new Set<string>();
+  for (const ch of chars) {
+    if (handled.has(ch)) continue;
+    handled.add(ch);
+    const matches = ALL_TAG_IDS.filter(
+      (id) => (tagNamesKr[String(id)] ?? "")[0] === ch,
+    );
+    if (matches.length === 0) {
+      // 공백은 경고할 대상이 아니므로 조용히 무시
+      if (ch.trim()) unmatched.push(ch);
+      continue;
+    }
+    matches.forEach((id) => visible.add(id));
+    const typed = chars.filter((c) => c === ch).length;
+    if (typed >= matches.length) {
+      selected.push(...matches);
+    } else {
+      matches.forEach((id) => highlighted.add(id));
+    }
+  }
+  return {
+    visible,
+    highlighted,
+    selected: selected.slice(0, MAX_SELECTED_TAGS),
+    unmatched,
+  };
+}
+
+// 받침 유무에 맞는 조사를 붙인다 ("원" → "원으로", "가" → "가로")
+function withRoParticle(word: string): string {
+  const last = Array.from(word).pop() ?? "";
+  const code = (last.codePointAt(0) ?? 0) - 0xac00;
+  if (code >= 0 && code < 11172) {
+    const jongseong = code % 28;
+    // 받침이 없거나 ㄹ이면 "로", 나머지는 "으로"
+    return word + (jongseong === 0 || jongseong === 8 ? "로" : "으로");
+  }
+  return word + "으로";
 }
 
 function StarBadge({ star }: { star: number }) {
@@ -428,6 +496,20 @@ export default function RecruitmentPage() {
     return groups;
   }, [data, recruitChars, deselected1Star]);
 
+  // 태그를 하나라도 선택했으면, 선택한 태그가 포함된 조합만 남겨서 보여준다
+  const displayedValueGroups = useMemo<ValueGroup[]>(() => {
+    if (selectedTags.length === 0) return valueGroups;
+    const selected = new Set(selectedTags);
+    return valueGroups
+      .map((group) => ({
+        ...group,
+        combos: group.combos.filter((combo) =>
+          combo.some((tagId) => selected.has(tagId)),
+        ),
+      }))
+      .filter((group) => group.combos.length > 0);
+  }, [valueGroups, selectedTags]);
+
   const toggleTag = (tagId: number) => {
     setSelectedTags((prev) => {
       if (prev.includes(tagId)) {
@@ -440,38 +522,24 @@ export default function RecruitmentPage() {
     });
   };
 
-  // 앞글자별 후보 태그 목록 (앞글자가 같은 태그가 여럿이면 직접 고르도록 하이라이트)
-  const highlightedTags = useMemo(() => {
-    const highlight = new Set<number>();
-    if (!data || !tagFilter) return highlight;
-    for (const ch of Array.from(tagFilter)) {
-      const matches = ALL_TAG_IDS.filter(
-        (id) => (data.tagNamesKr[String(id)] ?? "")[0] === ch,
-      );
-      if (matches.length > 1) matches.forEach((id) => highlight.add(id));
-    }
-    return highlight;
-  }, [data, tagFilter]);
+  // 앞글자 입력 결과: 해당 앞글자의 태그만 표시하고, 후보가 여럿인 글자는 하이라이트
+  const {
+    visible: filteredTags,
+    highlighted: highlightedTags,
+    unmatched: unmatchedFilterChars,
+  } = useMemo(
+    () => resolveTagFilter(data?.tagNamesKr ?? {}, tagFilter),
+    [data, tagFilter],
+  );
+  const tagFilterActive = tagFilter.length > 0;
 
-  // 텍스트 입력 시 기존 선택을 모두 취소하고 앞글자가 유일하게 일치하는 태그만 자동 선택
+  // 텍스트 입력 시 기존 선택을 모두 취소하고 앞글자에 해당하는 태그를 자동 선택
   const handleTagFilterChange = (value: string) => {
-    const chars = Array.from(value).slice(0, MAX_SELECTED_TAGS);
-    setTagFilter(chars.join(""));
-    if (!data) {
-      setSelectedTags([]);
-      return;
-    }
-    const selected: number[] = [];
-    for (const ch of chars) {
-      const matches = ALL_TAG_IDS.filter(
-        (id) => (data.tagNamesKr[String(id)] ?? "")[0] === ch,
-      );
-      // 앞글자가 유일한 경우에만 자동 선택 (여럿이면 하이라이트만 하고 직접 선택)
-      if (matches.length === 1 && !selected.includes(matches[0])) {
-        selected.push(matches[0]);
-      }
-    }
-    setSelectedTags(selected);
+    const next = Array.from(value).slice(0, MAX_SELECTED_TAGS).join("");
+    setTagFilter(next);
+    setSelectedTags(
+      data ? resolveTagFilter(data.tagNamesKr, next).selected : [],
+    );
   };
 
   const oneStarChars = useMemo(
@@ -646,43 +714,59 @@ export default function RecruitmentPage() {
             </div>
 
             <div className="flex flex-col divide-y divide-zinc-100">
-              {TAG_GROUPS.map((group) => (
-                <div key={group.label} className={GROUP_ROW}>
-                  <span
-                    className={
-                      GROUP_LABEL_BASE +
-                      " border-teal-200 bg-teal-50 text-teal-700"
-                    }
-                  >
-                    {group.label}
-                  </span>
-                  <div className={GROUP_TAGS}>
-                    {group.tagIds.map((tagId) => {
-                      const selected = selectedTags.includes(tagId);
-                      const highlighted =
-                        !selected && highlightedTags.has(tagId);
-                      return (
-                        <button
-                          key={tagId}
-                          type="button"
-                          onClick={() => toggleTag(tagId)}
-                          className={
-                            CHIP_BASE +
-                            " " +
-                            (selected
-                              ? "border-teal-600 bg-teal-600 text-white shadow-sm"
-                              : highlighted
-                                ? "border-amber-500 bg-amber-50 text-amber-700 ring-2 ring-amber-300 hover:bg-amber-100"
-                                : "border-zinc-300 bg-white text-zinc-700 hover:border-teal-400 hover:bg-teal-50 hover:text-teal-700")
-                          }
-                        >
-                          {data.tagNamesKr[String(tagId)] ?? `#${tagId}`}
-                        </button>
-                      );
-                    })}
-                  </div>
+              {unmatchedFilterChars.length > 0 && (
+                <div className="bg-amber-50 px-3 py-2 text-xs font-medium text-amber-700 sm:px-5 sm:py-2.5">
+                  {withRoParticle(unmatchedFilterChars.join(", "))} 시작하는
+                  태그는 없습니다.
                 </div>
-              ))}
+              )}
+              {TAG_GROUPS.map((group) => {
+                // 앞글자를 입력했으면 그 앞글자인 태그(+ 직접 선택한 태그)만 남긴다
+                const tagIds = tagFilterActive
+                  ? group.tagIds.filter(
+                      (id) =>
+                        filteredTags.has(id) || selectedTags.includes(id),
+                    )
+                  : group.tagIds;
+                if (tagIds.length === 0) return null;
+                return (
+                  <div key={group.label} className={GROUP_ROW}>
+                    <span
+                      className={
+                        GROUP_LABEL_BASE +
+                        " border-teal-200 bg-teal-50 text-teal-700"
+                      }
+                    >
+                      {group.label}
+                    </span>
+                    <div className={GROUP_TAGS}>
+                      {tagIds.map((tagId) => {
+                        const selected = selectedTags.includes(tagId);
+                        const highlighted =
+                          !selected && highlightedTags.has(tagId);
+                        return (
+                          <button
+                            key={tagId}
+                            type="button"
+                            onClick={() => toggleTag(tagId)}
+                            className={
+                              CHIP_BASE +
+                              " " +
+                              (selected
+                                ? "border-teal-600 bg-teal-600 text-white shadow-sm"
+                                : highlighted
+                                  ? "border-amber-500 bg-amber-50 text-amber-700 ring-2 ring-amber-300 hover:bg-amber-100"
+                                  : "border-zinc-300 bg-white text-zinc-700 hover:border-teal-400 hover:bg-teal-50 hover:text-teal-700")
+                            }
+                          >
+                            {data.tagNamesKr[String(tagId)] ?? `#${tagId}`}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+                );
+              })}
             </div>
           </section>
         )}
@@ -744,7 +828,7 @@ export default function RecruitmentPage() {
                             {combo.tags.map((tagId) => (
                               <span
                                 key={tagId}
-                                className="whitespace-nowrap rounded-md border border-teal-200 bg-teal-50 px-2.5 py-1 text-xs font-semibold text-teal-700"
+                                className={COMBO_TAG_CHIP + " " + COMBO_TAG_PLAIN}
                               >
                                 {data.tagNamesKr[String(tagId)] ?? `#${tagId}`}
                               </span>
@@ -787,15 +871,26 @@ export default function RecruitmentPage() {
                 가치 있는 태그 조합 총정리
                 <span className="ml-2 font-medium normal-case tracking-normal text-zinc-400">
                   3성 + 1성 저격 이상
+                  {selectedTags.length > 0 && " · 선택한 태그 포함 조합만"}
                 </span>
               </span>
               <span className="text-xs text-zinc-400">
-                {valueGroups.reduce((sum, g) => sum + g.combos.length, 0)}개 조합
+                {displayedValueGroups.reduce(
+                  (sum, g) => sum + g.combos.length,
+                  0,
+                )}
+                개 조합
               </span>
             </div>
 
+            {displayedValueGroups.length === 0 && (
+              <div className="px-5 py-12 text-center text-sm text-zinc-400">
+                선택한 태그가 포함된 조합이 없습니다.
+              </div>
+            )}
+
             <div className="flex flex-col divide-y divide-zinc-100">
-              {valueGroups.map((group) => (
+              {displayedValueGroups.map((group) => (
                 <div key={group.key} className="flex flex-col gap-2.5 px-3 py-3 sm:gap-3 sm:px-5 sm:py-4">
                   <div className="flex items-center gap-2">
                     <StarBadge star={group.min} />
@@ -825,7 +920,15 @@ export default function RecruitmentPage() {
                             {idx > 0 && (
                               <span className="text-zinc-300">+</span>
                             )}
-                            <span className="whitespace-nowrap rounded-md border border-teal-200 bg-teal-50 px-2.5 py-1 text-xs font-semibold text-teal-700">
+                            <span
+                              className={
+                                COMBO_TAG_CHIP +
+                                " " +
+                                (selectedTags.includes(tagId)
+                                  ? COMBO_TAG_HIGHLIGHT
+                                  : COMBO_TAG_PLAIN)
+                              }
+                            >
                               {data.tagNamesKr[String(tagId)] ?? `#${tagId}`}
                             </span>
                           </span>
