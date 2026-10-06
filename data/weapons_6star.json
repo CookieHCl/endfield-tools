@@ -450,10 +450,33 @@
     "name": "간식 시간",
     "star": 6,
     "image_name": "간식_시간.webp",
+    "signature_weapon": "푸치나.webp",
     "options": {
       "basic": "힘 증가",
       "additional": "치유 효율 증가",
       "skill": "의료"
+    }
+  },
+  {
+    "name": "옥에 깃든 형체",
+    "star": 6,
+    "image_name": "옥에_깃든_형체.webp",
+    "signature_weapon": "사.webp",
+    "options": {
+      "basic": "지능 증가",
+      "additional": "냉기 피해 증가",
+      "skill": "효율"
+    }
+  },
+  {
+    "name": "환월",
+    "star": 6,
+    "image_name": "환월.webp",
+    "signature_weapon": "명하.webp",
+    "options": {
+      "basic": "의지 증가",
+      "additional": "공격력 증가",
+      "skill": "고통"
     }
   }
 ]
