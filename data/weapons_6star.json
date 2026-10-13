@@ -478,5 +478,25 @@
       "additional": "공격력 증가",
       "skill": "고통"
     }
+  },
+  {
+    "name": "유구한 전승",
+    "star": 6,
+    "image_name": "유구한_전승.webp",
+    "options": {
+      "basic": "지능 증가",
+      "additional": "냉기 피해 증가",
+      "skill": "효율"
+    }
+  },
+  {
+    "name": "응집 공업",
+    "star": 6,
+    "image_name": "응집_공업.webp",
+    "options": {
+      "basic": "의지 증가",
+      "additional": "전기 피해 증가",
+      "skill": "방출"
+    }
   }
 ]
