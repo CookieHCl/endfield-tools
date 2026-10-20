@@ -3,8 +3,9 @@
 import { useEffect, useMemo, useState } from "react";
 import { ImportExportButtons } from "@/components/import-export-buttons";
 
-// 명일방주 원작 데이터 (arkntools.app이 쓰는 데이터 소스, GitHub Pages라 CORS 허용됨)
-const DATA_BASE = "https://data.arkntools.app";
+// 별도 CDN 대신 저장소의 원본 JSON을 직접 사용한다 (브라우저 CORS 허용).
+const DATA_BASE =
+  "https://raw.githubusercontent.com/arkntools/arknights-toolbox-data/main/assets";
 
 // 공개모집 태그 그룹 (id는 locales/kr/tag.json 기준)
 const TAG_GROUPS = [
@@ -63,12 +64,6 @@ const COMBO_TAG_PLAIN = "border-teal-200 bg-teal-50 text-teal-700";
 const COMBO_TAG_HIGHLIGHT =
   "border-amber-500 bg-amber-100 text-amber-800 ring-1 ring-amber-300";
 
-interface CheckInfo {
-  mapMd5: string;
-  timestamp: number;
-  version: string;
-}
-
 interface CharacterInfo {
   appellation: string;
   star: number;
@@ -79,7 +74,6 @@ interface CharacterInfo {
 }
 
 interface RecruitmentData {
-  check: CheckInfo;
   characters: Record<string, CharacterInfo>;
   charNamesKr: Record<string, string>;
   tagNamesKr: Record<string, string>;
@@ -121,14 +115,14 @@ interface RecruitSettings {
   ignoreLowRarity: boolean;
 }
 
-// "data/character.json" + "23071f1f" → "data/character.23071f1f.json"
-function hashedPath(path: string, hash: string): string {
-  const dotIndex = path.lastIndexOf(".");
-  return `${path.slice(0, dotIndex)}.${hash}${path.slice(dotIndex)}`;
-}
-
 async function fetchJson<T>(url: string): Promise<T> {
-  const res = await fetch(url);
+  let res: Response;
+  try {
+    res = await fetch(url);
+  } catch (error) {
+    const message = error instanceof Error ? error.message : String(error);
+    throw new Error(`${url} 연결 실패: ${message}`);
+  }
   if (!res.ok) {
     throw new Error(`${url} 요청 실패 (HTTP ${res.status})`);
   }
@@ -136,26 +130,13 @@ async function fetchJson<T>(url: string): Promise<T> {
 }
 
 async function fetchRecruitmentData(): Promise<RecruitmentData> {
-  const check = await fetchJson<CheckInfo>(`${DATA_BASE}/check.json`);
-  const map = await fetchJson<Record<string, string>>(
-    `${DATA_BASE}/map.${check.mapMd5}.json`,
-  );
-
-  const fetchMapped = <T,>(path: string): Promise<T> => {
-    const hash = map[path];
-    if (!hash) {
-      throw new Error(`파일 맵에 ${path} 항목이 없습니다.`);
-    }
-    return fetchJson<T>(`${DATA_BASE}/${hashedPath(path, hash)}`);
-  };
-
   const [characters, charNamesKr, tagNamesKr] = await Promise.all([
-    fetchMapped<Record<string, CharacterInfo>>("data/character.json"),
-    fetchMapped<Record<string, string>>("locales/kr/character.json"),
-    fetchMapped<Record<string, string>>("locales/kr/tag.json"),
+    fetchJson<Record<string, CharacterInfo>>(`${DATA_BASE}/data/character.json`),
+    fetchJson<Record<string, string>>(`${DATA_BASE}/locales/kr/character.json`),
+    fetchJson<Record<string, string>>(`${DATA_BASE}/locales/kr/tag.json`),
   ]);
 
-  return { check, characters, charNamesKr, tagNamesKr };
+  return { characters, charNamesKr, tagNamesKr };
 }
 
 // 앞글자 입력을 "표시할 태그 / 하이라이트할 후보 / 선택할 태그 / 해당 태그가 없는 글자"로 변환한다.
@@ -581,8 +562,6 @@ export default function RecruitmentPage() {
           </p>
           {data && (
             <p className="text-xs text-zinc-500">
-              데이터 버전: {data.check.version} (
-              {new Date(data.check.timestamp).toLocaleString("ko-KR")} 기준) ·
               오퍼레이터 {Object.keys(data.characters).length}명 (공개모집{" "}
               {recruitChars.length}명)
             </p>
