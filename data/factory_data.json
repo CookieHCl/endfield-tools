@@ -1,6 +1,6 @@
 {
   "version": {
-    "arknights-endfield": "v1.5.3"
+    "arknights-endfield": "v1.7.2"
   },
   "icons": [
     {
@@ -19,1259 +19,1374 @@
       "color": "#82adc9"
     },
     {
-      "id": "domain_key_tundra",
+      "id": "domain_key_jinlong",
       "position": "-192px 0px",
-      "color": "#777570"
+      "color": "#6b8178"
     },
     {
-      "id": "activity_copper_poly_cmpt",
+      "id": "domain_key_tundra",
       "position": "-256px 0px",
-      "color": "#b99656"
-    },
-    {
-      "id": "activity_copper_poly_gas",
-      "position": "-320px 0px",
-      "color": "#c8a567"
-    },
-    {
-      "id": "activity_copper_poly_tool",
-      "position": "-384px 0px",
-      "color": "#4d7951"
-    },
-    {
-      "id": "activity_copper_poly",
-      "position": "-448px 0px",
-      "color": "#9ea486"
-    },
-    {
-      "id": "activity_copper_xiranite_tool",
-      "position": "-512px 0px",
-      "color": "#7c8282"
-    },
-    {
-      "id": "activity_xiranite_box",
-      "position": "-576px 0px",
-      "color": "#84b982"
-    },
-    {
-      "id": "activity_xiranite_enr_box",
-      "position": "-640px 0px",
-      "color": "#75a16d"
-    },
-    {
-      "id": "activity_xiranite_enr_lung",
-      "position": "-704px 0px",
-      "color": "#769f7a"
-    },
-    {
-      "id": "activity_xiranite_enr_nugget",
-      "position": "-768px 0px",
-      "color": "#49aa41"
-    },
-    {
-      "id": "activity_xiranite_lung",
-      "position": "-832px 0px",
-      "color": "#7ca98e"
-    },
-    {
-      "id": "activity_xiranite_nugget",
-      "position": "-896px 0px",
-      "color": "#3d9a31"
+      "color": "#757672"
     },
     {
       "id": "activity",
-      "position": "-960px 0px",
-      "color": "#cacec5"
+      "position": "-320px 0px",
+      "color": "#c8cdc7"
     },
     {
       "id": "carbon_enr_powder",
-      "position": "0px -64px",
-      "color": "#494a49"
+      "position": "-384px 0px",
+      "color": "#494949"
     },
     {
       "id": "carbon_enr",
-      "position": "-64px -64px",
-      "color": "#494952"
+      "position": "-448px 0px",
+      "color": "#4a4852"
     },
     {
       "id": "carbon_mtl",
-      "position": "-128px -64px",
-      "color": "#3f4049"
+      "position": "-512px 0px",
+      "color": "#3c424a"
     },
     {
       "id": "carbon_powder",
-      "position": "-192px -64px",
-      "color": "#4e4d4c"
+      "position": "-576px 0px",
+      "color": "#4c4d4e"
     },
     {
       "id": "copper_bottle",
-      "position": "-256px -64px",
-      "color": "#6c4a4b"
+      "position": "-640px 0px",
+      "color": "#6d4949"
+    },
+    {
+      "id": "copper_bright_cmpt",
+      "position": "-704px 0px",
+      "color": "#c69386"
+    },
+    {
+      "id": "copper_bright",
+      "position": "-768px 0px",
+      "color": "#c98e8d"
     },
     {
       "id": "copper_cmpt",
-      "position": "-320px -64px",
-      "color": "#7d514a"
+      "position": "-832px 0px",
+      "color": "#7c514a"
     },
     {
       "id": "copper_enr_bottle",
-      "position": "-384px -64px",
-      "color": "#906b6d"
+      "position": "-896px 0px",
+      "color": "#916a6d"
     },
     {
       "id": "copper_enr_cmpt",
-      "position": "-448px -64px",
-      "color": "#ba8071"
+      "position": "-960px 0px",
+      "color": "#ba8271"
+    },
+    {
+      "id": "copper_enr_heng",
+      "position": "-1024px 0px",
+      "color": "#b1a681"
     },
     {
       "id": "copper_enr",
-      "position": "-512px -64px",
-      "color": "#d99287"
+      "position": "0px -64px",
+      "color": "#d99186"
     },
     {
       "id": "copper_enr2_cmpt",
-      "position": "-576px -64px",
-      "color": "#ac7162"
+      "position": "-64px -64px",
+      "color": "#af7061"
     },
     {
       "id": "copper_enr2",
-      "position": "-640px -64px",
-      "color": "#e4a388"
+      "position": "-128px -64px",
+      "color": "#e6a188"
+    },
+    {
+      "id": "copper_hui_cmpt",
+      "position": "-192px -64px",
+      "color": "#846e67"
+    },
+    {
+      "id": "copper_hui",
+      "position": "-256px -64px",
+      "color": "#755d5a"
     },
     {
       "id": "copper_jar",
-      "position": "-704px -64px",
-      "color": "#826767"
+      "position": "-320px -64px",
+      "color": "#806765"
+    },
+    {
+      "id": "copper_ming_cmpt",
+      "position": "-384px -64px",
+      "color": "#aa9891"
+    },
+    {
+      "id": "copper_ming",
+      "position": "-448px -64px",
+      "color": "#d9c2bb"
     },
     {
       "id": "copper_nugget",
-      "position": "-768px -64px",
-      "color": "#893a31"
+      "position": "-512px -64px",
+      "color": "#883932"
     },
     {
       "id": "copper_ore",
-      "position": "-832px -64px",
-      "color": "#aa6962"
+      "position": "-576px -64px",
+      "color": "#a86b60"
     },
     {
       "id": "copper_powder",
-      "position": "-896px -64px",
-      "color": "#a05d51"
+      "position": "-640px -64px",
+      "color": "#a25f53"
     },
     {
       "id": "crystal_enr_powder",
-      "position": "-960px -64px",
-      "color": "#9e643b"
+      "position": "-704px -64px",
+      "color": "#9d6639"
     },
     {
       "id": "crystal_enr",
-      "position": "0px -128px",
-      "color": "#756b35"
+      "position": "-768px -64px",
+      "color": "#766936"
     },
     {
       "id": "crystal_powder",
-      "position": "-64px -128px",
-      "color": "#6c411e"
+      "position": "-832px -64px",
+      "color": "#6c411d"
     },
     {
       "id": "crystal_shell",
-      "position": "-128px -128px",
-      "color": "#977741"
+      "position": "-896px -64px",
+      "color": "#967443"
     },
     {
       "id": "filter_core",
-      "position": "-192px -128px",
-      "color": "#737072"
+      "position": "-960px -64px",
+      "color": "#717371"
     },
     {
       "id": "gas_acid",
-      "position": "-256px -128px",
-      "color": "#d9c69a"
+      "position": "-1024px -64px",
+      "color": "#d8c59a"
+    },
+    {
+      "id": "gas_copper_bright_clear",
+      "position": "0px -128px",
+      "color": "#d7c7cd"
+    },
+    {
+      "id": "gas_copper_bright_turbid",
+      "position": "-64px -128px",
+      "color": "#c3a072"
+    },
+    {
+      "id": "gas_copper_enr_heng",
+      "position": "-128px -128px",
+      "color": "#e5c6aa"
     },
     {
       "id": "gas_copper_enr",
-      "position": "-320px -128px",
+      "position": "-192px -128px",
       "color": "#d9bdba"
     },
     {
       "id": "gas_copper_enr2",
-      "position": "-384px -128px",
+      "position": "-256px -128px",
       "color": "#d7a78d"
     },
     {
       "id": "gas_copper",
-      "position": "-448px -128px",
+      "position": "-320px -128px",
       "color": "#da9f94"
     },
     {
       "id": "gas_inert",
-      "position": "-512px -128px",
+      "position": "-384px -128px",
       "color": "#69a6b4"
     },
     {
       "id": "gas_water",
-      "position": "-576px -128px",
+      "position": "-448px -128px",
       "color": "#b5b9c2"
     },
     {
+      "id": "gas_xiranite_enr_heng",
+      "position": "-512px -128px",
+      "color": "#8cbab4"
+    },
+    {
       "id": "gas_xiranite_enr",
-      "position": "-640px -128px",
-      "color": "#b8ca8c"
+      "position": "-576px -128px",
+      "color": "#baca8d"
     },
     {
       "id": "gas_xiranite",
+      "position": "-640px -128px",
+      "color": "#a8c0a0"
+    },
+    {
+      "id": "gasjar_copper_gas_copper_bright_clear",
       "position": "-704px -128px",
-      "color": "#aac2a1"
+      "color": "#956560"
+    },
+    {
+      "id": "gasjar_copper_gas_copper_bright_turbid",
+      "position": "-768px -128px",
+      "color": "#956761"
+    },
+    {
+      "id": "gasjar_copper_gas_copper_enr_heng",
+      "position": "-832px -128px",
+      "color": "#966661"
+    },
+    {
+      "id": "gasjar_copper_gas_xiranite_enr_heng",
+      "position": "-896px -128px",
+      "color": "#956761"
     },
     {
       "id": "glass_bottle",
-      "position": "-768px -128px",
-      "color": "#5c4c7c"
+      "position": "-960px -128px",
+      "color": "#5c4d7e"
     },
     {
       "id": "glass_cmpt",
-      "position": "-832px -128px",
-      "color": "#9195a0"
+      "position": "-1024px -128px",
+      "color": "#9294a1"
     },
     {
       "id": "glass_enr_bottle",
-      "position": "-896px -128px",
-      "color": "#75778d"
+      "position": "0px -192px",
+      "color": "#77758d"
     },
     {
       "id": "glass_enr_cmpt",
-      "position": "-960px -128px",
-      "color": "#969299"
+      "position": "-64px -192px",
+      "color": "#959298"
+    },
+    {
+      "id": "iron_bottle-liquid_water",
+      "position": "-128px -192px",
+      "color": "#4a7c9e"
     },
     {
       "id": "iron_bottle",
-      "position": "0px -192px",
-      "color": "#395b79"
+      "position": "-192px -192px",
+      "color": "#3a5879"
     },
     {
       "id": "iron_cmpt",
-      "position": "-64px -192px",
-      "color": "#6c81aa"
+      "position": "-256px -192px",
+      "color": "#6e81a9"
     },
     {
       "id": "iron_enr_bottle",
-      "position": "-128px -192px",
-      "color": "#5a6c81"
+      "position": "-320px -192px",
+      "color": "#596e83"
     },
     {
       "id": "iron_enr_cmpt",
-      "position": "-192px -192px",
-      "color": "#5f758d"
+      "position": "-384px -192px",
+      "color": "#5e758e"
     },
     {
       "id": "iron_enr_powder",
-      "position": "-256px -192px",
-      "color": "#597e94"
+      "position": "-448px -192px",
+      "color": "#597c95"
     },
     {
       "id": "iron_enr",
-      "position": "-320px -192px",
-      "color": "#56809e"
+      "position": "-512px -192px",
+      "color": "#56819e"
     },
     {
       "id": "iron_nugget",
-      "position": "-384px -192px",
-      "color": "#628095"
+      "position": "-576px -192px",
+      "color": "#618296"
     },
     {
       "id": "iron_ore",
-      "position": "-448px -192px",
-      "color": "#5a718d"
+      "position": "-640px -192px",
+      "color": "#59718e"
     },
     {
       "id": "iron_powder",
-      "position": "-512px -192px",
-      "color": "#35526b"
+      "position": "-704px -192px",
+      "color": "#355169"
     },
     {
       "id": "liquid_acid",
-      "position": "-576px -192px",
-      "color": "#ba9d66"
+      "position": "-768px -192px",
+      "color": "#ba9f64"
     },
     {
       "id": "liquid_copper_enr",
-      "position": "-640px -192px",
-      "color": "#e9aca1"
+      "position": "-832px -192px",
+      "color": "#e9aea1"
     },
     {
       "id": "liquid_copper",
-      "position": "-704px -192px",
-      "color": "#ba4946"
+      "position": "-896px -192px",
+      "color": "#b84846"
     },
     {
       "id": "liquid_plant_grass_1",
-      "position": "-768px -192px",
-      "color": "#e5f6e2"
+      "position": "-960px -192px",
+      "color": "#e7f5e1"
     },
     {
       "id": "liquid_plant_grass_2",
-      "position": "-832px -192px",
-      "color": "#c1ed7e"
+      "position": "-1024px -192px",
+      "color": "#c2ec7f"
     },
     {
       "id": "liquid_sewage",
-      "position": "-896px -192px",
-      "color": "#616161"
+      "position": "0px -256px",
+      "color": "#616260"
     },
     {
       "id": "liquid_water",
-      "position": "-960px -192px",
-      "color": "#5ae7f8"
+      "position": "-64px -256px",
+      "color": "#59e5fa"
     },
     {
       "id": "liquid_xiranite_enr",
-      "position": "0px -256px",
-      "color": "#557a51"
+      "position": "-128px -256px",
+      "color": "#577851"
     },
     {
       "id": "liquid_xiranite_lowpoly",
-      "position": "-64px -256px",
-      "color": "#245842"
+      "position": "-192px -256px",
+      "color": "#265843"
     },
     {
       "id": "liquid_xiranite_poly",
-      "position": "-128px -256px",
-      "color": "#3b6541"
+      "position": "-256px -256px",
+      "color": "#386643"
     },
     {
       "id": "liquid_xiranite",
-      "position": "-192px -256px",
-      "color": "#467867"
+      "position": "-320px -256px",
+      "color": "#477966"
     },
     {
       "id": "originium_enr_powder",
-      "position": "-256px -256px",
-      "color": "#75522c"
+      "position": "-384px -256px",
+      "color": "#75522d"
     },
     {
       "id": "originium_ore",
-      "position": "-320px -256px",
-      "color": "#815d3e"
+      "position": "-448px -256px",
+      "color": "#825c3d"
     },
     {
       "id": "originium_powder",
-      "position": "-384px -256px",
-      "color": "#4f3c29"
+      "position": "-512px -256px",
+      "color": "#4d3e28"
     },
     {
       "id": "plant_bbflower_1",
-      "position": "-448px -256px",
-      "color": "#625c3f"
+      "position": "-576px -256px",
+      "color": "#635d3f"
     },
     {
       "id": "plant_bbflower_powder_1",
-      "position": "-512px -256px",
-      "color": "#7c7637"
+      "position": "-640px -256px",
+      "color": "#7d7435"
     },
     {
       "id": "plant_bbflower_seed_1",
-      "position": "-576px -256px",
-      "color": "#afa16a"
+      "position": "-704px -256px",
+      "color": "#aea36b"
     },
     {
       "id": "plant_grass_1",
-      "position": "-640px -256px",
-      "color": "#798661"
+      "position": "-768px -256px",
+      "color": "#798760"
     },
     {
       "id": "plant_grass_2",
-      "position": "-704px -256px",
-      "color": "#5e5c49"
+      "position": "-832px -256px",
+      "color": "#5e5d4a"
     },
     {
       "id": "plant_grass_powder_1",
-      "position": "-768px -256px",
-      "color": "#b9bea0"
+      "position": "-896px -256px",
+      "color": "#babda1"
     },
     {
       "id": "plant_grass_powder_2",
-      "position": "-832px -256px",
-      "color": "#b3917b"
+      "position": "-960px -256px",
+      "color": "#b2937b"
     },
     {
       "id": "plant_grass_seed_1",
-      "position": "-896px -256px",
-      "color": "#959c75"
+      "position": "-1024px -256px",
+      "color": "#959e77"
     },
     {
       "id": "plant_grass_seed_2",
-      "position": "-960px -256px",
-      "color": "#9e7f6b"
+      "position": "0px -320px",
+      "color": "#9c7d6a"
     },
     {
       "id": "plant_moss_1",
-      "position": "0px -320px",
-      "color": "#615b24"
+      "position": "-64px -320px",
+      "color": "#605925"
     },
     {
       "id": "plant_moss_2",
-      "position": "-64px -320px",
-      "color": "#66691e"
+      "position": "-128px -320px",
+      "color": "#66681e"
     },
     {
       "id": "plant_moss_3",
-      "position": "-128px -320px",
-      "color": "#927529"
+      "position": "-192px -320px",
+      "color": "#90762a"
     },
     {
       "id": "plant_moss_enr_powder_1",
-      "position": "-192px -320px",
-      "color": "#8a6363"
+      "position": "-256px -320px",
+      "color": "#896060"
     },
     {
       "id": "plant_moss_enr_powder_2",
-      "position": "-256px -320px",
-      "color": "#91865b"
+      "position": "-320px -320px",
+      "color": "#908559"
     },
     {
       "id": "plant_moss_powder_1",
-      "position": "-320px -320px",
-      "color": "#ac6d66"
+      "position": "-384px -320px",
+      "color": "#ac6d67"
     },
     {
       "id": "plant_moss_powder_2",
-      "position": "-384px -320px",
-      "color": "#d4c175"
+      "position": "-448px -320px",
+      "color": "#d5c276"
     },
     {
       "id": "plant_moss_powder_3",
-      "position": "-448px -320px",
-      "color": "#9e700a"
+      "position": "-512px -320px",
+      "color": "#9d710b"
     },
     {
       "id": "plant_moss_seed_1",
-      "position": "-512px -320px",
-      "color": "#9c6246"
+      "position": "-576px -320px",
+      "color": "#9d6045"
     },
     {
       "id": "plant_moss_seed_2",
-      "position": "-576px -320px",
-      "color": "#918028"
+      "position": "-640px -320px",
+      "color": "#928228"
     },
     {
       "id": "plant_moss_seed_3",
-      "position": "-640px -320px",
-      "color": "#846911"
+      "position": "-704px -320px",
+      "color": "#856b11"
     },
     {
       "id": "quartz_enr_powder",
-      "position": "-704px -320px",
-      "color": "#b0adc3"
+      "position": "-768px -320px",
+      "color": "#b1adc2"
     },
     {
       "id": "quartz_enr",
-      "position": "-768px -320px",
-      "color": "#999aa6"
+      "position": "-832px -320px",
+      "color": "#989aa4"
     },
     {
       "id": "quartz_glass",
-      "position": "-832px -320px",
-      "color": "#715d93"
+      "position": "-896px -320px",
+      "color": "#725e90"
     },
     {
       "id": "quartz_powder",
-      "position": "-896px -320px",
-      "color": "#615079"
+      "position": "-960px -320px",
+      "color": "#615279"
     },
     {
       "id": "quartz_sand",
-      "position": "-960px -320px",
-      "color": "#5e4a6c"
+      "position": "-1024px -320px",
+      "color": "#5d496e"
+    },
+    {
+      "id": "xiranite_enr_heng",
+      "position": "0px -384px",
+      "color": "#4f9275"
     },
     {
       "id": "xiranite_enr_powder",
-      "position": "0px -384px",
-      "color": "#356339"
+      "position": "-64px -384px",
+      "color": "#366138"
+    },
+    {
+      "id": "xiranite_hui",
+      "position": "-128px -384px",
+      "color": "#1d4229"
+    },
+    {
+      "id": "xiranite_ming",
+      "position": "-192px -384px",
+      "color": "#96a99a"
     },
     {
       "id": "xiranite_poly",
-      "position": "-64px -384px",
-      "color": "#39413e"
+      "position": "-256px -384px",
+      "color": "#3a413d"
     },
     {
       "id": "xiranite_powder",
-      "position": "-128px -384px",
-      "color": "#305244"
+      "position": "-320px -384px",
+      "color": "#325145"
     },
     {
       "id": "bottled_food_1",
-      "position": "-192px -384px",
-      "color": "#7e867c"
+      "position": "-384px -384px",
+      "color": "#7d867f"
     },
     {
       "id": "bottled_food_2",
-      "position": "-256px -384px",
-      "color": "#858e69"
+      "position": "-448px -384px",
+      "color": "#848d6a"
     },
     {
       "id": "bottled_food_3",
-      "position": "-320px -384px",
-      "color": "#818982"
+      "position": "-512px -384px",
+      "color": "#818880"
     },
     {
       "id": "bottled_food_4",
-      "position": "-384px -384px",
-      "color": "#536e71"
+      "position": "-576px -384px",
+      "color": "#526f71"
     },
     {
       "id": "bottled_food_5",
-      "position": "-448px -384px",
-      "color": "#5a8568"
+      "position": "-640px -384px",
+      "color": "#598668"
     },
     {
       "id": "bottled_rec_hp_1",
-      "position": "-512px -384px",
-      "color": "#b19695"
+      "position": "-704px -384px",
+      "color": "#b39596"
     },
     {
       "id": "bottled_rec_hp_2",
-      "position": "-576px -384px",
-      "color": "#bea1a2"
+      "position": "-768px -384px",
+      "color": "#bca1a1"
     },
     {
       "id": "bottled_rec_hp_3",
-      "position": "-640px -384px",
-      "color": "#b6959d"
+      "position": "-832px -384px",
+      "color": "#b6979c"
     },
     {
       "id": "bottled_rec_hp_4",
-      "position": "-704px -384px",
-      "color": "#a69591"
+      "position": "-896px -384px",
+      "color": "#a59690"
     },
     {
       "id": "bottled_rec_hp_5",
-      "position": "-768px -384px",
-      "color": "#9d8277"
+      "position": "-960px -384px",
+      "color": "#9f8076"
+    },
+    {
+      "id": "copper_bright_cube",
+      "position": "-1024px -384px",
+      "color": "#e39b81"
+    },
+    {
+      "id": "copper_xiranite_hui",
+      "position": "0px -448px",
+      "color": "#765d62"
+    },
+    {
+      "id": "copper_xiranite_ming",
+      "position": "-64px -448px",
+      "color": "#898680"
     },
     {
       "id": "equip_script_1",
-      "position": "-832px -384px",
-      "color": "#a0a1b2"
+      "position": "-128px -448px",
+      "color": "#a1a1b2"
     },
     {
       "id": "equip_script_2",
-      "position": "-896px -384px",
-      "color": "#8998bc"
+      "position": "-192px -448px",
+      "color": "#889bbd"
     },
     {
       "id": "equip_script_3",
-      "position": "-960px -384px",
-      "color": "#a2a7b1"
+      "position": "-256px -448px",
+      "color": "#a3a5b0"
     },
     {
       "id": "equip_script_4_1",
-      "position": "0px -448px",
-      "color": "#71423c"
+      "position": "-320px -448px",
+      "color": "#71423f"
     },
     {
       "id": "equip_script_4_2",
-      "position": "-64px -448px",
-      "color": "#b3756e"
+      "position": "-384px -448px",
+      "color": "#b3756f"
     },
     {
       "id": "equip_script_4_3",
-      "position": "-128px -448px",
-      "color": "#bc7d5d"
+      "position": "-448px -448px",
+      "color": "#bc7e5d"
     },
     {
       "id": "equip_script_4",
-      "position": "-192px -448px",
-      "color": "#5e5744"
+      "position": "-512px -448px",
+      "color": "#5e5645"
     },
     {
       "id": "product",
-      "position": "-256px -448px",
-      "color": "#957e78"
+      "position": "-576px -448px",
+      "color": "#957e7b"
     },
     {
       "id": "proc_battery_1",
-      "position": "-320px -448px",
-      "color": "#9f9c9a"
+      "position": "-640px -448px",
+      "color": "#9f9d9a"
     },
     {
       "id": "proc_battery_2",
-      "position": "-384px -448px",
-      "color": "#9f9b9d"
+      "position": "-704px -448px",
+      "color": "#9f989d"
     },
     {
       "id": "proc_battery_3",
-      "position": "-448px -448px",
-      "color": "#9e999e"
+      "position": "-768px -448px",
+      "color": "#9e989d"
     },
     {
       "id": "proc_battery_4",
-      "position": "-512px -448px",
+      "position": "-832px -448px",
       "color": "#698a70"
     },
     {
       "id": "proc_battery_5",
-      "position": "-576px -448px",
-      "color": "#5d6956"
+      "position": "-896px -448px",
+      "color": "#5e6856"
+    },
+    {
+      "id": "proc_battery_6",
+      "position": "-960px -448px",
+      "color": "#5a6960"
     },
     {
       "id": "proc_bomb_1",
-      "position": "-640px -448px",
-      "color": "#8c7f79"
+      "position": "-1024px -448px",
+      "color": "#8c7c79"
     },
     {
       "id": "jinlong_coupon",
-      "position": "-704px -448px",
-      "color": "#8fa1a0"
+      "position": "0px -512px",
+      "color": "#8da0a1"
     },
     {
       "id": "tundra_coupon",
-      "position": "-768px -448px",
-      "color": "#c5cab7"
+      "position": "-64px -512px",
+      "color": "#c7c9b6"
     },
     {
       "id": "jinlong",
-      "position": "-832px -448px",
-      "color": "#7f9997"
+      "position": "-128px -512px",
+      "color": "#7e9995"
     },
     {
       "id": "tundra",
-      "position": "-896px -448px",
-      "color": "#9caa79"
+      "position": "-192px -512px",
+      "color": "#9fa978"
     },
     {
       "id": "__domain_transfer",
-      "position": "-960px -448px",
-      "color": "#a2927d"
+      "position": "-256px -512px",
+      "color": "#a1927e"
     },
     {
       "id": "cmpt_mc_1",
-      "position": "0px -512px",
-      "color": "#858683"
-    },
-    {
-      "id": "dismantler_1",
-      "position": "-64px -512px",
-      "color": "#9b998e"
+      "position": "-320px -512px",
+      "color": "#848583"
     },
     {
       "id": "filling_pd_mc_1",
-      "position": "-128px -512px",
-      "color": "#838081"
+      "position": "-384px -512px",
+      "color": "#818181"
+    },
+    {
+      "id": "formation_magic_heng_1",
+      "position": "-448px -512px",
+      "color": "#0eb48a"
+    },
+    {
+      "id": "formation_magic_hui_1",
+      "position": "-512px -512px",
+      "color": "#888a8a"
+    },
+    {
+      "id": "formation_magic_ming_1",
+      "position": "-576px -512px",
+      "color": "#cccdce"
     },
     {
       "id": "furnance_1",
-      "position": "-192px -512px",
-      "color": "#aa9c99"
+      "position": "-640px -512px",
+      "color": "#a99d99"
     },
     {
       "id": "gas_pump_1",
-      "position": "-256px -512px",
-      "color": "#a5a6a0"
+      "position": "-704px -512px",
+      "color": "#a6a7a2"
     },
     {
       "id": "gas_reactor_1",
-      "position": "-320px -512px",
-      "color": "#92948a"
+      "position": "-768px -512px",
+      "color": "#919689"
     },
     {
       "id": "grinder_1",
-      "position": "-384px -512px",
-      "color": "#929598"
+      "position": "-832px -512px",
+      "color": "#90959a"
     },
     {
       "id": "liquid_clean_gate",
-      "position": "-448px -512px",
-      "color": "#989899"
+      "position": "-896px -512px",
+      "color": "#999a99"
     },
     {
       "id": "liquid_cleaner_1",
-      "position": "-512px -512px",
-      "color": "#797c7d"
+      "position": "-960px -512px",
+      "color": "#7a7e7d"
     },
     {
       "id": "liquid_purifier_1",
-      "position": "-576px -512px",
-      "color": "#8f9192"
+      "position": "-1024px -512px",
+      "color": "#8d9291"
+    },
+    {
+      "id": "magic_balancer_1",
+      "position": "0px -576px",
+      "color": "#99999a"
     },
     {
       "id": "miner_2",
-      "position": "-640px -512px",
-      "color": "#868585"
+      "position": "-64px -576px",
+      "color": "#878485"
     },
     {
       "id": "miner_3",
-      "position": "-704px -512px",
-      "color": "#938988"
+      "position": "-128px -576px",
+      "color": "#928988"
     },
     {
       "id": "miner_4",
-      "position": "-768px -512px",
-      "color": "#8d8e8a"
+      "position": "-192px -576px",
+      "color": "#8c8e8b"
     },
     {
       "id": "mix_pool_1",
-      "position": "-832px -512px",
-      "color": "#88898f"
+      "position": "-256px -576px",
+      "color": "#89898e"
     },
     {
       "id": "mix_pool_2",
-      "position": "-896px -512px",
-      "color": "#858579"
+      "position": "-320px -576px",
+      "color": "#848779"
     },
     {
       "id": "phase_trans_1",
-      "position": "-960px -512px",
-      "color": "#929492"
+      "position": "-384px -576px",
+      "color": "#929491"
     },
     {
       "id": "phase_trans_2",
-      "position": "0px -576px",
-      "color": "#7c7e7e"
+      "position": "-448px -576px",
+      "color": "#7d7e7f"
     },
     {
       "id": "planter_1",
-      "position": "-64px -576px",
+      "position": "-512px -576px",
       "color": "#7c817e"
     },
     {
       "id": "power_sta_1",
-      "position": "-128px -576px",
-      "color": "#919da1"
+      "position": "-576px -576px",
+      "color": "#909fa0"
     },
     {
       "id": "pump_1",
-      "position": "-192px -576px",
-      "color": "#8e8f86"
+      "position": "-640px -576px",
+      "color": "#8e8f87"
     },
     {
       "id": "pump_2",
-      "position": "-256px -576px",
+      "position": "-704px -576px",
       "color": "#898279"
     },
     {
       "id": "seedcol_1",
-      "position": "-320px -576px",
-      "color": "#747d76"
+      "position": "-768px -576px",
+      "color": "#767d76"
     },
     {
       "id": "shaper_1",
-      "position": "-384px -576px",
-      "color": "#919291"
+      "position": "-832px -576px",
+      "color": "#909191"
     },
     {
       "id": "thickener_1",
-      "position": "-448px -576px",
-      "color": "#8a8a89"
+      "position": "-896px -576px",
+      "color": "#8a888b"
     },
     {
       "id": "tools_asm_mc_1",
-      "position": "-512px -576px",
-      "color": "#858a89"
+      "position": "-960px -576px",
+      "color": "#858b89"
     },
     {
       "id": "winder_1",
-      "position": "-576px -576px",
-      "color": "#959592"
+      "position": "-1024px -576px",
+      "color": "#949592"
     },
     {
       "id": "xiranite_oven_1",
-      "position": "-640px -576px",
-      "color": "#a3a499"
-    },
-    {
-      "id": "InN_zV0Bo",
-      "position": "-704px -576px",
-      "color": "#a2a9a4"
-    },
-    {
-      "id": "mokYxBo_D",
-      "position": "-768px -576px",
-      "color": "#a89a73"
-    },
-    {
-      "id": "hOwR0Jem2",
-      "position": "-832px -576px",
-      "color": "#8d957e"
+      "position": "0px -640px",
+      "color": "#a3a799"
     },
     {
       "id": "aNhoXNVVI",
-      "position": "-896px -576px",
-      "color": "#484b49"
+      "position": "-64px -640px",
+      "color": "#4b484a"
     },
     {
       "id": "Z2IEDQBer",
-      "position": "-960px -576px",
-      "color": "#625051"
+      "position": "-128px -640px",
+      "color": "#615252"
     },
     {
       "id": "xFsOz8GXn",
-      "position": "0px -640px",
-      "color": "#615e53"
+      "position": "-192px -640px",
+      "color": "#615d52"
     },
     {
       "id": "xFMoNt_0-",
-      "position": "-64px -640px",
-      "color": "#4c514e"
+      "position": "-256px -640px",
+      "color": "#4f534d"
     },
     {
       "id": "tF0KCVMNv",
-      "position": "-128px -640px",
-      "color": "#444748"
+      "position": "-320px -640px",
+      "color": "#464748"
     },
     {
       "id": "lIwML7hJA",
-      "position": "-192px -640px",
-      "color": "#4a4743"
+      "position": "-384px -640px",
+      "color": "#494640"
     },
     {
       "id": "wSTIJRUt2",
-      "position": "-256px -640px",
-      "color": "#494e41"
+      "position": "-448px -640px",
+      "color": "#494d42"
     },
     {
       "id": "8f-XntBAi",
-      "position": "-320px -640px",
-      "color": "#5a5146"
+      "position": "-512px -640px",
+      "color": "#585244"
     },
     {
       "id": "bfVwkel-1",
-      "position": "-384px -640px",
-      "color": "#484d4d"
+      "position": "-576px -640px",
+      "color": "#4a4e4d"
     },
     {
       "id": "UK3cw32jH",
-      "position": "-448px -640px",
-      "color": "#7a786f"
+      "position": "-640px -640px",
+      "color": "#78786c"
     },
     {
       "id": "EyVhscDqY",
-      "position": "-512px -640px",
-      "color": "#75675d"
+      "position": "-704px -640px",
+      "color": "#75655c"
     },
     {
       "id": "sJ497s081",
-      "position": "-576px -640px",
-      "color": "#705956"
+      "position": "-768px -640px",
+      "color": "#715b55"
     },
     {
       "id": "EkYDieNFa",
-      "position": "-640px -640px",
-      "color": "#877f59"
+      "position": "-832px -640px",
+      "color": "#867e59"
     },
     {
       "id": "-5xQnlo_H",
-      "position": "-704px -640px",
-      "color": "#675446"
+      "position": "-896px -640px",
+      "color": "#655745"
     },
     {
       "id": "g6eZC2ckR",
-      "position": "-768px -640px",
-      "color": "#958a82"
+      "position": "-960px -640px",
+      "color": "#948982"
     },
     {
       "id": "QU3-0LfcJ",
-      "position": "-832px -640px",
-      "color": "#89855a"
+      "position": "-1024px -640px",
+      "color": "#8a8459"
+    },
+    {
+      "id": "JvK4hAcOl",
+      "position": "0px -704px",
+      "color": "#b79191"
+    },
+    {
+      "id": "SKXdzSG5F",
+      "position": "-64px -704px",
+      "color": "#a98684"
+    },
+    {
+      "id": "BdMxTKvQP",
+      "position": "-128px -704px",
+      "color": "#a6947e"
+    },
+    {
+      "id": "7HEZZXQXi",
+      "position": "-192px -704px",
+      "color": "#ca9891"
     },
     {
       "id": "1x5_iFxrl",
-      "position": "-896px -640px",
-      "color": "#bf9389"
+      "position": "-256px -704px",
+      "color": "#be9189"
     },
     {
       "id": "grKjDDYLU",
-      "position": "-960px -640px",
-      "color": "#ca9b84"
+      "position": "-320px -704px",
+      "color": "#c99a87"
     },
     {
       "id": "TIRc8l-Ov",
-      "position": "0px -704px",
-      "color": "#8d6258"
+      "position": "-384px -704px",
+      "color": "#8e615a"
     },
     {
       "id": "pSkp8UtzR",
-      "position": "-64px -704px",
-      "color": "#a18182"
+      "position": "-448px -704px",
+      "color": "#a18081"
     },
     {
       "id": "-PLwC7rav",
-      "position": "-128px -704px",
-      "color": "#986234"
+      "position": "-512px -704px",
+      "color": "#9a6136"
     },
     {
       "id": "-IDibphrv",
-      "position": "-192px -704px",
-      "color": "#9e6639"
+      "position": "-576px -704px",
+      "color": "#9d663a"
     },
     {
       "id": "b06HlUyW9",
-      "position": "-256px -704px",
-      "color": "#78542c"
+      "position": "-640px -704px",
+      "color": "#79552e"
     },
     {
       "id": "j2R9Yyfk7",
-      "position": "-320px -704px",
-      "color": "#654120"
+      "position": "-704px -704px",
+      "color": "#654121"
     },
     {
       "id": "tVuwQqAnt",
-      "position": "-384px -704px",
-      "color": "#8d6f3d"
+      "position": "-768px -704px",
+      "color": "#8e6f3c"
     },
     {
       "id": "OIsG_0_gQ",
-      "position": "-448px -704px",
-      "color": "#8e6e41"
+      "position": "-832px -704px",
+      "color": "#8d6e41"
     },
     {
       "id": "BTDiP1-WN",
-      "position": "-512px -704px",
-      "color": "#c5bba1"
+      "position": "-896px -704px",
+      "color": "#c4b8a2"
+    },
+    {
+      "id": "--fy8JitE",
+      "position": "-960px -704px",
+      "color": "#c3b5bd"
+    },
+    {
+      "id": "XvL38FqFc",
+      "position": "-1024px -704px",
+      "color": "#bab0b7"
+    },
+    {
+      "id": "FVD_V1gkz",
+      "position": "0px -768px",
+      "color": "#c1b29c"
     },
     {
       "id": "LESvbc0cp",
-      "position": "-576px -704px",
-      "color": "#b8bdca"
+      "position": "-64px -768px",
+      "color": "#b9bdca"
     },
     {
       "id": "3nEkFN4v3",
-      "position": "-640px -704px",
-      "color": "#c2b4b1"
+      "position": "-128px -768px",
+      "color": "#c3b4b1"
     },
     {
       "id": "F26jLFsSM",
-      "position": "-704px -704px",
-      "color": "#bfada9"
+      "position": "-192px -768px",
+      "color": "#beacab"
     },
     {
       "id": "ynGeJZzIH",
-      "position": "-768px -704px",
-      "color": "#dda678"
+      "position": "-256px -768px",
+      "color": "#dca67b"
     },
     {
       "id": "ugzGGeljq",
-      "position": "-832px -704px",
-      "color": "#be9c8e"
+      "position": "-320px -768px",
+      "color": "#bf9d8e"
     },
     {
       "id": "6cFT0YI85",
-      "position": "-896px -704px",
-      "color": "#bea099"
+      "position": "-384px -768px",
+      "color": "#bda299"
     },
     {
       "id": "MzFhhwu9q",
-      "position": "-960px -704px",
-      "color": "#b69991"
+      "position": "-448px -768px",
+      "color": "#b69891"
     },
     {
       "id": "ngnifkfVC",
-      "position": "0px -768px",
-      "color": "#adb2b3"
+      "position": "-512px -768px",
+      "color": "#adb2b0"
+    },
+    {
+      "id": "3yH_sUEon",
+      "position": "-576px -768px",
+      "color": "#8fada7"
     },
     {
       "id": "4N6PISlNQ",
-      "position": "-64px -768px",
-      "color": "#a2c5ae"
+      "position": "-640px -768px",
+      "color": "#a1c4ad"
     },
     {
       "id": "08QnmafUO",
-      "position": "-128px -768px",
-      "color": "#b1b895"
+      "position": "-704px -768px",
+      "color": "#b2bb97"
     },
     {
       "id": "4uTTruYze",
-      "position": "-192px -768px",
-      "color": "#aab58e"
+      "position": "-768px -768px",
+      "color": "#a9b78c"
     },
     {
       "id": "VM4dhho2c",
-      "position": "-256px -768px",
-      "color": "#a5b6a2"
+      "position": "-832px -768px",
+      "color": "#a6b5a2"
     },
     {
       "id": "eAPSNjYPO",
-      "position": "-320px -768px",
-      "color": "#9dad9a"
+      "position": "-896px -768px",
+      "color": "#9ead99"
     },
     {
       "id": "7aWLncdum",
-      "position": "-384px -768px",
-      "color": "#799199"
+      "position": "-960px -768px",
+      "color": "#7a939b"
     },
     {
       "id": "zSG48A1GN",
-      "position": "-448px -768px",
-      "color": "#6e8f78"
+      "position": "-1024px -768px",
+      "color": "#6d8e7b"
     },
     {
       "id": "YP_fqgPjK",
-      "position": "-512px -768px",
-      "color": "#658299"
+      "position": "0px -832px",
+      "color": "#64819a"
     },
     {
       "id": "rCPd1tfS9",
-      "position": "-576px -768px",
-      "color": "#5c7c92"
-    },
-    {
-      "id": "nvQgypPJO",
-      "position": "-640px -768px",
-      "color": "#93a59d"
-    },
-    {
-      "id": "DxQbkoaDm",
-      "position": "-704px -768px",
-      "color": "#92a4a3"
+      "position": "-64px -832px",
+      "color": "#5c7d91"
     },
     {
       "id": "TqWZWVpY3",
-      "position": "-768px -768px",
-      "color": "#899e9c"
+      "position": "-128px -832px",
+      "color": "#8a9c9e"
     },
     {
       "id": "qA-EMB1fs",
-      "position": "-832px -768px",
-      "color": "#899d9a"
+      "position": "-192px -832px",
+      "color": "#889e9a"
     },
     {
       "id": "Sjdqh9m2X",
-      "position": "-896px -768px",
-      "color": "#97a09d"
+      "position": "-256px -832px",
+      "color": "#95a09c"
     },
     {
       "id": "VqJ8q3DQp",
-      "position": "-960px -768px",
-      "color": "#969c9f"
+      "position": "-320px -832px",
+      "color": "#949d9d"
     },
     {
       "id": "fftXa_L3O",
-      "position": "0px -832px",
-      "color": "#909697"
+      "position": "-384px -832px",
+      "color": "#909597"
     },
     {
       "id": "nL57eW-eu",
-      "position": "-64px -832px",
-      "color": "#a39d9a"
+      "position": "-448px -832px",
+      "color": "#a19e9a"
     },
     {
       "id": "lpxYv1B-a",
-      "position": "-128px -832px",
-      "color": "#a19a95"
+      "position": "-512px -832px",
+      "color": "#a19997"
     },
     {
       "id": "zbLLpntwq",
-      "position": "-192px -832px",
-      "color": "#8e9899"
+      "position": "-576px -832px",
+      "color": "#8d9899"
     },
     {
       "id": "vI10u14eE",
-      "position": "-256px -832px",
-      "color": "#8d9e9c"
+      "position": "-640px -832px",
+      "color": "#8e9e9c"
     },
     {
       "id": "e13iR_HPS",
-      "position": "-320px -832px",
-      "color": "#8b999b"
+      "position": "-704px -832px",
+      "color": "#899b99"
     },
     {
       "id": "TQnSxeYps",
-      "position": "-384px -832px",
-      "color": "#859891"
+      "position": "-768px -832px",
+      "color": "#859992"
     },
     {
       "id": "MN3RgE0QK",
-      "position": "-448px -832px",
-      "color": "#869b97"
+      "position": "-832px -832px",
+      "color": "#849a94"
     },
     {
       "id": "n1F3_H0xn",
-      "position": "-512px -832px",
-      "color": "#9d9380"
+      "position": "-896px -832px",
+      "color": "#9e9280"
+    },
+    {
+      "id": "3H826tx7z",
+      "position": "-960px -832px",
+      "color": "#958a7d"
     },
     {
       "id": "gMs3wV6Mc",
-      "position": "-576px -832px",
-      "color": "#7a797e"
+      "position": "-1024px -832px",
+      "color": "#79797e"
     },
     {
       "id": "LIU8uRWtP",
-      "position": "-640px -832px",
-      "color": "#767979"
+      "position": "0px -896px",
+      "color": "#777a79"
     },
     {
       "id": "MZA0Aj7xM",
-      "position": "-704px -832px",
-      "color": "#767f7b"
+      "position": "-64px -896px",
+      "color": "#767d78"
     },
     {
       "id": "21JXqNHcO",
-      "position": "-768px -832px",
-      "color": "#b19e97"
+      "position": "-128px -896px",
+      "color": "#b19e95"
     },
     {
       "id": "eNbizvaDC",
-      "position": "-832px -832px",
-      "color": "#a07d7a"
+      "position": "-192px -896px",
+      "color": "#a27d7a"
     },
     {
       "id": "RSg0ZawgK",
-      "position": "-896px -832px",
-      "color": "#747575"
+      "position": "-256px -896px",
+      "color": "#767575"
     },
     {
       "id": "tnHAWZomJ",
-      "position": "-960px -832px",
-      "color": "#7eb0ba"
+      "position": "-320px -896px",
+      "color": "#7eb1b9"
     },
     {
       "id": "eVII5GgNz",
-      "position": "0px -896px",
-      "color": "#748676"
+      "position": "-384px -896px",
+      "color": "#758677"
     },
     {
       "id": "CZoh2vwOX",
-      "position": "-64px -896px",
-      "color": "#697868"
+      "position": "-448px -896px",
+      "color": "#68796a"
     },
     {
       "id": "qUq983O5F",
-      "position": "-128px -896px",
-      "color": "#707d75"
+      "position": "-512px -896px",
+      "color": "#717c74"
     },
     {
       "id": "KsAbKo-kL",
-      "position": "-192px -896px",
-      "color": "#788983"
+      "position": "-576px -896px",
+      "color": "#7a8b81"
     },
     {
       "id": "vzHASkcwW",
-      "position": "-256px -896px",
-      "color": "#919696"
+      "position": "-640px -896px",
+      "color": "#919694"
     },
     {
       "id": "DCZK3_Hum",
-      "position": "-320px -896px",
-      "color": "#99a1a7"
+      "position": "-704px -896px",
+      "color": "#9ba1a6"
     },
     {
       "id": "PZWgDQOzb",
-      "position": "-384px -896px",
-      "color": "#99a0a5"
+      "position": "-768px -896px",
+      "color": "#98a1a5"
     },
     {
       "id": "YvRkgjni9",
-      "position": "-448px -896px",
-      "color": "#9aa2a4"
+      "position": "-832px -896px",
+      "color": "#9aa3a4"
     },
     {
       "id": "u_hgkzqGZ",
-      "position": "-512px -896px",
-      "color": "#919f9d"
+      "position": "-896px -896px",
+      "color": "#919e9c"
     },
     {
       "id": "uE4Xzd-Nt",
-      "position": "-576px -896px",
-      "color": "#8d999a"
+      "position": "-960px -896px",
+      "color": "#8f989a"
+    },
+    {
+      "id": "4FB5yychN",
+      "position": "-1024px -896px",
+      "color": "#8b9799"
     },
     {
       "id": "5ReMJ-axh",
-      "position": "-640px -896px",
-      "color": "#6c5a88"
+      "position": "0px -960px",
+      "color": "#6e598a"
     },
     {
       "id": "rNYknIToK",
-      "position": "-704px -896px",
-      "color": "#6a5684"
+      "position": "-64px -960px",
+      "color": "#695684"
     },
     {
       "id": "D87_y4QHp",
-      "position": "-768px -896px",
-      "color": "#bdbead"
+      "position": "-128px -960px",
+      "color": "#bdbdae"
     },
     {
       "id": "LChCprdXR",
-      "position": "-832px -896px",
-      "color": "#bdbda6"
+      "position": "-192px -960px",
+      "color": "#bcbfa5"
     },
     {
       "id": "lG5pYr6_F",
-      "position": "-896px -896px",
-      "color": "#b7baa9"
+      "position": "-256px -960px",
+      "color": "#b7b9a8"
     },
     {
       "id": "NXpQnBpZJ",
-      "position": "-960px -896px",
-      "color": "#c6c1b0"
+      "position": "-320px -960px",
+      "color": "#c5c2b3"
     },
     {
       "id": "B33Y1xtAN",
-      "position": "0px -960px",
-      "color": "#c9c2b5"
+      "position": "-384px -960px",
+      "color": "#cbc1b7"
     },
     {
       "id": "Wy_OqDd79",
-      "position": "-64px -960px",
-      "color": "#c2b9ae"
+      "position": "-448px -960px",
+      "color": "#c0baad"
     },
     {
       "id": "FRZxbTuQP",
-      "position": "-128px -960px",
-      "color": "#beb9a1"
+      "position": "-512px -960px",
+      "color": "#bebaa1"
     },
     {
       "id": "fpxipfxQ_",
-      "position": "-192px -960px",
-      "color": "#b6b9a9"
+      "position": "-576px -960px",
+      "color": "#b5baab"
     },
     {
       "id": "WqhucJQl5",
-      "position": "-256px -960px",
-      "color": "#bdc2b7"
+      "position": "-640px -960px",
+      "color": "#bfc1b6"
     },
     {
       "id": "0pLWUXtXS",
-      "position": "-320px -960px",
-      "color": "#b8bdb6"
+      "position": "-704px -960px",
+      "color": "#bbbcb5"
     },
     {
       "id": "PaI2yXcVi",
-      "position": "-384px -960px",
-      "color": "#b5b8b0"
+      "position": "-768px -960px",
+      "color": "#b6b8b1"
     },
     {
       "id": "be5cdHAfy",
-      "position": "-448px -960px",
-      "color": "#bec3ad"
+      "position": "-832px -960px",
+      "color": "#bdc2ac"
     },
     {
       "id": "HsYpeEhwA",
-      "position": "-512px -960px",
-      "color": "#bdc2b0"
+      "position": "-896px -960px",
+      "color": "#bec0b2"
     },
     {
       "id": "tcIJgshsc",
-      "position": "-576px -960px",
-      "color": "#bfc1ae"
+      "position": "-960px -960px",
+      "color": "#bec1ac"
+    },
+    {
+      "id": "3XnGkDb8n",
+      "position": "-1024px -960px",
+      "color": "#608475"
+    },
+    {
+      "id": "UhyW4h2jl",
+      "position": "0px -1024px",
+      "color": "#617465"
     },
     {
       "id": "o7qlvjIpX",
-      "position": "-640px -960px",
-      "color": "#586d59"
+      "position": "-64px -1024px",
+      "color": "#5b6d5a"
     },
     {
       "id": "5FnJGJYHD",
-      "position": "-704px -960px",
-      "color": "#3a5348"
+      "position": "-128px -1024px",
+      "color": "#3a5149"
     },
     {
       "id": "tk28kQJ4M",
-      "position": "-768px -960px",
-      "color": "#357a90"
+      "position": "-192px -1024px",
+      "color": "#377990"
     },
     {
       "id": "D9uBSezBN",
-      "position": "-832px -960px",
-      "color": "#5f6862"
+      "position": "-256px -1024px",
+      "color": "#5d6a62"
     }
   ],
   "categories": [
@@ -1709,6 +1824,14 @@
       "icon": "iron_enr_cmpt"
     },
     {
+      "id": "iron_bottle-liquid_water",
+      "name": "Ferrium Bottle(Clean Water)",
+      "stack": 50,
+      "category": "material",
+      "row": 4,
+      "icon": "iron_bottle-liquid_water"
+    },
+    {
       "id": "iron_bottle-liquid_plant_grass_1",
       "name": "Ferrium Bottle(Jincao Solution)",
       "buildIcon": [
@@ -1813,6 +1936,62 @@
       "icon": "copper_enr2_cmpt"
     },
     {
+      "id": "copper_ming",
+      "name": "L-Cuprium",
+      "stack": 50,
+      "category": "material",
+      "row": 5,
+      "icon": "copper_ming"
+    },
+    {
+      "id": "copper_hui",
+      "name": "T-Cuprium",
+      "stack": 50,
+      "category": "material",
+      "row": 5,
+      "icon": "copper_hui"
+    },
+    {
+      "id": "copper_enr_heng",
+      "name": "Equprium",
+      "stack": 50,
+      "category": "material",
+      "row": 5,
+      "icon": "copper_enr_heng"
+    },
+    {
+      "id": "copper_bright",
+      "name": "Lucidolite",
+      "stack": 50,
+      "category": "material",
+      "row": 5,
+      "icon": "copper_bright"
+    },
+    {
+      "id": "copper_ming_cmpt",
+      "name": "L-Cuprium Part",
+      "stack": 50,
+      "category": "material",
+      "row": 5,
+      "icon": "copper_ming_cmpt"
+    },
+    {
+      "id": "copper_hui_cmpt",
+      "name": "T-Cuprium Part",
+      "stack": 50,
+      "category": "material",
+      "row": 5,
+      "icon": "copper_hui_cmpt"
+    },
+    {
+      "id": "copper_bright_cmpt",
+      "name": "Lucidolite Part",
+      "stack": 50,
+      "category": "material",
+      "row": 5,
+      "icon": "copper_bright_cmpt"
+    },
+    {
       "id": "liquid_copper",
       "name": "Cuprium Solution",
       "category": "material",
@@ -1846,6 +2025,27 @@
       "category": "material",
       "row": 6,
       "icon": "gas_copper_enr2"
+    },
+    {
+      "id": "gas_copper_enr_heng",
+      "name": "Equprium Gas",
+      "category": "material",
+      "row": 6,
+      "icon": "gas_copper_enr_heng"
+    },
+    {
+      "id": "gas_copper_bright_clear",
+      "name": "Clean Lucidolite Gas",
+      "category": "material",
+      "row": 6,
+      "icon": "gas_copper_bright_clear"
+    },
+    {
+      "id": "gas_copper_bright_turbid",
+      "name": "Turbid Lucidolite Gas",
+      "category": "material",
+      "row": 6,
+      "icon": "gas_copper_bright_turbid"
     },
     {
       "id": "copper_bottle",
@@ -1912,6 +2112,30 @@
       "icon": "xiranite_enr_powder"
     },
     {
+      "id": "xiranite_ming",
+      "name": "Luminarite",
+      "stack": 50,
+      "category": "material",
+      "row": 7,
+      "icon": "xiranite_ming"
+    },
+    {
+      "id": "xiranite_hui",
+      "name": "Turbidarite",
+      "stack": 50,
+      "category": "material",
+      "row": 7,
+      "icon": "xiranite_hui"
+    },
+    {
+      "id": "xiranite_enr_heng",
+      "name": "Equiranite",
+      "stack": 50,
+      "category": "material",
+      "row": 7,
+      "icon": "xiranite_enr_heng"
+    },
+    {
       "id": "liquid_xiranite_poly",
       "name": "Xircon Effluent",
       "category": "material",
@@ -1961,6 +2185,13 @@
       "icon": "gas_xiranite_enr"
     },
     {
+      "id": "gas_xiranite_enr_heng",
+      "name": "Equiragen",
+      "category": "material",
+      "row": 8,
+      "icon": "gas_xiranite_enr_heng"
+    },
+    {
       "id": "liquid_water",
       "name": "Clean Water",
       "category": "material",
@@ -1994,6 +2225,38 @@
       "category": "material",
       "row": 8,
       "icon": "gas_inert"
+    },
+    {
+      "id": "gasjar_copper_gas_copper_enr_heng",
+      "name": "Cuprium Canister(Equprium Gas)",
+      "stack": 50,
+      "category": "material",
+      "row": 9,
+      "icon": "gasjar_copper_gas_copper_enr_heng"
+    },
+    {
+      "id": "gasjar_copper_gas_xiranite_enr_heng",
+      "name": "Cuprium Canister(Equiragen)",
+      "stack": 50,
+      "category": "material",
+      "row": 9,
+      "icon": "gasjar_copper_gas_xiranite_enr_heng"
+    },
+    {
+      "id": "gasjar_copper_gas_copper_bright_clear",
+      "name": "Cuprium Canister(Clean Lucidolite Gas)",
+      "stack": 50,
+      "category": "material",
+      "row": 9,
+      "icon": "gasjar_copper_gas_copper_bright_clear"
+    },
+    {
+      "id": "gasjar_copper_gas_copper_bright_turbid",
+      "name": "Cuprium Canister(Turbid Lucidolite Gas)",
+      "stack": 50,
+      "category": "material",
+      "row": 9,
+      "icon": "gasjar_copper_gas_copper_bright_turbid"
     },
     {
       "id": "bottled_food_1",
@@ -2172,12 +2435,44 @@
       "icon": "proc_battery_5"
     },
     {
+      "id": "proc_battery_6",
+      "name": "HC Wuling Battery",
+      "stack": 50,
+      "category": "product",
+      "row": 3,
+      "icon": "proc_battery_6"
+    },
+    {
       "id": "proc_bomb_1",
       "name": "Industrial Explosive",
       "stack": 50,
       "category": "product",
       "row": 4,
       "icon": "proc_bomb_1"
+    },
+    {
+      "id": "copper_xiranite_ming",
+      "name": "CuPKG Luminarite Component",
+      "stack": 50,
+      "category": "product",
+      "row": 5,
+      "icon": "copper_xiranite_ming"
+    },
+    {
+      "id": "copper_xiranite_hui",
+      "name": "CuPKG Heavy IC",
+      "stack": 50,
+      "category": "product",
+      "row": 5,
+      "icon": "copper_xiranite_hui"
+    },
+    {
+      "id": "copper_bright_cube",
+      "name": "Lucidolite Energy Brick",
+      "stack": 50,
+      "category": "product",
+      "row": 5,
+      "icon": "copper_bright_cube"
     },
     {
       "id": "tundra_coupon",
@@ -2196,92 +2491,12 @@
       "icon": "jinlong_coupon"
     },
     {
-      "id": "activity_xiranite_lung",
-      "name": "Xiranite Chubby Lung",
-      "stack": 50,
-      "category": "activity",
-      "row": 0,
-      "icon": "activity_xiranite_lung"
-    },
-    {
-      "id": "activity_xiranite_enr_lung",
-      "name": "Heavy Xiranite Chubby Lung",
-      "stack": 50,
-      "category": "activity",
-      "row": 0,
-      "icon": "activity_xiranite_enr_lung"
-    },
-    {
-      "id": "activity_xiranite_nugget",
-      "name": "Proto Xiranite",
-      "stack": 50,
-      "category": "activity",
-      "row": 1,
-      "icon": "activity_xiranite_nugget"
-    },
-    {
-      "id": "activity_xiranite_box",
-      "name": "Proto Chubby Lung Shell",
-      "stack": 50,
-      "category": "activity",
-      "row": 1,
-      "icon": "activity_xiranite_box"
-    },
-    {
-      "id": "activity_copper_xiranite_tool",
-      "name": "Proto Cuprium Frame",
-      "stack": 50,
-      "category": "activity",
-      "row": 1,
-      "icon": "activity_copper_xiranite_tool"
-    },
-    {
-      "id": "activity_copper_poly_gas",
-      "name": "Proto Xiran-Cuprium Gas",
-      "stack": 50,
-      "category": "activity",
-      "row": 2,
-      "icon": "activity_copper_poly_gas"
-    },
-    {
-      "id": "activity_copper_poly",
-      "name": "Proto Xiran-Cuprium",
-      "stack": 50,
-      "category": "activity",
-      "row": 2,
-      "icon": "activity_copper_poly"
-    },
-    {
-      "id": "activity_copper_poly_cmpt",
-      "name": "Proto Xiran-Cuprium Part",
-      "stack": 50,
-      "category": "activity",
-      "row": 2,
-      "icon": "activity_copper_poly_cmpt"
-    },
-    {
-      "id": "activity_xiranite_enr_nugget",
-      "name": "Proto Heavy Xiranite",
-      "stack": 50,
-      "category": "activity",
-      "row": 2,
-      "icon": "activity_xiranite_enr_nugget"
-    },
-    {
-      "id": "activity_copper_poly_tool",
-      "name": "Proto Xiran-Cuprium Frame",
-      "stack": 50,
-      "category": "activity",
-      "row": 2,
-      "icon": "activity_copper_poly_tool"
-    },
-    {
-      "id": "activity_xiranite_enr_box",
-      "name": "Proto Chubby Lung Heavy Shell",
-      "stack": 50,
-      "category": "activity",
-      "row": 2,
-      "icon": "activity_xiranite_enr_box"
+      "id": "domain_key_jinlong",
+      "name": "Metastorage Transfer",
+      "stack": 1,
+      "category": "__domain_transfer",
+      "row": 999,
+      "icon": "domain_key_jinlong"
     },
     {
       "id": "domain_key_tundra",
@@ -2346,26 +2561,6 @@
       "icon": "cmpt_mc_1"
     },
     {
-      "id": "dismantler_1",
-      "name": "Separating Unit",
-      "stack": 50,
-      "machine": {
-        "speed": 1,
-        "type": "electric",
-        "usage": 20,
-        "size": [
-          6,
-          4
-        ],
-        "locations": [
-          "jinlong"
-        ]
-      },
-      "category": "machine",
-      "row": 999,
-      "icon": "dismantler_1"
-    },
-    {
       "id": "filling_pd_mc_1",
       "name": "Filling Unit",
       "stack": 50,
@@ -2381,6 +2576,166 @@
       "category": "machine",
       "row": 999,
       "icon": "filling_pd_mc_1"
+    },
+    {
+      "id": "formation_magic_heng_1",
+      "name": "E-Array T1",
+      "stack": 1,
+      "machine": {
+        "speed": 1,
+        "type": "electric",
+        "usage": 0,
+        "locations": [
+          "jinlong"
+        ]
+      },
+      "category": "machine",
+      "row": 999,
+      "icon": "formation_magic_heng_1"
+    },
+    {
+      "id": "formation_magic_heng_2",
+      "name": "E-Array T2",
+      "icon": "formation_magic_heng_1",
+      "stack": 1,
+      "machine": {
+        "speed": 1,
+        "type": "electric",
+        "usage": 0,
+        "locations": [
+          "jinlong"
+        ]
+      },
+      "category": "machine",
+      "row": 999
+    },
+    {
+      "id": "formation_magic_hui_1",
+      "name": "T-Array T1",
+      "stack": 1,
+      "machine": {
+        "speed": 1,
+        "type": "electric",
+        "usage": 0,
+        "locations": [
+          "jinlong"
+        ]
+      },
+      "category": "machine",
+      "row": 999,
+      "icon": "formation_magic_hui_1"
+    },
+    {
+      "id": "formation_magic_hui_2",
+      "name": "T-Array T2",
+      "icon": "formation_magic_hui_1",
+      "stack": 1,
+      "machine": {
+        "speed": 1,
+        "type": "electric",
+        "usage": 0,
+        "locations": [
+          "jinlong"
+        ]
+      },
+      "category": "machine",
+      "row": 999
+    },
+    {
+      "id": "formation_magic_hui_3",
+      "name": "T-Array T3",
+      "icon": "formation_magic_hui_1",
+      "stack": 1,
+      "machine": {
+        "speed": 1,
+        "type": "electric",
+        "usage": 0,
+        "locations": [
+          "jinlong"
+        ]
+      },
+      "category": "machine",
+      "row": 999
+    },
+    {
+      "id": "formation_magic_hui_4",
+      "name": "T-Array T4",
+      "icon": "formation_magic_hui_1",
+      "stack": 1,
+      "machine": {
+        "speed": 1,
+        "type": "electric",
+        "usage": 0,
+        "locations": [
+          "jinlong"
+        ]
+      },
+      "category": "machine",
+      "row": 999
+    },
+    {
+      "id": "formation_magic_ming_1",
+      "name": "L-Array T1",
+      "stack": 1,
+      "machine": {
+        "speed": 1,
+        "type": "electric",
+        "usage": 0,
+        "locations": [
+          "jinlong"
+        ]
+      },
+      "category": "machine",
+      "row": 999,
+      "icon": "formation_magic_ming_1"
+    },
+    {
+      "id": "formation_magic_ming_2",
+      "name": "L-Array T2",
+      "icon": "formation_magic_ming_1",
+      "stack": 1,
+      "machine": {
+        "speed": 1,
+        "type": "electric",
+        "usage": 0,
+        "locations": [
+          "jinlong"
+        ]
+      },
+      "category": "machine",
+      "row": 999
+    },
+    {
+      "id": "formation_magic_ming_3",
+      "name": "L-Array T3",
+      "icon": "formation_magic_ming_1",
+      "stack": 1,
+      "machine": {
+        "speed": 1,
+        "type": "electric",
+        "usage": 0,
+        "locations": [
+          "jinlong"
+        ]
+      },
+      "category": "machine",
+      "row": 999
+    },
+    {
+      "id": "formation_magic_ming_4",
+      "name": "L-Array T4",
+      "icon": "formation_magic_ming_1",
+      "stack": 1,
+      "machine": {
+        "speed": 1,
+        "type": "electric",
+        "usage": 0,
+        "locations": [
+          "jinlong"
+        ]
+      },
+      "category": "machine",
+      "row": 999
     },
     {
       "id": "furnance_1",
@@ -2473,7 +2828,7 @@
     },
     {
       "id": "liquid_cleaner_1",
-      "name": "Water Treatment Unit",
+      "name": "Waste Treatment Unit",
       "stack": 50,
       "machine": {
         "speed": 1,
@@ -2526,6 +2881,26 @@
       "icon": "liquid_clean_gate",
       "category": "machine",
       "row": 999
+    },
+    {
+      "id": "magic_balancer_1",
+      "name": "Forge of Equilibrium",
+      "stack": 50,
+      "machine": {
+        "speed": 1,
+        "type": "electric",
+        "usage": 50,
+        "size": [
+          5,
+          5
+        ],
+        "locations": [
+          "jinlong"
+        ]
+      },
+      "category": "machine",
+      "row": 999,
+      "icon": "magic_balancer_1"
     },
     {
       "id": "miner_2",
@@ -2735,7 +3110,7 @@
       "icon": "seedcol_1"
     },
     {
-      "id": "settlement-jinlong",
+      "id": "settlement-jinlong_coupon",
       "name": "Outpost Supplies(Wuling)",
       "icon": "jinlong",
       "stack": 1,
@@ -2752,43 +3127,9 @@
       "row": 999
     },
     {
-      "id": "settlement-jinlong_coupon",
-      "name": "Outpost Supplies(Wuling)",
-      "icon": "jinlong_coupon",
-      "stack": 1,
-      "machine": {
-        "speed": 1,
-        "type": "electric",
-        "usage": 0,
-        "hideRate": true,
-        "locations": [
-          "jinlong"
-        ]
-      },
-      "category": "machine",
-      "row": 999
-    },
-    {
-      "id": "settlement-tundra",
-      "name": "Outpost Supplies(Valley IV)",
-      "icon": "tundra",
-      "stack": 1,
-      "machine": {
-        "speed": 1,
-        "type": "electric",
-        "usage": 0,
-        "hideRate": true,
-        "locations": [
-          "tundra"
-        ]
-      },
-      "category": "machine",
-      "row": 999
-    },
-    {
       "id": "settlement-tundra_coupon",
       "name": "Outpost Supplies(Valley IV)",
-      "icon": "tundra_coupon",
+      "icon": "tundra",
       "stack": 1,
       "machine": {
         "speed": 1,
@@ -4029,6 +4370,27 @@
       "time": 2,
       "in": {
         "iron_bottle": 1,
+        "liquid_water": 1
+      },
+      "out": {
+        "iron_bottle-liquid_water": 1
+      },
+      "producers": [
+        "filling_pd_mc_1"
+      ],
+      "locations": [
+        "jinlong"
+      ],
+      "id": "iron_bottle-liquid_water",
+      "name": "Ferrium Bottle(Clean Water)",
+      "category": "material",
+      "row": 4,
+      "icon": "iron_bottle-liquid_water"
+    },
+    {
+      "time": 2,
+      "in": {
+        "iron_bottle": 1,
         "liquid_plant_grass_1": 1
       },
       "out": {
@@ -4368,6 +4730,129 @@
       "icon": "filter_core"
     },
     {
+      "time": 10,
+      "in": {
+        "copper_ming": 10,
+        "copper_hui": 10
+      },
+      "out": {
+        "copper_enr": 5
+      },
+      "producers": [
+        "magic_balancer_1"
+      ],
+      "id": "magic_balancer_1-copper_enr",
+      "name": "Hetonite(Forge of Equilibrium)",
+      "category": "material",
+      "row": 5,
+      "icon": "7HEZZXQXi"
+    },
+    {
+      "time": 2,
+      "in": {
+        "gas_copper_enr_heng": 1,
+        "gas_xiranite": 0.2
+      },
+      "out": {
+        "copper_enr_heng": 2
+      },
+      "producers": [
+        "phase_trans_2"
+      ],
+      "id": "phase_trans_2-copper_enr_heng",
+      "name": "Equprium(Solid-Gas Transmuting Unit)",
+      "category": "material",
+      "row": 5,
+      "icon": "BdMxTKvQP"
+    },
+    {
+      "time": 10,
+      "in": {
+        "xiranite_enr_heng": 10,
+        "copper_enr_heng": 10
+      },
+      "out": {
+        "copper_bright": 5
+      },
+      "producers": [
+        "magic_balancer_1"
+      ],
+      "id": "magic_balancer_1-copper_bright",
+      "name": "Lucidolite(Forge of Equilibrium)",
+      "category": "material",
+      "row": 5,
+      "icon": "JvK4hAcOl"
+    },
+    {
+      "time": 2,
+      "in": {
+        "gas_copper_bright_clear": 2,
+        "gas_xiranite": 0.2
+      },
+      "out": {
+        "copper_bright": 2
+      },
+      "producers": [
+        "phase_trans_2"
+      ],
+      "id": "phase_trans_2-copper_bright",
+      "name": "Lucidolite(Solid-Gas Transmuting Unit)",
+      "category": "material",
+      "row": 5,
+      "icon": "SKXdzSG5F"
+    },
+    {
+      "time": 2,
+      "in": {
+        "copper_ming": 1
+      },
+      "out": {
+        "copper_ming_cmpt": 1
+      },
+      "producers": [
+        "cmpt_mc_1"
+      ],
+      "id": "copper_ming_cmpt",
+      "name": "L-Cuprium Part",
+      "category": "material",
+      "row": 5,
+      "icon": "copper_ming_cmpt"
+    },
+    {
+      "time": 2,
+      "in": {
+        "copper_hui": 1
+      },
+      "out": {
+        "copper_hui_cmpt": 1
+      },
+      "producers": [
+        "cmpt_mc_1"
+      ],
+      "id": "copper_hui_cmpt",
+      "name": "T-Cuprium Part",
+      "category": "material",
+      "row": 5,
+      "icon": "copper_hui_cmpt"
+    },
+    {
+      "time": 2,
+      "in": {
+        "copper_bright": 1
+      },
+      "out": {
+        "copper_bright_cmpt": 1
+      },
+      "producers": [
+        "cmpt_mc_1"
+      ],
+      "id": "copper_bright_cmpt",
+      "name": "Lucidolite Part",
+      "category": "material",
+      "row": 5,
+      "icon": "copper_bright_cmpt"
+    },
+    {
       "time": 2,
       "in": {
         "copper_powder": 1,
@@ -4587,6 +5072,97 @@
     {
       "time": 2,
       "in": {
+        "copper_enr_heng": 2,
+        "gas_xiranite": 0.2
+      },
+      "out": {
+        "gas_copper_enr_heng": 1
+      },
+      "producers": [
+        "phase_trans_2"
+      ],
+      "id": "phase_trans_2-gas_copper_enr_heng",
+      "name": "Equprium Gas(Solid-Gas Transmuting Unit)",
+      "category": "material",
+      "row": 6,
+      "icon": "FVD_V1gkz"
+    },
+    {
+      "time": 2,
+      "in": {
+        "xiranite_enr_heng": 2,
+        "gas_xiranite": 0.2
+      },
+      "out": {
+        "gas_xiranite_enr_heng": 1
+      },
+      "producers": [
+        "phase_trans_2"
+      ],
+      "id": "phase_trans_2-gas_xiranite_enr_heng",
+      "name": "Equiragen(Solid-Gas Transmuting Unit)",
+      "category": "material",
+      "row": 6,
+      "icon": "3yH_sUEon"
+    },
+    {
+      "time": 2,
+      "in": {
+        "gas_copper_enr_heng": 1,
+        "gas_xiranite_enr_heng": 1
+      },
+      "out": {
+        "gas_copper_bright_clear": 1,
+        "gas_copper_bright_turbid": 1
+      },
+      "producers": [
+        "gas_reactor_1"
+      ],
+      "id": "gas_copper_bright_clear",
+      "name": "Clean Lucidolite Gas",
+      "category": "material",
+      "row": 6,
+      "icon": "gas_copper_bright_clear"
+    },
+    {
+      "time": 2,
+      "in": {
+        "gas_copper_bright_turbid": 2,
+        "filter_core": 2
+      },
+      "out": {
+        "gas_copper_bright_clear": 2
+      },
+      "producers": [
+        "liquid_purifier_1"
+      ],
+      "id": "gas_copper_bright_clear-purifier",
+      "name": "Clean Lucidolite Gas(Purification Unit)",
+      "category": "material",
+      "row": 6,
+      "icon": "--fy8JitE"
+    },
+    {
+      "time": 2,
+      "in": {
+        "copper_bright": 2,
+        "gas_xiranite": 0.2
+      },
+      "out": {
+        "gas_copper_bright_clear": 2
+      },
+      "producers": [
+        "phase_trans_2"
+      ],
+      "id": "phase_trans_2-gas_copper_bright_clear",
+      "name": "Clean Lucidolite Gas(Solid-Gas Transmuting Unit)",
+      "category": "material",
+      "row": 6,
+      "icon": "XvL38FqFc"
+    },
+    {
+      "time": 2,
+      "in": {
         "carbon_mtl": 1,
         "liquid_water": 1
       },
@@ -4692,6 +5268,42 @@
       "category": "material",
       "row": 7,
       "icon": "o7qlvjIpX"
+    },
+    {
+      "time": 10,
+      "in": {
+        "xiranite_ming": 5,
+        "xiranite_hui": 5
+      },
+      "out": {
+        "xiranite_enr_powder": 2
+      },
+      "producers": [
+        "magic_balancer_1"
+      ],
+      "id": "magic_balancer_1-xiranite_enr_powder",
+      "name": "Heavy Xiranite(Forge of Equilibrium)",
+      "category": "material",
+      "row": 7,
+      "icon": "UhyW4h2jl"
+    },
+    {
+      "time": 2,
+      "in": {
+        "gas_xiranite_enr_heng": 1,
+        "gas_xiranite": 0.2
+      },
+      "out": {
+        "xiranite_enr_heng": 2
+      },
+      "producers": [
+        "phase_trans_2"
+      ],
+      "id": "phase_trans_2-xiranite_enr_heng",
+      "name": "Equiranite(Solid-Gas Transmuting Unit)",
+      "category": "material",
+      "row": 7,
+      "icon": "3XnGkDb8n"
     },
     {
       "time": 2,
@@ -4983,6 +5595,566 @@
       "category": "material",
       "row": 8,
       "icon": "BTDiP1-WN"
+    },
+    {
+      "time": 10,
+      "in": {
+        "copper_nugget": 1
+      },
+      "out": {
+        "copper_ming": 0.2,
+        "copper_nugget": 0.8
+      },
+      "producers": [
+        "formation_magic_ming_1"
+      ],
+      "flags": [
+        "formation"
+      ],
+      "locations": [
+        "jinlong"
+      ],
+      "id": "formation_magic_ming_item_copper_ming_1",
+      "name": "L-Cuprium (20%)",
+      "category": "material",
+      "row": 9,
+      "icon": "copper_ming"
+    },
+    {
+      "time": 10,
+      "in": {
+        "copper_nugget": 1
+      },
+      "out": {
+        "copper_ming": 0.4,
+        "copper_nugget": 0.6
+      },
+      "producers": [
+        "formation_magic_ming_2"
+      ],
+      "flags": [
+        "formation"
+      ],
+      "locations": [
+        "jinlong"
+      ],
+      "id": "formation_magic_ming_item_copper_ming_2",
+      "name": "L-Cuprium (40%)",
+      "category": "material",
+      "row": 9,
+      "icon": "copper_ming"
+    },
+    {
+      "time": 10,
+      "in": {
+        "copper_nugget": 1
+      },
+      "out": {
+        "copper_ming": 0.6,
+        "copper_nugget": 0.4
+      },
+      "producers": [
+        "formation_magic_ming_3"
+      ],
+      "flags": [
+        "formation"
+      ],
+      "locations": [
+        "jinlong"
+      ],
+      "id": "formation_magic_ming_item_copper_ming_3",
+      "name": "L-Cuprium (60%)",
+      "category": "material",
+      "row": 9,
+      "icon": "copper_ming"
+    },
+    {
+      "time": 10,
+      "in": {
+        "copper_nugget": 1
+      },
+      "out": {
+        "copper_ming": 1
+      },
+      "producers": [
+        "formation_magic_ming_4"
+      ],
+      "flags": [
+        "formation"
+      ],
+      "locations": [
+        "jinlong"
+      ],
+      "id": "formation_magic_ming_item_copper_ming_4",
+      "name": "L-Cuprium (100%)",
+      "category": "material",
+      "row": 9,
+      "icon": "copper_ming"
+    },
+    {
+      "time": 10,
+      "in": {
+        "copper_nugget": 1
+      },
+      "out": {
+        "copper_hui": 0.2,
+        "copper_nugget": 0.8
+      },
+      "producers": [
+        "formation_magic_hui_1"
+      ],
+      "flags": [
+        "formation"
+      ],
+      "locations": [
+        "jinlong"
+      ],
+      "id": "formation_magic_hui_item_copper_hui_1",
+      "name": "T-Cuprium (20%)",
+      "category": "material",
+      "row": 10,
+      "icon": "copper_hui"
+    },
+    {
+      "time": 10,
+      "in": {
+        "copper_nugget": 1
+      },
+      "out": {
+        "copper_hui": 0.4,
+        "copper_nugget": 0.6
+      },
+      "producers": [
+        "formation_magic_hui_2"
+      ],
+      "flags": [
+        "formation"
+      ],
+      "locations": [
+        "jinlong"
+      ],
+      "id": "formation_magic_hui_item_copper_hui_2",
+      "name": "T-Cuprium (40%)",
+      "category": "material",
+      "row": 10,
+      "icon": "copper_hui"
+    },
+    {
+      "time": 10,
+      "in": {
+        "copper_nugget": 1
+      },
+      "out": {
+        "copper_hui": 0.6,
+        "copper_nugget": 0.4
+      },
+      "producers": [
+        "formation_magic_hui_3"
+      ],
+      "flags": [
+        "formation"
+      ],
+      "locations": [
+        "jinlong"
+      ],
+      "id": "formation_magic_hui_item_copper_hui_3",
+      "name": "T-Cuprium (60%)",
+      "category": "material",
+      "row": 10,
+      "icon": "copper_hui"
+    },
+    {
+      "time": 10,
+      "in": {
+        "copper_nugget": 1
+      },
+      "out": {
+        "copper_hui": 1
+      },
+      "producers": [
+        "formation_magic_hui_4"
+      ],
+      "flags": [
+        "formation"
+      ],
+      "locations": [
+        "jinlong"
+      ],
+      "id": "formation_magic_hui_item_copper_hui_4",
+      "name": "T-Cuprium (100%)",
+      "category": "material",
+      "row": 10,
+      "icon": "copper_hui"
+    },
+    {
+      "time": 10,
+      "in": {
+        "copper_nugget": 1
+      },
+      "out": {
+        "copper_enr_heng": 0.4,
+        "copper_nugget": 0.6
+      },
+      "producers": [
+        "formation_magic_heng_1"
+      ],
+      "flags": [
+        "formation"
+      ],
+      "locations": [
+        "jinlong"
+      ],
+      "id": "formation_magic_heng_item_copper_enr_heng_1",
+      "name": "Equprium (40%)",
+      "category": "material",
+      "row": 11,
+      "icon": "copper_enr_heng"
+    },
+    {
+      "time": 10,
+      "in": {
+        "copper_nugget": 1
+      },
+      "out": {
+        "copper_enr_heng": 0.8,
+        "copper_nugget": 0.2
+      },
+      "producers": [
+        "formation_magic_heng_2"
+      ],
+      "flags": [
+        "formation"
+      ],
+      "locations": [
+        "jinlong"
+      ],
+      "id": "formation_magic_heng_item_copper_enr_heng_2",
+      "name": "Equprium (80%)",
+      "category": "material",
+      "row": 11,
+      "icon": "copper_enr_heng"
+    },
+    {
+      "time": 10,
+      "in": {
+        "xiranite_powder": 1
+      },
+      "out": {
+        "xiranite_ming": 0.2,
+        "xiranite_powder": 0.8
+      },
+      "producers": [
+        "formation_magic_ming_1"
+      ],
+      "flags": [
+        "formation"
+      ],
+      "locations": [
+        "jinlong"
+      ],
+      "id": "formation_magic_ming_item_xiranite_ming_1",
+      "name": "Luminarite (20%)",
+      "category": "material",
+      "row": 12,
+      "icon": "xiranite_ming"
+    },
+    {
+      "time": 10,
+      "in": {
+        "xiranite_powder": 1
+      },
+      "out": {
+        "xiranite_ming": 0.4,
+        "xiranite_powder": 0.6
+      },
+      "producers": [
+        "formation_magic_ming_2"
+      ],
+      "flags": [
+        "formation"
+      ],
+      "locations": [
+        "jinlong"
+      ],
+      "id": "formation_magic_ming_item_xiranite_ming_2",
+      "name": "Luminarite (40%)",
+      "category": "material",
+      "row": 12,
+      "icon": "xiranite_ming"
+    },
+    {
+      "time": 10,
+      "in": {
+        "xiranite_powder": 1
+      },
+      "out": {
+        "xiranite_ming": 0.6,
+        "xiranite_powder": 0.4
+      },
+      "producers": [
+        "formation_magic_ming_3"
+      ],
+      "flags": [
+        "formation"
+      ],
+      "locations": [
+        "jinlong"
+      ],
+      "id": "formation_magic_ming_item_xiranite_ming_3",
+      "name": "Luminarite (60%)",
+      "category": "material",
+      "row": 12,
+      "icon": "xiranite_ming"
+    },
+    {
+      "time": 10,
+      "in": {
+        "xiranite_powder": 1
+      },
+      "out": {
+        "xiranite_ming": 1
+      },
+      "producers": [
+        "formation_magic_ming_4"
+      ],
+      "flags": [
+        "formation"
+      ],
+      "locations": [
+        "jinlong"
+      ],
+      "id": "formation_magic_ming_item_xiranite_ming_4",
+      "name": "Luminarite (100%)",
+      "category": "material",
+      "row": 12,
+      "icon": "xiranite_ming"
+    },
+    {
+      "time": 10,
+      "in": {
+        "xiranite_powder": 1
+      },
+      "out": {
+        "xiranite_hui": 0.2,
+        "xiranite_powder": 0.8
+      },
+      "producers": [
+        "formation_magic_hui_1"
+      ],
+      "flags": [
+        "formation"
+      ],
+      "locations": [
+        "jinlong"
+      ],
+      "id": "formation_magic_hui_item_xiranite_hui_1",
+      "name": "Turbidarite (20%)",
+      "category": "material",
+      "row": 13,
+      "icon": "xiranite_hui"
+    },
+    {
+      "time": 10,
+      "in": {
+        "xiranite_powder": 1
+      },
+      "out": {
+        "xiranite_hui": 0.4,
+        "xiranite_powder": 0.6
+      },
+      "producers": [
+        "formation_magic_hui_2"
+      ],
+      "flags": [
+        "formation"
+      ],
+      "locations": [
+        "jinlong"
+      ],
+      "id": "formation_magic_hui_item_xiranite_hui_2",
+      "name": "Turbidarite (40%)",
+      "category": "material",
+      "row": 13,
+      "icon": "xiranite_hui"
+    },
+    {
+      "time": 10,
+      "in": {
+        "xiranite_powder": 1
+      },
+      "out": {
+        "xiranite_hui": 0.6,
+        "xiranite_powder": 0.4
+      },
+      "producers": [
+        "formation_magic_hui_3"
+      ],
+      "flags": [
+        "formation"
+      ],
+      "locations": [
+        "jinlong"
+      ],
+      "id": "formation_magic_hui_item_xiranite_hui_3",
+      "name": "Turbidarite (60%)",
+      "category": "material",
+      "row": 13,
+      "icon": "xiranite_hui"
+    },
+    {
+      "time": 10,
+      "in": {
+        "xiranite_powder": 1
+      },
+      "out": {
+        "xiranite_hui": 1
+      },
+      "producers": [
+        "formation_magic_hui_4"
+      ],
+      "flags": [
+        "formation"
+      ],
+      "locations": [
+        "jinlong"
+      ],
+      "id": "formation_magic_hui_item_xiranite_hui_4",
+      "name": "Turbidarite (100%)",
+      "category": "material",
+      "row": 13,
+      "icon": "xiranite_hui"
+    },
+    {
+      "time": 10,
+      "in": {
+        "xiranite_powder": 1
+      },
+      "out": {
+        "xiranite_enr_heng": 0.4,
+        "xiranite_powder": 0.6
+      },
+      "producers": [
+        "formation_magic_heng_1"
+      ],
+      "flags": [
+        "formation"
+      ],
+      "locations": [
+        "jinlong"
+      ],
+      "id": "formation_magic_heng_item_xiranite_enr_heng_1",
+      "name": "Equiranite (40%)",
+      "category": "material",
+      "row": 14,
+      "icon": "xiranite_enr_heng"
+    },
+    {
+      "time": 10,
+      "in": {
+        "xiranite_powder": 1
+      },
+      "out": {
+        "xiranite_enr_heng": 0.8,
+        "xiranite_powder": 0.2
+      },
+      "producers": [
+        "formation_magic_heng_2"
+      ],
+      "flags": [
+        "formation"
+      ],
+      "locations": [
+        "jinlong"
+      ],
+      "id": "formation_magic_heng_item_xiranite_enr_heng_2",
+      "name": "Equiranite (80%)",
+      "category": "material",
+      "row": 14,
+      "icon": "xiranite_enr_heng"
+    },
+    {
+      "time": 2,
+      "in": {
+        "copper_jar": 1,
+        "gas_copper_enr_heng": 1
+      },
+      "out": {
+        "gasjar_copper_gas_copper_enr_heng": 1
+      },
+      "producers": [
+        "filling_pd_mc_1"
+      ],
+      "locations": [
+        "jinlong"
+      ],
+      "id": "gasjar_copper_gas_copper_enr_heng",
+      "name": "Cuprium Canister(Equprium Gas)",
+      "category": "material",
+      "row": 15,
+      "icon": "gasjar_copper_gas_copper_enr_heng"
+    },
+    {
+      "time": 2,
+      "in": {
+        "copper_jar": 1,
+        "gas_xiranite_enr_heng": 1
+      },
+      "out": {
+        "gasjar_copper_gas_xiranite_enr_heng": 1
+      },
+      "producers": [
+        "filling_pd_mc_1"
+      ],
+      "locations": [
+        "jinlong"
+      ],
+      "id": "gasjar_copper_gas_xiranite_enr_heng",
+      "name": "Cuprium Canister(Equiragen)",
+      "category": "material",
+      "row": 15,
+      "icon": "gasjar_copper_gas_xiranite_enr_heng"
+    },
+    {
+      "time": 2,
+      "in": {
+        "copper_jar": 1,
+        "gas_copper_bright_clear": 1
+      },
+      "out": {
+        "gasjar_copper_gas_copper_bright_clear": 1
+      },
+      "producers": [
+        "filling_pd_mc_1"
+      ],
+      "locations": [
+        "jinlong"
+      ],
+      "id": "gasjar_copper_gas_copper_bright_clear",
+      "name": "Cuprium Canister(Clean Lucidolite Gas)",
+      "category": "material",
+      "row": 15,
+      "icon": "gasjar_copper_gas_copper_bright_clear"
+    },
+    {
+      "time": 2,
+      "in": {
+        "copper_jar": 1,
+        "gas_copper_bright_turbid": 1
+      },
+      "out": {
+        "gasjar_copper_gas_copper_bright_turbid": 1
+      },
+      "producers": [
+        "filling_pd_mc_1"
+      ],
+      "locations": [
+        "jinlong"
+      ],
+      "id": "gasjar_copper_gas_copper_bright_turbid",
+      "name": "Cuprium Canister(Turbid Lucidolite Gas)",
+      "category": "material",
+      "row": 15,
+      "icon": "gasjar_copper_gas_copper_bright_turbid"
     },
     {
       "time": 60,
@@ -5401,6 +6573,24 @@
     {
       "time": 10,
       "in": {
+        "xiranite_enr_heng": 5,
+        "originium_enr_powder": 20
+      },
+      "out": {
+        "proc_battery_6": 1
+      },
+      "producers": [
+        "tools_asm_mc_1"
+      ],
+      "id": "proc_battery_6",
+      "name": "HC Wuling Battery",
+      "category": "product",
+      "row": 3,
+      "icon": "proc_battery_6"
+    },
+    {
+      "time": 10,
+      "in": {
         "glass_cmpt": 5,
         "plant_bbflower_powder_1": 1
       },
@@ -5415,6 +6605,60 @@
       "category": "product",
       "row": 4,
       "icon": "proc_bomb_1"
+    },
+    {
+      "time": 10,
+      "in": {
+        "copper_ming_cmpt": 10,
+        "xiranite_ming": 5
+      },
+      "out": {
+        "copper_xiranite_ming": 5
+      },
+      "producers": [
+        "tools_asm_mc_1"
+      ],
+      "id": "copper_xiranite_ming",
+      "name": "CuPKG Luminarite Component",
+      "category": "product",
+      "row": 5,
+      "icon": "copper_xiranite_ming"
+    },
+    {
+      "time": 10,
+      "in": {
+        "copper_hui_cmpt": 15,
+        "xiranite_enr_powder": 2
+      },
+      "out": {
+        "copper_xiranite_hui": 5
+      },
+      "producers": [
+        "tools_asm_mc_1"
+      ],
+      "id": "copper_xiranite_hui",
+      "name": "CuPKG Heavy IC",
+      "category": "product",
+      "row": 5,
+      "icon": "copper_xiranite_hui"
+    },
+    {
+      "time": 10,
+      "in": {
+        "copper_bright_cmpt": 5,
+        "originium_enr_powder": 5
+      },
+      "out": {
+        "copper_bright_cube": 5
+      },
+      "producers": [
+        "tools_asm_mc_1"
+      ],
+      "id": "copper_bright_cube",
+      "name": "Lucidolite Energy Brick",
+      "category": "product",
+      "row": 5,
+      "icon": "copper_bright_cube"
     },
     {
       "time": 2,
@@ -5963,261 +7207,1551 @@
       "icon": "e13iR_HPS"
     },
     {
-      "time": 10,
+      "time": 3600,
+      "producers": [
+        "__domain_transfer"
+      ],
       "in": {
-        "activity_xiranite_lung": 1
+        "domain_key_jinlong": 1
       },
       "out": {
-        "jinlong_coupon": 100
+        "bottled_food_1": 150
       },
-      "producers": [
-        "settlement-jinlong_coupon"
-      ],
-      "flags": [
-        "hideProducer"
-      ],
-      "cost": 30,
-      "id": "jinlong_coupon-activity_xiranite_lung",
-      "name": "Wuling Stock Bill(Xiranite Chubby Lung)",
-      "category": "settlement",
-      "row": 4,
-      "icon": "DxQbkoaDm"
+      "id": "transfer_jinlong_bottled_food_1",
+      "name": "Canned Citrome [C]",
+      "category": "__domain_transfer",
+      "row": 999,
+      "icon": "bottled_food_1"
     },
     {
-      "time": 10,
+      "time": 3600,
+      "producers": [
+        "__domain_transfer"
+      ],
       "in": {
-        "activity_xiranite_enr_lung": 1
+        "domain_key_jinlong": 1
       },
       "out": {
-        "jinlong_coupon": 200
+        "bottled_food_2": 75
       },
-      "producers": [
-        "settlement-jinlong_coupon"
-      ],
-      "flags": [
-        "hideProducer"
-      ],
-      "cost": 30,
-      "id": "jinlong_coupon-activity_xiranite_enr_lung",
-      "name": "Wuling Stock Bill(Heavy Xiranite Chubby Lung)",
-      "category": "settlement",
-      "row": 4,
-      "icon": "nvQgypPJO"
+      "id": "transfer_jinlong_bottled_food_2",
+      "name": "Canned Citrome [B]",
+      "category": "__domain_transfer",
+      "row": 999,
+      "icon": "bottled_food_2"
     },
     {
-      "time": 10,
+      "time": 3600,
+      "producers": [
+        "__domain_transfer"
+      ],
       "in": {
-        "activity_xiranite_box": 5,
-        "activity_copper_xiranite_tool": 5
+        "domain_key_jinlong": 1
       },
       "out": {
-        "activity_xiranite_lung": 1
+        "bottled_food_3": 30
       },
-      "producers": [
-        "tools_asm_mc_1"
-      ],
-      "id": "activity_xiranite_lung",
-      "name": "Xiranite Chubby Lung",
-      "category": "activity",
-      "row": 0,
-      "icon": "activity_xiranite_lung"
+      "id": "transfer_jinlong_bottled_food_3",
+      "name": "Canned Citrome [A]",
+      "category": "__domain_transfer",
+      "row": 999,
+      "icon": "bottled_food_3"
     },
     {
-      "time": 10,
+      "time": 3600,
+      "producers": [
+        "__domain_transfer"
+      ],
       "in": {
-        "activity_xiranite_enr_box": 1,
-        "activity_copper_poly_tool": 1
+        "domain_key_jinlong": 1
       },
       "out": {
-        "activity_xiranite_enr_lung": 1
+        "bottled_food_4": 30
       },
-      "producers": [
-        "tools_asm_mc_1"
-      ],
-      "id": "activity_xiranite_enr_lung",
-      "name": "Heavy Xiranite Chubby Lung",
-      "category": "activity",
-      "row": 0,
-      "icon": "activity_xiranite_enr_lung"
+      "id": "transfer_jinlong_bottled_food_4",
+      "name": "Jincao Drink",
+      "category": "__domain_transfer",
+      "row": 999,
+      "icon": "bottled_food_4"
     },
     {
-      "time": 2,
+      "time": 3600,
+      "producers": [
+        "__domain_transfer"
+      ],
       "in": {
-        "xiranite_powder": 1
+        "domain_key_jinlong": 1
       },
       "out": {
-        "activity_xiranite_nugget": 1
+        "bottled_food_5": 15
       },
-      "producers": [
-        "furnance_1"
-      ],
-      "id": "activity_xiranite_nugget",
-      "name": "Proto Xiranite",
-      "category": "activity",
-      "row": 1,
-      "icon": "activity_xiranite_nugget"
+      "id": "transfer_jinlong_bottled_food_5",
+      "name": "Jincao Tea",
+      "category": "__domain_transfer",
+      "row": 999,
+      "icon": "bottled_food_5"
     },
     {
-      "time": 2,
+      "time": 3600,
+      "producers": [
+        "__domain_transfer"
+      ],
       "in": {
-        "activity_xiranite_nugget": 1
+        "domain_key_jinlong": 1
       },
       "out": {
-        "activity_xiranite_box": 1
+        "bottled_rec_hp_1": 150
       },
-      "producers": [
-        "shaper_1"
-      ],
-      "id": "activity_xiranite_box",
-      "name": "Proto Chubby Lung Shell",
-      "category": "activity",
-      "row": 1,
-      "icon": "activity_xiranite_box"
+      "id": "transfer_jinlong_bottled_rec_hp_1",
+      "name": "Buck Capsule [C]",
+      "category": "__domain_transfer",
+      "row": 999,
+      "icon": "bottled_rec_hp_1"
     },
     {
-      "time": 2,
+      "time": 3600,
+      "producers": [
+        "__domain_transfer"
+      ],
       "in": {
-        "copper_cmpt": 4,
-        "xiranite_powder": 1
+        "domain_key_jinlong": 1
       },
       "out": {
-        "activity_copper_xiranite_tool": 1
+        "bottled_rec_hp_2": 75
       },
-      "producers": [
-        "tools_asm_mc_1"
-      ],
-      "id": "activity_copper_xiranite_tool",
-      "name": "Proto Cuprium Frame",
-      "category": "activity",
-      "row": 1,
-      "icon": "activity_copper_xiranite_tool"
+      "id": "transfer_jinlong_bottled_rec_hp_2",
+      "name": "Buck Capsule [B]",
+      "category": "__domain_transfer",
+      "row": 999,
+      "icon": "bottled_rec_hp_2"
     },
     {
-      "time": 2,
+      "time": 3600,
+      "producers": [
+        "__domain_transfer"
+      ],
       "in": {
-        "gas_copper": 2,
-        "gas_xiranite": 1
+        "domain_key_jinlong": 1
       },
       "out": {
-        "activity_copper_poly_gas": 1
+        "bottled_rec_hp_3": 30
       },
-      "producers": [
-        "gas_reactor_1"
-      ],
-      "id": "activity_copper_poly_gas",
-      "name": "Proto Xiran-Cuprium Gas",
-      "category": "activity",
-      "row": 2,
-      "icon": "InN_zV0Bo"
+      "id": "transfer_jinlong_bottled_rec_hp_3",
+      "name": "Buck Capsule [A]",
+      "category": "__domain_transfer",
+      "row": 999,
+      "icon": "bottled_rec_hp_3"
     },
     {
-      "time": 2,
+      "time": 3600,
+      "producers": [
+        "__domain_transfer"
+      ],
       "in": {
-        "activity_copper_poly": 1,
-        "gas_xiranite": 0.2
+        "domain_key_jinlong": 1
       },
       "out": {
-        "activity_copper_poly_gas": 1
+        "bottled_rec_hp_4": 30
       },
-      "producers": [
-        "phase_trans_2"
-      ],
-      "id": "phase_trans_2-activity_copper_poly_gas",
-      "name": "Proto Xiran-Cuprium Gas(Solid-Gas Transmuting Unit)",
-      "category": "activity",
-      "row": 2,
-      "icon": "mokYxBo_D"
+      "id": "transfer_jinlong_bottled_rec_hp_4",
+      "name": "Yazhen Syringe [C]",
+      "category": "__domain_transfer",
+      "row": 999,
+      "icon": "bottled_rec_hp_4"
     },
     {
-      "time": 2,
+      "time": 3600,
+      "producers": [
+        "__domain_transfer"
+      ],
       "in": {
-        "activity_copper_poly_gas": 1,
-        "gas_xiranite": 0.2
+        "domain_key_jinlong": 1
       },
       "out": {
-        "activity_copper_poly": 1
+        "bottled_rec_hp_5": 15
       },
-      "producers": [
-        "phase_trans_2"
-      ],
-      "id": "phase_trans_2-activity_copper_poly",
-      "name": "Proto Xiran-Cuprium(Solid-Gas Transmuting Unit)",
-      "category": "activity",
-      "row": 2,
-      "icon": "hOwR0Jem2"
+      "id": "transfer_jinlong_bottled_rec_hp_5",
+      "name": "Yazhen Syringe [A]",
+      "category": "__domain_transfer",
+      "row": 999,
+      "icon": "bottled_rec_hp_5"
     },
     {
-      "time": 10,
+      "time": 3600,
+      "producers": [
+        "__domain_transfer"
+      ],
       "in": {
-        "activity_copper_poly": 5
+        "domain_key_jinlong": 1
       },
       "out": {
-        "activity_copper_poly_cmpt": 1
+        "carbon_enr": 1500
       },
-      "producers": [
-        "cmpt_mc_1"
-      ],
-      "id": "activity_copper_poly_cmpt",
-      "name": "Proto Xiran-Cuprium Part",
-      "category": "activity",
-      "row": 2,
-      "icon": "activity_copper_poly_cmpt"
+      "id": "transfer_jinlong_carbon_enr",
+      "name": "Stabilized Carbon",
+      "category": "__domain_transfer",
+      "row": 999,
+      "icon": "carbon_enr"
     },
     {
-      "time": 10,
+      "time": 3600,
+      "producers": [
+        "__domain_transfer"
+      ],
       "in": {
-        "xiranite_enr_powder": 1
+        "domain_key_jinlong": 1
       },
       "out": {
-        "activity_xiranite_enr_nugget": 1
+        "carbon_enr_powder": 1500
       },
-      "producers": [
-        "furnance_1"
-      ],
-      "id": "activity_xiranite_enr_nugget",
-      "name": "Proto Heavy Xiranite",
-      "category": "activity",
-      "row": 2,
-      "icon": "activity_xiranite_enr_nugget"
+      "id": "transfer_jinlong_carbon_enr_powder",
+      "name": "Dense Carbon Powder",
+      "category": "__domain_transfer",
+      "row": 999,
+      "icon": "carbon_enr_powder"
     },
     {
-      "time": 10,
+      "time": 3600,
+      "producers": [
+        "__domain_transfer"
+      ],
       "in": {
-        "activity_copper_poly_cmpt": 1,
-        "xiranite_enr_powder": 1
+        "domain_key_jinlong": 1
       },
       "out": {
-        "activity_copper_poly_tool": 1
+        "carbon_mtl": 1500
       },
-      "producers": [
-        "tools_asm_mc_1"
-      ],
-      "id": "activity_copper_poly_tool",
-      "name": "Proto Xiran-Cuprium Frame",
-      "category": "activity",
-      "row": 2,
-      "icon": "activity_copper_poly_tool"
+      "id": "transfer_jinlong_carbon_mtl",
+      "name": "Carbon",
+      "category": "__domain_transfer",
+      "row": 999,
+      "icon": "carbon_mtl"
     },
     {
-      "time": 10,
+      "time": 3600,
+      "producers": [
+        "__domain_transfer"
+      ],
       "in": {
-        "activity_xiranite_enr_nugget": 1,
-        "gas_inert": 5
+        "domain_key_jinlong": 1
       },
       "out": {
-        "activity_xiranite_enr_box": 1
+        "carbon_powder": 1500
       },
+      "id": "transfer_jinlong_carbon_powder",
+      "name": "Carbon Powder",
+      "category": "__domain_transfer",
+      "row": 999,
+      "icon": "carbon_powder"
+    },
+    {
+      "time": 3600,
       "producers": [
-        "shaper_1"
+        "__domain_transfer"
       ],
-      "locations": [
-        "jinlong"
+      "in": {
+        "domain_key_jinlong": 1
+      },
+      "out": {
+        "copper_bottle": 300
+      },
+      "id": "transfer_jinlong_copper_bottle",
+      "name": "Cuprium Bottle",
+      "category": "__domain_transfer",
+      "row": 999,
+      "icon": "copper_bottle"
+    },
+    {
+      "time": 3600,
+      "producers": [
+        "__domain_transfer"
       ],
-      "id": "activity_xiranite_enr_box",
-      "name": "Proto Chubby Lung Heavy Shell",
-      "category": "activity",
-      "row": 2,
-      "icon": "activity_xiranite_enr_box"
+      "in": {
+        "domain_key_jinlong": 1
+      },
+      "out": {
+        "copper_bright": 30
+      },
+      "id": "transfer_jinlong_copper_bright",
+      "name": "Lucidolite",
+      "category": "__domain_transfer",
+      "row": 999,
+      "icon": "copper_bright"
+    },
+    {
+      "time": 3600,
+      "producers": [
+        "__domain_transfer"
+      ],
+      "in": {
+        "domain_key_jinlong": 1
+      },
+      "out": {
+        "copper_bright_cmpt": 15
+      },
+      "id": "transfer_jinlong_copper_bright_cmpt",
+      "name": "Lucidolite Part",
+      "category": "__domain_transfer",
+      "row": 999,
+      "icon": "copper_bright_cmpt"
+    },
+    {
+      "time": 3600,
+      "producers": [
+        "__domain_transfer"
+      ],
+      "in": {
+        "domain_key_jinlong": 1
+      },
+      "out": {
+        "copper_cmpt": 750
+      },
+      "id": "transfer_jinlong_copper_cmpt",
+      "name": "Cuprium Part",
+      "category": "__domain_transfer",
+      "row": 999,
+      "icon": "copper_cmpt"
+    },
+    {
+      "time": 3600,
+      "producers": [
+        "__domain_transfer"
+      ],
+      "in": {
+        "domain_key_jinlong": 1
+      },
+      "out": {
+        "copper_enr": 75
+      },
+      "id": "transfer_jinlong_copper_enr",
+      "name": "Hetonite",
+      "category": "__domain_transfer",
+      "row": 999,
+      "icon": "copper_enr"
+    },
+    {
+      "time": 3600,
+      "producers": [
+        "__domain_transfer"
+      ],
+      "in": {
+        "domain_key_jinlong": 1
+      },
+      "out": {
+        "copper_enr_bottle": 30
+      },
+      "id": "transfer_jinlong_copper_enr_bottle",
+      "name": "Hetonite Bottle",
+      "category": "__domain_transfer",
+      "row": 999,
+      "icon": "copper_enr_bottle"
+    },
+    {
+      "time": 3600,
+      "producers": [
+        "__domain_transfer"
+      ],
+      "in": {
+        "domain_key_jinlong": 1
+      },
+      "out": {
+        "copper_enr_cmpt": 15
+      },
+      "id": "transfer_jinlong_copper_enr_cmpt",
+      "name": "Hetonite Part",
+      "category": "__domain_transfer",
+      "row": 999,
+      "icon": "copper_enr_cmpt"
+    },
+    {
+      "time": 3600,
+      "producers": [
+        "__domain_transfer"
+      ],
+      "in": {
+        "domain_key_jinlong": 1
+      },
+      "out": {
+        "copper_enr_heng": 150
+      },
+      "id": "transfer_jinlong_copper_enr_heng",
+      "name": "Equprium",
+      "category": "__domain_transfer",
+      "row": 999,
+      "icon": "copper_enr_heng"
+    },
+    {
+      "time": 3600,
+      "producers": [
+        "__domain_transfer"
+      ],
+      "in": {
+        "domain_key_jinlong": 1
+      },
+      "out": {
+        "copper_enr2": 75
+      },
+      "id": "transfer_jinlong_copper_enr2",
+      "name": "Pyrrolite",
+      "category": "__domain_transfer",
+      "row": 999,
+      "icon": "copper_enr2"
+    },
+    {
+      "time": 3600,
+      "producers": [
+        "__domain_transfer"
+      ],
+      "in": {
+        "domain_key_jinlong": 1
+      },
+      "out": {
+        "copper_enr2_cmpt": 15
+      },
+      "id": "transfer_jinlong_copper_enr2_cmpt",
+      "name": "Pyrrolite Part",
+      "category": "__domain_transfer",
+      "row": 999,
+      "icon": "copper_enr2_cmpt"
+    },
+    {
+      "time": 3600,
+      "producers": [
+        "__domain_transfer"
+      ],
+      "in": {
+        "domain_key_jinlong": 1
+      },
+      "out": {
+        "copper_hui": 150
+      },
+      "id": "transfer_jinlong_copper_hui",
+      "name": "T-Cuprium",
+      "category": "__domain_transfer",
+      "row": 999,
+      "icon": "copper_hui"
+    },
+    {
+      "time": 3600,
+      "producers": [
+        "__domain_transfer"
+      ],
+      "in": {
+        "domain_key_jinlong": 1
+      },
+      "out": {
+        "copper_hui_cmpt": 15
+      },
+      "id": "transfer_jinlong_copper_hui_cmpt",
+      "name": "T-Cuprium Part",
+      "category": "__domain_transfer",
+      "row": 999,
+      "icon": "copper_hui_cmpt"
+    },
+    {
+      "time": 3600,
+      "producers": [
+        "__domain_transfer"
+      ],
+      "in": {
+        "domain_key_jinlong": 1
+      },
+      "out": {
+        "copper_jar": 300
+      },
+      "id": "transfer_jinlong_copper_jar",
+      "name": "Cuprium Canister",
+      "category": "__domain_transfer",
+      "row": 999,
+      "icon": "copper_jar"
+    },
+    {
+      "time": 3600,
+      "producers": [
+        "__domain_transfer"
+      ],
+      "in": {
+        "domain_key_jinlong": 1
+      },
+      "out": {
+        "copper_ming": 150
+      },
+      "id": "transfer_jinlong_copper_ming",
+      "name": "L-Cuprium",
+      "category": "__domain_transfer",
+      "row": 999,
+      "icon": "copper_ming"
+    },
+    {
+      "time": 3600,
+      "producers": [
+        "__domain_transfer"
+      ],
+      "in": {
+        "domain_key_jinlong": 1
+      },
+      "out": {
+        "copper_ming_cmpt": 15
+      },
+      "id": "transfer_jinlong_copper_ming_cmpt",
+      "name": "L-Cuprium Part",
+      "category": "__domain_transfer",
+      "row": 999,
+      "icon": "copper_ming_cmpt"
+    },
+    {
+      "time": 3600,
+      "producers": [
+        "__domain_transfer"
+      ],
+      "in": {
+        "domain_key_jinlong": 1
+      },
+      "out": {
+        "copper_nugget": 750
+      },
+      "id": "transfer_jinlong_copper_nugget",
+      "name": "Cuprium",
+      "category": "__domain_transfer",
+      "row": 999,
+      "icon": "copper_nugget"
+    },
+    {
+      "time": 3600,
+      "producers": [
+        "__domain_transfer"
+      ],
+      "in": {
+        "domain_key_jinlong": 1
+      },
+      "out": {
+        "copper_ore": 1500
+      },
+      "id": "transfer_jinlong_copper_ore",
+      "name": "Cuprium Ore",
+      "category": "__domain_transfer",
+      "row": 999,
+      "icon": "copper_ore"
+    },
+    {
+      "time": 3600,
+      "producers": [
+        "__domain_transfer"
+      ],
+      "in": {
+        "domain_key_jinlong": 1
+      },
+      "out": {
+        "copper_powder": 750
+      },
+      "id": "transfer_jinlong_copper_powder",
+      "name": "Cuprium Powder",
+      "category": "__domain_transfer",
+      "row": 999,
+      "icon": "copper_powder"
+    },
+    {
+      "time": 3600,
+      "producers": [
+        "__domain_transfer"
+      ],
+      "in": {
+        "domain_key_jinlong": 1
+      },
+      "out": {
+        "crystal_enr": 750
+      },
+      "id": "transfer_jinlong_crystal_enr",
+      "name": "Packed Origocrust",
+      "category": "__domain_transfer",
+      "row": 999,
+      "icon": "crystal_enr"
+    },
+    {
+      "time": 3600,
+      "producers": [
+        "__domain_transfer"
+      ],
+      "in": {
+        "domain_key_jinlong": 1
+      },
+      "out": {
+        "crystal_enr_powder": 750
+      },
+      "id": "transfer_jinlong_crystal_enr_powder",
+      "name": "Dense Origocrust Powder",
+      "category": "__domain_transfer",
+      "row": 999,
+      "icon": "crystal_enr_powder"
+    },
+    {
+      "time": 3600,
+      "producers": [
+        "__domain_transfer"
+      ],
+      "in": {
+        "domain_key_jinlong": 1
+      },
+      "out": {
+        "crystal_powder": 1500
+      },
+      "id": "transfer_jinlong_crystal_powder",
+      "name": "Origocrust Powder",
+      "category": "__domain_transfer",
+      "row": 999,
+      "icon": "crystal_powder"
+    },
+    {
+      "time": 3600,
+      "producers": [
+        "__domain_transfer"
+      ],
+      "in": {
+        "domain_key_jinlong": 1
+      },
+      "out": {
+        "crystal_shell": 1500
+      },
+      "id": "transfer_jinlong_crystal_shell",
+      "name": "Origocrust",
+      "category": "__domain_transfer",
+      "row": 999,
+      "icon": "crystal_shell"
+    },
+    {
+      "time": 3600,
+      "producers": [
+        "__domain_transfer"
+      ],
+      "in": {
+        "domain_key_jinlong": 1
+      },
+      "out": {
+        "filter_core": 750
+      },
+      "id": "transfer_jinlong_filter_core",
+      "name": "Separator Core",
+      "category": "__domain_transfer",
+      "row": 999,
+      "icon": "filter_core"
+    },
+    {
+      "time": 3600,
+      "producers": [
+        "__domain_transfer"
+      ],
+      "in": {
+        "domain_key_jinlong": 1
+      },
+      "out": {
+        "glass_bottle": 750
+      },
+      "id": "transfer_jinlong_glass_bottle",
+      "name": "Amethyst Bottle",
+      "category": "__domain_transfer",
+      "row": 999,
+      "icon": "glass_bottle"
+    },
+    {
+      "time": 3600,
+      "producers": [
+        "__domain_transfer"
+      ],
+      "in": {
+        "domain_key_jinlong": 1
+      },
+      "out": {
+        "glass_cmpt": 1500
+      },
+      "id": "transfer_jinlong_glass_cmpt",
+      "name": "Amethyst Part",
+      "category": "__domain_transfer",
+      "row": 999,
+      "icon": "glass_cmpt"
+    },
+    {
+      "time": 3600,
+      "producers": [
+        "__domain_transfer"
+      ],
+      "in": {
+        "domain_key_jinlong": 1
+      },
+      "out": {
+        "glass_enr_bottle": 300
+      },
+      "id": "transfer_jinlong_glass_enr_bottle",
+      "name": "Cryston Bottle",
+      "category": "__domain_transfer",
+      "row": 999,
+      "icon": "glass_enr_bottle"
+    },
+    {
+      "time": 3600,
+      "producers": [
+        "__domain_transfer"
+      ],
+      "in": {
+        "domain_key_jinlong": 1
+      },
+      "out": {
+        "glass_enr_cmpt": 750
+      },
+      "id": "transfer_jinlong_glass_enr_cmpt",
+      "name": "Cryston Part",
+      "category": "__domain_transfer",
+      "row": 999,
+      "icon": "glass_enr_cmpt"
+    },
+    {
+      "time": 3600,
+      "producers": [
+        "__domain_transfer"
+      ],
+      "in": {
+        "domain_key_jinlong": 1
+      },
+      "out": {
+        "iron_bottle": 750
+      },
+      "id": "transfer_jinlong_iron_bottle",
+      "name": "Ferrium Bottle",
+      "category": "__domain_transfer",
+      "row": 999,
+      "icon": "iron_bottle"
+    },
+    {
+      "time": 3600,
+      "producers": [
+        "__domain_transfer"
+      ],
+      "in": {
+        "domain_key_jinlong": 1
+      },
+      "out": {
+        "iron_cmpt": 1500
+      },
+      "id": "transfer_jinlong_iron_cmpt",
+      "name": "Ferrium Part",
+      "category": "__domain_transfer",
+      "row": 999,
+      "icon": "iron_cmpt"
+    },
+    {
+      "time": 3600,
+      "producers": [
+        "__domain_transfer"
+      ],
+      "in": {
+        "domain_key_jinlong": 1
+      },
+      "out": {
+        "iron_enr": 750
+      },
+      "id": "transfer_jinlong_iron_enr",
+      "name": "Steel",
+      "category": "__domain_transfer",
+      "row": 999,
+      "icon": "iron_enr"
+    },
+    {
+      "time": 3600,
+      "producers": [
+        "__domain_transfer"
+      ],
+      "in": {
+        "domain_key_jinlong": 1
+      },
+      "out": {
+        "iron_enr_bottle": 300
+      },
+      "id": "transfer_jinlong_iron_enr_bottle",
+      "name": "Steel Bottle",
+      "category": "__domain_transfer",
+      "row": 999,
+      "icon": "iron_enr_bottle"
+    },
+    {
+      "time": 3600,
+      "producers": [
+        "__domain_transfer"
+      ],
+      "in": {
+        "domain_key_jinlong": 1
+      },
+      "out": {
+        "iron_enr_cmpt": 750
+      },
+      "id": "transfer_jinlong_iron_enr_cmpt",
+      "name": "Steel Part",
+      "category": "__domain_transfer",
+      "row": 999,
+      "icon": "iron_enr_cmpt"
+    },
+    {
+      "time": 3600,
+      "producers": [
+        "__domain_transfer"
+      ],
+      "in": {
+        "domain_key_jinlong": 1
+      },
+      "out": {
+        "iron_enr_powder": 750
+      },
+      "id": "transfer_jinlong_iron_enr_powder",
+      "name": "Dense Ferrium Powder",
+      "category": "__domain_transfer",
+      "row": 999,
+      "icon": "iron_enr_powder"
+    },
+    {
+      "time": 3600,
+      "producers": [
+        "__domain_transfer"
+      ],
+      "in": {
+        "domain_key_jinlong": 1
+      },
+      "out": {
+        "iron_nugget": 1500
+      },
+      "id": "transfer_jinlong_iron_nugget",
+      "name": "Ferrium",
+      "category": "__domain_transfer",
+      "row": 999,
+      "icon": "iron_nugget"
+    },
+    {
+      "time": 3600,
+      "producers": [
+        "__domain_transfer"
+      ],
+      "in": {
+        "domain_key_jinlong": 1
+      },
+      "out": {
+        "iron_ore": 1500
+      },
+      "id": "transfer_jinlong_iron_ore",
+      "name": "Ferrium Ore",
+      "category": "__domain_transfer",
+      "row": 999,
+      "icon": "iron_ore"
+    },
+    {
+      "time": 3600,
+      "producers": [
+        "__domain_transfer"
+      ],
+      "in": {
+        "domain_key_jinlong": 1
+      },
+      "out": {
+        "iron_powder": 1500
+      },
+      "id": "transfer_jinlong_iron_powder",
+      "name": "Ferrium Powder",
+      "category": "__domain_transfer",
+      "row": 999,
+      "icon": "iron_powder"
+    },
+    {
+      "time": 3600,
+      "producers": [
+        "__domain_transfer"
+      ],
+      "in": {
+        "domain_key_jinlong": 1
+      },
+      "out": {
+        "originium_enr_powder": 1500
+      },
+      "id": "transfer_jinlong_originium_enr_powder",
+      "name": "Dense Originium Powder",
+      "category": "__domain_transfer",
+      "row": 999,
+      "icon": "originium_enr_powder"
+    },
+    {
+      "time": 3600,
+      "producers": [
+        "__domain_transfer"
+      ],
+      "in": {
+        "domain_key_jinlong": 1
+      },
+      "out": {
+        "originium_ore": 1500
+      },
+      "id": "transfer_jinlong_originium_ore",
+      "name": "Originium Ore",
+      "category": "__domain_transfer",
+      "row": 999,
+      "icon": "originium_ore"
+    },
+    {
+      "time": 3600,
+      "producers": [
+        "__domain_transfer"
+      ],
+      "in": {
+        "domain_key_jinlong": 1
+      },
+      "out": {
+        "originium_powder": 1500
+      },
+      "id": "transfer_jinlong_originium_powder",
+      "name": "Originium Powder",
+      "category": "__domain_transfer",
+      "row": 999,
+      "icon": "originium_powder"
+    },
+    {
+      "time": 3600,
+      "producers": [
+        "__domain_transfer"
+      ],
+      "in": {
+        "domain_key_jinlong": 1
+      },
+      "out": {
+        "plant_bbflower_1": 1500
+      },
+      "id": "transfer_jinlong_plant_bbflower_1",
+      "name": "Aketine",
+      "category": "__domain_transfer",
+      "row": 999,
+      "icon": "plant_bbflower_1"
+    },
+    {
+      "time": 3600,
+      "producers": [
+        "__domain_transfer"
+      ],
+      "in": {
+        "domain_key_jinlong": 1
+      },
+      "out": {
+        "plant_bbflower_powder_1": 1500
+      },
+      "id": "transfer_jinlong_plant_bbflower_powder_1",
+      "name": "Aketine Powder",
+      "category": "__domain_transfer",
+      "row": 999,
+      "icon": "plant_bbflower_powder_1"
+    },
+    {
+      "time": 3600,
+      "producers": [
+        "__domain_transfer"
+      ],
+      "in": {
+        "domain_key_jinlong": 1
+      },
+      "out": {
+        "plant_bbflower_seed_1": 1500
+      },
+      "id": "transfer_jinlong_plant_bbflower_seed_1",
+      "name": "Aketine Seed",
+      "category": "__domain_transfer",
+      "row": 999,
+      "icon": "plant_bbflower_seed_1"
+    },
+    {
+      "time": 3600,
+      "producers": [
+        "__domain_transfer"
+      ],
+      "in": {
+        "domain_key_jinlong": 1
+      },
+      "out": {
+        "plant_grass_1": 1500
+      },
+      "id": "transfer_jinlong_plant_grass_1",
+      "name": "Jincao",
+      "category": "__domain_transfer",
+      "row": 999,
+      "icon": "plant_grass_1"
+    },
+    {
+      "time": 3600,
+      "producers": [
+        "__domain_transfer"
+      ],
+      "in": {
+        "domain_key_jinlong": 1
+      },
+      "out": {
+        "plant_grass_2": 1500
+      },
+      "id": "transfer_jinlong_plant_grass_2",
+      "name": "Yazhen",
+      "category": "__domain_transfer",
+      "row": 999,
+      "icon": "plant_grass_2"
+    },
+    {
+      "time": 3600,
+      "producers": [
+        "__domain_transfer"
+      ],
+      "in": {
+        "domain_key_jinlong": 1
+      },
+      "out": {
+        "plant_grass_powder_1": 1500
+      },
+      "id": "transfer_jinlong_plant_grass_powder_1",
+      "name": "Jincao Powder",
+      "category": "__domain_transfer",
+      "row": 999,
+      "icon": "plant_grass_powder_1"
+    },
+    {
+      "time": 3600,
+      "producers": [
+        "__domain_transfer"
+      ],
+      "in": {
+        "domain_key_jinlong": 1
+      },
+      "out": {
+        "plant_grass_powder_2": 1500
+      },
+      "id": "transfer_jinlong_plant_grass_powder_2",
+      "name": "Yazhen Powder",
+      "category": "__domain_transfer",
+      "row": 999,
+      "icon": "plant_grass_powder_2"
+    },
+    {
+      "time": 3600,
+      "producers": [
+        "__domain_transfer"
+      ],
+      "in": {
+        "domain_key_jinlong": 1
+      },
+      "out": {
+        "plant_grass_seed_1": 1500
+      },
+      "id": "transfer_jinlong_plant_grass_seed_1",
+      "name": "Jincao Seed",
+      "category": "__domain_transfer",
+      "row": 999,
+      "icon": "plant_grass_seed_1"
+    },
+    {
+      "time": 3600,
+      "producers": [
+        "__domain_transfer"
+      ],
+      "in": {
+        "domain_key_jinlong": 1
+      },
+      "out": {
+        "plant_grass_seed_2": 1500
+      },
+      "id": "transfer_jinlong_plant_grass_seed_2",
+      "name": "Yazhen Seeds",
+      "category": "__domain_transfer",
+      "row": 999,
+      "icon": "plant_grass_seed_2"
+    },
+    {
+      "time": 3600,
+      "producers": [
+        "__domain_transfer"
+      ],
+      "in": {
+        "domain_key_jinlong": 1
+      },
+      "out": {
+        "plant_moss_1": 1500
+      },
+      "id": "transfer_jinlong_plant_moss_1",
+      "name": "Buckflower",
+      "category": "__domain_transfer",
+      "row": 999,
+      "icon": "plant_moss_1"
+    },
+    {
+      "time": 3600,
+      "producers": [
+        "__domain_transfer"
+      ],
+      "in": {
+        "domain_key_jinlong": 1
+      },
+      "out": {
+        "plant_moss_2": 1500
+      },
+      "id": "transfer_jinlong_plant_moss_2",
+      "name": "Citrome",
+      "category": "__domain_transfer",
+      "row": 999,
+      "icon": "plant_moss_2"
+    },
+    {
+      "time": 3600,
+      "producers": [
+        "__domain_transfer"
+      ],
+      "in": {
+        "domain_key_jinlong": 1
+      },
+      "out": {
+        "plant_moss_3": 1500
+      },
+      "id": "transfer_jinlong_plant_moss_3",
+      "name": "Sandleaf",
+      "category": "__domain_transfer",
+      "row": 999,
+      "icon": "plant_moss_3"
+    },
+    {
+      "time": 3600,
+      "producers": [
+        "__domain_transfer"
+      ],
+      "in": {
+        "domain_key_jinlong": 1
+      },
+      "out": {
+        "plant_moss_enr_powder_1": 1500
+      },
+      "id": "transfer_jinlong_plant_moss_enr_powder_1",
+      "name": "Ground Buckflower Powder",
+      "category": "__domain_transfer",
+      "row": 999,
+      "icon": "plant_moss_enr_powder_1"
+    },
+    {
+      "time": 3600,
+      "producers": [
+        "__domain_transfer"
+      ],
+      "in": {
+        "domain_key_jinlong": 1
+      },
+      "out": {
+        "plant_moss_enr_powder_2": 1500
+      },
+      "id": "transfer_jinlong_plant_moss_enr_powder_2",
+      "name": "Ground Citrome Powder",
+      "category": "__domain_transfer",
+      "row": 999,
+      "icon": "plant_moss_enr_powder_2"
+    },
+    {
+      "time": 3600,
+      "producers": [
+        "__domain_transfer"
+      ],
+      "in": {
+        "domain_key_jinlong": 1
+      },
+      "out": {
+        "plant_moss_powder_1": 1500
+      },
+      "id": "transfer_jinlong_plant_moss_powder_1",
+      "name": "Buckflower Powder",
+      "category": "__domain_transfer",
+      "row": 999,
+      "icon": "plant_moss_powder_1"
+    },
+    {
+      "time": 3600,
+      "producers": [
+        "__domain_transfer"
+      ],
+      "in": {
+        "domain_key_jinlong": 1
+      },
+      "out": {
+        "plant_moss_powder_2": 1500
+      },
+      "id": "transfer_jinlong_plant_moss_powder_2",
+      "name": "Citrome Powder",
+      "category": "__domain_transfer",
+      "row": 999,
+      "icon": "plant_moss_powder_2"
+    },
+    {
+      "time": 3600,
+      "producers": [
+        "__domain_transfer"
+      ],
+      "in": {
+        "domain_key_jinlong": 1
+      },
+      "out": {
+        "plant_moss_powder_3": 1500
+      },
+      "id": "transfer_jinlong_plant_moss_powder_3",
+      "name": "Sandleaf Powder",
+      "category": "__domain_transfer",
+      "row": 999,
+      "icon": "plant_moss_powder_3"
+    },
+    {
+      "time": 3600,
+      "producers": [
+        "__domain_transfer"
+      ],
+      "in": {
+        "domain_key_jinlong": 1
+      },
+      "out": {
+        "plant_moss_seed_1": 1500
+      },
+      "id": "transfer_jinlong_plant_moss_seed_1",
+      "name": "Buckflower Seed",
+      "category": "__domain_transfer",
+      "row": 999,
+      "icon": "plant_moss_seed_1"
+    },
+    {
+      "time": 3600,
+      "producers": [
+        "__domain_transfer"
+      ],
+      "in": {
+        "domain_key_jinlong": 1
+      },
+      "out": {
+        "plant_moss_seed_2": 1500
+      },
+      "id": "transfer_jinlong_plant_moss_seed_2",
+      "name": "Citrome Seed",
+      "category": "__domain_transfer",
+      "row": 999,
+      "icon": "plant_moss_seed_2"
+    },
+    {
+      "time": 3600,
+      "producers": [
+        "__domain_transfer"
+      ],
+      "in": {
+        "domain_key_jinlong": 1
+      },
+      "out": {
+        "plant_moss_seed_3": 1500
+      },
+      "id": "transfer_jinlong_plant_moss_seed_3",
+      "name": "Sandleaf Seed",
+      "category": "__domain_transfer",
+      "row": 999,
+      "icon": "plant_moss_seed_3"
+    },
+    {
+      "time": 3600,
+      "producers": [
+        "__domain_transfer"
+      ],
+      "in": {
+        "domain_key_jinlong": 1
+      },
+      "out": {
+        "proc_battery_1": 75
+      },
+      "id": "transfer_jinlong_proc_battery_1",
+      "name": "LC Valley Battery",
+      "category": "__domain_transfer",
+      "row": 999,
+      "icon": "proc_battery_1"
+    },
+    {
+      "time": 3600,
+      "producers": [
+        "__domain_transfer"
+      ],
+      "in": {
+        "domain_key_jinlong": 1
+      },
+      "out": {
+        "proc_battery_2": 75
+      },
+      "id": "transfer_jinlong_proc_battery_2",
+      "name": "SC Valley Battery",
+      "category": "__domain_transfer",
+      "row": 999,
+      "icon": "proc_battery_2"
+    },
+    {
+      "time": 3600,
+      "producers": [
+        "__domain_transfer"
+      ],
+      "in": {
+        "domain_key_jinlong": 1
+      },
+      "out": {
+        "proc_battery_3": 30
+      },
+      "id": "transfer_jinlong_proc_battery_3",
+      "name": "HC Valley Battery",
+      "category": "__domain_transfer",
+      "row": 999,
+      "icon": "proc_battery_3"
+    },
+    {
+      "time": 3600,
+      "producers": [
+        "__domain_transfer"
+      ],
+      "in": {
+        "domain_key_jinlong": 1
+      },
+      "out": {
+        "proc_battery_4": 30
+      },
+      "id": "transfer_jinlong_proc_battery_4",
+      "name": "LC Wuling Battery",
+      "category": "__domain_transfer",
+      "row": 999,
+      "icon": "proc_battery_4"
+    },
+    {
+      "time": 3600,
+      "producers": [
+        "__domain_transfer"
+      ],
+      "in": {
+        "domain_key_jinlong": 1
+      },
+      "out": {
+        "proc_battery_5": 15
+      },
+      "id": "transfer_jinlong_proc_battery_5",
+      "name": "SC Wuling Battery",
+      "category": "__domain_transfer",
+      "row": 999,
+      "icon": "proc_battery_5"
+    },
+    {
+      "time": 3600,
+      "producers": [
+        "__domain_transfer"
+      ],
+      "in": {
+        "domain_key_jinlong": 1
+      },
+      "out": {
+        "proc_battery_6": 3
+      },
+      "id": "transfer_jinlong_proc_battery_6",
+      "name": "HC Wuling Battery",
+      "category": "__domain_transfer",
+      "row": 999,
+      "icon": "proc_battery_6"
+    },
+    {
+      "time": 3600,
+      "producers": [
+        "__domain_transfer"
+      ],
+      "in": {
+        "domain_key_jinlong": 1
+      },
+      "out": {
+        "proc_bomb_1": 300
+      },
+      "id": "transfer_jinlong_proc_bomb_1",
+      "name": "Industrial Explosive",
+      "category": "__domain_transfer",
+      "row": 999,
+      "icon": "proc_bomb_1"
+    },
+    {
+      "time": 3600,
+      "producers": [
+        "__domain_transfer"
+      ],
+      "in": {
+        "domain_key_jinlong": 1
+      },
+      "out": {
+        "quartz_enr": 750
+      },
+      "id": "transfer_jinlong_quartz_enr",
+      "name": "Cryston Fiber",
+      "category": "__domain_transfer",
+      "row": 999,
+      "icon": "quartz_enr"
+    },
+    {
+      "time": 3600,
+      "producers": [
+        "__domain_transfer"
+      ],
+      "in": {
+        "domain_key_jinlong": 1
+      },
+      "out": {
+        "quartz_enr_powder": 750
+      },
+      "id": "transfer_jinlong_quartz_enr_powder",
+      "name": "Cryston Powder",
+      "category": "__domain_transfer",
+      "row": 999,
+      "icon": "quartz_enr_powder"
+    },
+    {
+      "time": 3600,
+      "producers": [
+        "__domain_transfer"
+      ],
+      "in": {
+        "domain_key_jinlong": 1
+      },
+      "out": {
+        "quartz_glass": 1500
+      },
+      "id": "transfer_jinlong_quartz_glass",
+      "name": "Amethyst Fiber",
+      "category": "__domain_transfer",
+      "row": 999,
+      "icon": "quartz_glass"
+    },
+    {
+      "time": 3600,
+      "producers": [
+        "__domain_transfer"
+      ],
+      "in": {
+        "domain_key_jinlong": 1
+      },
+      "out": {
+        "quartz_powder": 1500
+      },
+      "id": "transfer_jinlong_quartz_powder",
+      "name": "Amethyst Powder",
+      "category": "__domain_transfer",
+      "row": 999,
+      "icon": "quartz_powder"
+    },
+    {
+      "time": 3600,
+      "producers": [
+        "__domain_transfer"
+      ],
+      "in": {
+        "domain_key_jinlong": 1
+      },
+      "out": {
+        "quartz_sand": 1500
+      },
+      "id": "transfer_jinlong_quartz_sand",
+      "name": "Amethyst Ore",
+      "category": "__domain_transfer",
+      "row": 999,
+      "icon": "quartz_sand"
+    },
+    {
+      "time": 3600,
+      "producers": [
+        "__domain_transfer"
+      ],
+      "in": {
+        "domain_key_jinlong": 1
+      },
+      "out": {
+        "xiranite_enr_heng": 150
+      },
+      "id": "transfer_jinlong_xiranite_enr_heng",
+      "name": "Equiranite",
+      "category": "__domain_transfer",
+      "row": 999,
+      "icon": "xiranite_enr_heng"
+    },
+    {
+      "time": 3600,
+      "producers": [
+        "__domain_transfer"
+      ],
+      "in": {
+        "domain_key_jinlong": 1
+      },
+      "out": {
+        "xiranite_enr_powder": 30
+      },
+      "id": "transfer_jinlong_xiranite_enr_powder",
+      "name": "Heavy Xiranite",
+      "category": "__domain_transfer",
+      "row": 999,
+      "icon": "xiranite_enr_powder"
+    },
+    {
+      "time": 3600,
+      "producers": [
+        "__domain_transfer"
+      ],
+      "in": {
+        "domain_key_jinlong": 1
+      },
+      "out": {
+        "xiranite_hui": 150
+      },
+      "id": "transfer_jinlong_xiranite_hui",
+      "name": "Turbidarite",
+      "category": "__domain_transfer",
+      "row": 999,
+      "icon": "xiranite_hui"
+    },
+    {
+      "time": 3600,
+      "producers": [
+        "__domain_transfer"
+      ],
+      "in": {
+        "domain_key_jinlong": 1
+      },
+      "out": {
+        "xiranite_ming": 150
+      },
+      "id": "transfer_jinlong_xiranite_ming",
+      "name": "Luminarite",
+      "category": "__domain_transfer",
+      "row": 999,
+      "icon": "xiranite_ming"
+    },
+    {
+      "time": 3600,
+      "producers": [
+        "__domain_transfer"
+      ],
+      "in": {
+        "domain_key_jinlong": 1
+      },
+      "out": {
+        "xiranite_poly": 150
+      },
+      "id": "transfer_jinlong_xiranite_poly",
+      "name": "Xircon",
+      "category": "__domain_transfer",
+      "row": 999,
+      "icon": "xiranite_poly"
+    },
+    {
+      "time": 3600,
+      "producers": [
+        "__domain_transfer"
+      ],
+      "in": {
+        "domain_key_jinlong": 1
+      },
+      "out": {
+        "xiranite_powder": 750
+      },
+      "id": "transfer_jinlong_xiranite_powder",
+      "name": "Xiranite",
+      "category": "__domain_transfer",
+      "row": 999,
+      "icon": "xiranite_powder"
     },
     {
       "time": 3600,
@@ -6704,6 +9238,23 @@
         "domain_key_tundra": 1
       },
       "out": {
+        "iron_ore": 1500
+      },
+      "id": "transfer_tundra_iron_ore",
+      "name": "Ferrium Ore",
+      "category": "__domain_transfer",
+      "row": 999,
+      "icon": "iron_ore"
+    },
+    {
+      "time": 3600,
+      "producers": [
+        "__domain_transfer"
+      ],
+      "in": {
+        "domain_key_tundra": 1
+      },
+      "out": {
         "iron_powder": 1500
       },
       "id": "transfer_tundra_iron_powder",
@@ -6728,6 +9279,23 @@
       "category": "__domain_transfer",
       "row": 999,
       "icon": "originium_enr_powder"
+    },
+    {
+      "time": 3600,
+      "producers": [
+        "__domain_transfer"
+      ],
+      "in": {
+        "domain_key_tundra": 1
+      },
+      "out": {
+        "originium_ore": 1500
+      },
+      "id": "transfer_tundra_originium_ore",
+      "name": "Originium Ore",
+      "category": "__domain_transfer",
+      "row": 999,
+      "icon": "originium_ore"
     },
     {
       "time": 3600,
@@ -7221,6 +9789,23 @@
       "category": "__domain_transfer",
       "row": 999,
       "icon": "quartz_powder"
+    },
+    {
+      "time": 3600,
+      "producers": [
+        "__domain_transfer"
+      ],
+      "in": {
+        "domain_key_tundra": 1
+      },
+      "out": {
+        "quartz_sand": 1500
+      },
+      "id": "transfer_tundra_quartz_sand",
+      "name": "Amethyst Ore",
+      "category": "__domain_transfer",
+      "row": 999,
+      "icon": "quartz_sand"
     }
   ],
   "locations": [
